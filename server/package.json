@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "babel-watch server.js",
+    "test": "jest -u --coverage",
     "lint": "eslint ./ || true"
   },
   "dependencies": {
@@ -18,6 +19,8 @@
     "babel-eslint": "^8.2.3",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.11.0"
+    "eslint-plugin-import": "^2.11.0",
+    "jest": "^22.4.3",
+    "supertest": "^3.0.0"
   }
 }

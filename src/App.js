@@ -4,18 +4,22 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
+import { Provider } from "react-redux";
 import { LandingPage, AboutPage } from './components';
+import store from './store';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route exact path="/" component={LandingPage} />
-          <Route exact path="/about" component={AboutPage}/>
-        </Switch>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={LandingPage} />
+            <Route exact path="/about" component={AboutPage}/>
+          </Switch>
+        </Router>
+      </Provider>
     );
   }
 }

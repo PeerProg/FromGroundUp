@@ -1,24 +1,21 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from 'react-router-dom';
-import { LandingPage, AboutPage } from './components';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import routes from './routes';
 import './App.css';
 
-const App = () => {
-
-    return (
-      <div>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={LandingPage} />
-          <Route exact path="/about" component={AboutPage}/>
-        </Switch>
-      </Router>
-      </div>
-    );
-}
+const App = () => (
+  <BrowserRouter>
+    <Switch>
+      {routes.map(({path, component, exact}, index) => (
+        <Route
+          key={index}
+          path={path}
+          component={component}
+          exact={exact}
+        />
+      ))}
+    </Switch>
+  </BrowserRouter>
+);
 
 export default App;

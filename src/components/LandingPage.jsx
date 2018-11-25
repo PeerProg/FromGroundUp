@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import requestHandler from '../services/requestHandler'
+
 
 const LandingPage = () => {
-  const [user, setUser] = useState([]);
-
+  const [landingPageUrl, setlandingPageUrl] = useState([]);
+  
   useEffect(() => {
-    fetch('/home')
-      .then(res => res.json())
-      .then(user => setUser(user))
-  }, [user])
+    requestHandler.homeUrl().then(res => setlandingPageUrl(res.data.message))
+  }, [landingPageUrl])
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1 className="App-title">Welcome to The Habit Tracker Application</h1>
-        <h3>
-          {user.message}
-        </h3>
+        <h1 className="App-title">{landingPageUrl}</h1>
       </header>
       <div className="App-intro">
 

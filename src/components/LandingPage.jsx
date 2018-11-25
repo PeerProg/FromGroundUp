@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
 const LandingPage = () => {
+
   return (
     <div className="App">
       <header className="App-header">
-        <h1 className="App-title">Welcome to The Habit Tracker Application</h1>
+        <h1 className="App-title">Welcome Home</h1>
       </header>
       <div className="App-intro">
 

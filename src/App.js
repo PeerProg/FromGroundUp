@@ -4,7 +4,7 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import { LandingPage, AboutPage, RegisterPage, LoginPage } from './components';
+import { LandingPage, AboutPage } from './components';
 import './App.css';
 
 const App = () => {

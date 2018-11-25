@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Landing Page Component 1`] = `
+<div
+  className="App"
+>
+  <div
+    className="App-intro"
+  >
+    <h2>
+      Landing Page Placeholder
+    </h2>
+  </div>
+</div>
+`;

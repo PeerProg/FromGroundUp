@@ -60,6 +60,9 @@ const RegisterPage = (props) => {
         }}
         onSubmit={(values, { setSubmitting }) => {
           requestHandler.registerUser(values).then(res => setallowRedirect(true))
+          .catch((err) => {
+            alert('Request Not Completed, try again ')
+          })
           setSubmitting(false);
         }}
       >

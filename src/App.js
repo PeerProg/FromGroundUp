@@ -3,8 +3,12 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import routes from './routes';
 import { Header } from './components';
 import './App.css';
+import AppProviderComponent from './context/AppProvider';
 
-const App = () => (
+const App = () => {
+return (
+  <AppProviderComponent>
+ 
   <BrowserRouter>
     <Fragment>
       <Header />
@@ -20,6 +24,9 @@ const App = () => (
       </Switch>
     </Fragment>
   </BrowserRouter>
-);
+
+  </AppProviderComponent>
+)
+};
 
 export default App;

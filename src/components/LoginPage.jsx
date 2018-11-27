@@ -17,7 +17,6 @@ const LoginPage = (props) => {
         validate={values => {
           let errors = {};
           if ( !values.identifier || !values.password) {
-            // errors.email = !values.email ? 'Email Required' : undefined;
             errors.identifier = !values.identifier ? 'Username or Email Required' : undefined;
             errors.password = !values.password ? 'Password Required' : undefined;
           } 

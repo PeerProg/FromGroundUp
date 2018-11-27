@@ -1,4 +1,4 @@
-import { AboutPage, LandingPage } from '../components';
+import { AboutPage, LandingPage, RegisterPage, LoginPage, LogoutPage } from '../components';
 
 export default [
   {
@@ -10,5 +10,20 @@ export default [
     path: '/about',
     exact: true,
     component: AboutPage
+  },
+  {
+    path: '/login',
+    exact: true,
+    component: LoginPage
+  },
+  {
+    path: '/register',
+    exact: true,
+    component: RegisterPage
+  },
+  {
+    path: '/logout',
+    exact: true,
+    component: LogoutPage
   },
 ];

@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import requestHandler from '../services/requestHandler'
 
 const LandingPage = () => {
-  const [landingPageUrl, setlandingPageUrl] = useState([]);
+  const [landingPageContent, setlandingPageContent] = useState('');
 
   useEffect(() => {
-    requestHandler.homeUrl().then(res => setlandingPageUrl(res.data.message))
-  }, [landingPageUrl])
+    requestHandler.homeUrl().then(res => setlandingPageContent(res.data.message))
+  }, [landingPageContent])
   return (
     <div className="App">
       <div className="App-intro">
         <h2>
-          {landingPageUrl}
+          {landingPageContent}
         </h2>
       </div>
     </div>

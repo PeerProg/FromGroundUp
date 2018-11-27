@@ -1,14 +1,9 @@
-import React, { useState }  from 'react';
-import { Redirect } from 'react-router'
+import React  from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import requestHandler from '../services/requestHandler';
 import { AppConsumer } from '../context';
 
 const LoginPage = (props) => {
-
-  const [allowRedirect, setallowRedirect] = useState(false);
-
-
   return (
     <AppConsumer>
       {({ handleUsernameChange }) => (
@@ -18,32 +13,31 @@ const LoginPage = (props) => {
 
 
       <Formik
-        initialValues={{ username: '',  password: '' }}
+        initialValues={{ identifier: '',  password: '' }}
         validate={values => {
           let errors = {};
-          if ( !values.username || !values.password) {
+          if ( !values.identifier || !values.password) {
             // errors.email = !values.email ? 'Email Required' : undefined;
-            errors.username = !values.username ? 'Username or Email Required' : undefined;
+            errors.identifier = !values.identifier ? 'Username or Email Required' : undefined;
             errors.password = !values.password ? 'Password Required' : undefined;
           } 
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
           requestHandler.loginUser(values).then(res => {
-            handleUsernameChange(res.data.username)
-            setallowRedirect(true)
+            handleUsernameChange(res.data.username)          
+            // Redirect to the homepage
+            props.history.push('/')
           }).catch((err) => {
-            console.log(err, 99);
+            alert('Incorrect Login Information')
           })
           setSubmitting(false);
         }}
       >
         {({ isSubmitting }) => (
           <Form>
-            <Field type="text" name="username" placeholder="Username" />
-            <ErrorMessage name="username" component="div" />
-            {/* <Field type="email" name="email" placeholder="Email" />
-            <ErrorMessage name="email" component="div" /> */}
+            <Field type="text" name="identifier" placeholder="Username" />
+            <ErrorMessage name="identifier" component="div" />
             <Field type="password" name="password" placeholder="password" />
             <ErrorMessage name="password" component="div" />
             <button type="submit" disabled={isSubmitting}>
@@ -52,10 +46,6 @@ const LoginPage = (props) => {
           </Form>
         )}
       </Formik>
-
-          {allowRedirect && (
-            <Redirect to="/" />)
-          }
 
     </div>
       )}

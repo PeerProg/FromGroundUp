@@ -50,7 +50,7 @@ const Header = (props) => {
               </Link> }
               
 
-              {username && <Link to="/logout" style={styles.linkText}>
+              {username && <Link to="/" style={styles.linkText}>
                 <Button color="inherit"
                 onClick={() => {
                   handleUsernameChange('')

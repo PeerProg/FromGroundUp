@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import requestHandler from '../services/requestHandler'
+import React from 'react';
 import { AppConsumer } from '../context';
 
 
 const LandingPage = () => {
-  const [landingPageContent, setlandingPageContent] = useState('');
 
-  useEffect(() => {
-    requestHandler.homeUrl().then(res => setlandingPageContent(res.data.message))
-  }, [landingPageContent])
   return (
     <AppConsumer>
       {({ username }) => (
     <div className="App">
       <div className="App-intro">
         <h2>
-          {landingPageContent}
+          Welcome to the habit tracker application
         </h2>
 
         {username ?

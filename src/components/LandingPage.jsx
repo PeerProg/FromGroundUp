@@ -1,13 +1,17 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
+import requestHandler from '../services/requestHandler'
 
 const LandingPage = () => {
+  const [landingPageUrl, setlandingPageUrl] = useState([]);
 
+  useEffect(() => {
+    requestHandler.homeUrl().then(res => setlandingPageUrl(res.data.message))
+  }, [landingPageUrl])
   return (
     <div className="App">
       <div className="App-intro">
         <h2>
-          Landing Page Placeholder
+          {landingPageUrl}
         </h2>
       </div>
     </div>

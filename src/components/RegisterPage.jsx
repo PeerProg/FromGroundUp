@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router'
 import { withStyles } from '@material-ui/core/styles';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import requestHandler from '../services/requestHandler';
@@ -36,7 +35,6 @@ const styles = theme => ({
 
 
 const RegisterPage = (props) => {
-  const [allowRedirect, setallowRedirect] = useState(false);
 
   return (
 
@@ -59,7 +57,7 @@ const RegisterPage = (props) => {
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          requestHandler.registerUser(values).then(res => setallowRedirect(true))
+          requestHandler.registerUser(values).then(res => props.history.push('/login'))
           .catch((err) => {
             alert('Request Not Completed, try again ')
           })
@@ -82,10 +80,6 @@ const RegisterPage = (props) => {
 
         )}
       </Formik>
-
-      { allowRedirect && (
-          <Redirect to="/login" />)
-      }
 
 
     </div>

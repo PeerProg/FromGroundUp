@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import { Redirect } from 'react-router'
 import { withStyles } from '@material-ui/core/styles';
-
-
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import requestHandler from '../services/requestHandler';
 
@@ -38,71 +36,56 @@ const styles = theme => ({
 
 
 const RegisterPage = (props) => {
-
-  //   const [name, setname] = useState('Cat in the Hat');
-
-
-
-
-  //   const { classes } = props;
-
-  //  const handleChange = (event) => setname(event.target.value)
-
-
-
-
-
-
-
+  const [allowRedirect, setallowRedirect] = useState(false);
 
   return (
 
     <div>
 
-    <h1>This is the registerPage</h1>
-    <Formik
-      initialValues={{ username: '', email: '', password: '' }}
-      validate={values => {
-        let errors = {};
-        if (!values.email || !values.username || !values.password) {
-          errors.email = !values.email ? 'Email Required' : undefined;
-          errors.username = !values.username ? 'Username Required' : undefined;
-          errors.password = !values.password ? 'Password Required' : undefined;
-        } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-        ) {
-          errors.email = 'Invalid email address';
-        }
-        return errors;
-      }}
-      onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
-        requestHandler.registerUser(values).then(res => console.log(res, 0)
-        )
-        setSubmitting(false);
-      }}
-    >
-      {({ isSubmitting }) => (
-        <Form>
-          <Field type="text" name="username" placeholder="Username" />
-          <ErrorMessage name="username" component="div" />
-          <Field type="email" name="email" placeholder="Email" />
-          <ErrorMessage name="email" component="div" />
-          <Field type="password" name="password" placeholder="password" />
-          <ErrorMessage name="password" component="div" />
-          <button type="submit" disabled={isSubmitting}>
-            Submit
+      <h1>This is the registerPage</h1>
+      <Formik
+        initialValues={{ username: '', email: '', password: '' }}
+        validate={values => {
+          let errors = {};
+          if (!values.email || !values.username || !values.password) {
+            errors.email = !values.email ? 'Email Required' : undefined;
+            errors.username = !values.username ? 'Username Required' : undefined;
+            errors.password = !values.password ? 'Password Required' : undefined;
+          } else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+          ) {
+            errors.email = 'Invalid email address';
+          }
+          return errors;
+        }}
+        onSubmit={(values, { setSubmitting }) => {
+          requestHandler.registerUser(values).then(res => setallowRedirect(true))
+          setSubmitting(false);
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <Field type="text" name="username" placeholder="Username" />
+            <ErrorMessage name="username" component="div" />
+            <Field type="email" name="email" placeholder="Email" />
+            <ErrorMessage name="email" component="div" />
+            <Field type="password" name="password" placeholder="password" />
+            <ErrorMessage name="password" component="div" />
+            <button type="submit" disabled={isSubmitting}>
+              Submit
           </button>
-        </Form>
-      )}
-    </Formik>
+          </Form>
 
 
+        )}
+      </Formik>
+
+      { allowRedirect && (
+          <Redirect to="/login" />)
+      }
 
 
-
-
-   </div>
+    </div>
   );
 };
 

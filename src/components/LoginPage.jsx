@@ -1,11 +1,12 @@
 import React, { useState }  from 'react';
+import { Redirect } from 'react-router'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import requestHandler from '../services/requestHandler';
 import { AppConsumer } from '../context';
 
 const LoginPage = (props) => {
 
-  const [username, setUsername] = useState('');
+  const [allowRedirect, setallowRedirect] = useState(false);
 
 
   return (
@@ -14,9 +15,7 @@ const LoginPage = (props) => {
 
     <div>
       <h1>This is the LoginPage</h1>
-     { username ?
-       <h2 >Welcome {username}</h2> : ''
-      }
+
 
       <Formik
         initialValues={{ username: '',  password: '' }}
@@ -31,8 +30,8 @@ const LoginPage = (props) => {
         }}
         onSubmit={(values, { setSubmitting }) => {
           requestHandler.loginUser(values).then(res => {
-            setUsername(res.data.username)
             handleUsernameChange(res.data.username)
+            setallowRedirect(true)
           }).catch((err) => {
             console.log(err, 99);
           })
@@ -54,7 +53,9 @@ const LoginPage = (props) => {
         )}
       </Formik>
 
-
+          {allowRedirect && (
+            <Redirect to="/" />)
+          }
 
     </div>
       )}

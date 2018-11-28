@@ -4,11 +4,12 @@ export const signupValidator = (inputObject) => {
     errors.email = !inputObject.email ? 'Email Required' : undefined;
     errors.username = !inputObject.username ? 'Username Required' : undefined;
     errors.password = !inputObject.password ? 'Password Required' : undefined;
-    errors.confirmPassword = inputObject.password !== inputObject.confirmPassword ? 'Passwords don\'t match' : undefined
   } else if (
     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(inputObject.email)
   ) {
     errors.email = 'Invalid email address';
+  } else if (inputObject.password !== inputObject.confirmPassword) {
+    errors.confirmPassword = 'Passwords don\'t match';
   }
   return errors;
 };

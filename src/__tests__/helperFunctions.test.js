@@ -14,20 +14,24 @@ const sampleNestedObject = {
 
 describe('HELPER FUNCTIONS TEST SUITE', () => {
   describe('isEmpty', () => {
-    it('indicates if a string is empty', () => {
+    it('Should indicate if a string is empty', (done) => {
       expect(isEmpty(testString)).toBe(true);
+      done();
     });
 
-    it('indicates if an array is empty', () => {
+    it('Should indicate if an array is empty', (done) => {
       expect(isEmpty(sampleEmptyArray)).toBe(true);
+      done();
     });
 
-    it('Returns false if the subblied param is not empty', () => {
+    it('Should return false if the subblied param is not empty', (done) => {
       expect(isEmpty(sampleNonEmptyArray)).toBe(false);
+      done();
     });
 
-    it('Verifies the emptiness or otherwise of an object with nested properties', () => {
+    it('Should verify the emptiness of an object with nested properties', (done) => {
       expect(isEmpty(sampleNestedObject)).toBe(true);
+      done();
     });
   });
 });

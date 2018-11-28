@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import requestHandler from '../services/requestHandler';
+import { AuthInputPasswordField, AuthInputTextField } from '.'
+import { submitButtonStyle, loginFormContainerStyle } from '../styles';
+import { AppConsumer } from '../context';
+import { signupValidator } from '../helpers';
 
 
 const styles = theme => ({
@@ -32,33 +36,24 @@ const styles = theme => ({
 
 });
 
-
+const initialValues = { username: '', email: '', password: '' };
 
 const RegisterPage = (props) => {
-
   return (
-
     <div>
-
       <h1>This is the registerPage</h1>
+      <AppConsumer>
+        {({ handleUsernameChange }) => (
       <Formik
-        initialValues={{ username: '', email: '', password: '' }}
-        validate={values => {
-          let errors = {};
-          if (!values.email || !values.username || !values.password) {
-            errors.email = !values.email ? 'Email Required' : undefined;
-            errors.username = !values.username ? 'Username Required' : undefined;
-            errors.password = !values.password ? 'Password Required' : undefined;
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-          ) {
-            errors.email = 'Invalid email address';
-          }
-          return errors;
-        }}
+        initialValues={initialValues}
+        validate={values => signupValidator(values)}
         onSubmit={(values, { setSubmitting }) => {
-          requestHandler.registerUser(values).then(res => props.history.push('/login'))
-          .catch((err) => {
+          requestHandler.registerUser(values)
+            .then(res => {
+              handleUsernameChange(res.data.username);
+              props.history.push('/login')
+            })
+            .catch((err) => {
             alert('Request Not Completed, try again ')
           })
           setSubmitting(false);
@@ -66,20 +61,58 @@ const RegisterPage = (props) => {
       >
         {({ isSubmitting }) => (
           <Form>
-            <Field type="text" name="username" placeholder="Username" />
+            <div style={loginFormContainerStyle}>
+            <Field
+              type="text"
+              name="username"
+              placeholder="Username"
+              component={AuthInputTextField}
+            />
+            <br />
+            <br />
             <ErrorMessage name="username" component="div" />
-            <Field type="email" name="email" placeholder="Email" />
+            <Field
+              type="email"
+              name="email"
+              placeholder="Email"
+              component={AuthInputTextField}
+            />
+            <br />
+            <br />
             <ErrorMessage name="email" component="div" />
-            <Field type="password" name="password" placeholder="password" />
+            <Field
+              type="password"
+              name="password"
+              placeholder="password"
+              component={AuthInputPasswordField}
+            />
+            <br/>
+            <br />
             <ErrorMessage name="password" component="div" />
-            <button type="submit" disabled={isSubmitting}>
+            <Field
+              type="password"
+              name="confirmPassword"
+              placeholder="confirm password"
+              component={AuthInputPasswordField}
+            />
+            <br/>
+            <br />
+            <ErrorMessage name="confirmPassword" component="div" />
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              style={submitButtonStyle}
+            >
               Submit
-          </button>
+            </button>
+            </div>
           </Form>
 
 
         )}
       </Formik>
+        )}
+      </AppConsumer>
 
 
     </div>

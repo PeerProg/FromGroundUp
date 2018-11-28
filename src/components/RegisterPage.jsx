@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import requestHandler from '../services/requestHandler';
-import { AuthInputPasswordField, AuthInputTextField } from '.'
+import { CustomInput } from '.'
 import { submitButtonStyle, loginFormContainerStyle } from '../styles';
 import { AppConsumer } from '../context';
 import { signupValidator } from '../helpers';
@@ -64,7 +64,7 @@ const RegisterPage = (props) => {
                   type="text"
                   name="username"
                   placeholder="Username"
-                  component={AuthInputTextField}
+                  component={CustomInput}
                 />
                 <br />
                 <br />
@@ -73,7 +73,7 @@ const RegisterPage = (props) => {
                   type="email"
                   name="email"
                   placeholder="Email"
-                  component={AuthInputTextField}
+                  component={CustomInput}
                 />
                 <br />
                 <br />
@@ -81,8 +81,8 @@ const RegisterPage = (props) => {
                 <Field
                   type="password"
                   name="password"
-                  placeholder="password"
-                  component={AuthInputPasswordField}
+                  placeholder="Password"
+                  component={CustomInput}
                 />
                 <br />
                 <br />
@@ -90,8 +90,8 @@ const RegisterPage = (props) => {
                 <Field
                   type="password"
                   name="confirmPassword"
-                  placeholder="confirm password"
-                  component={AuthInputPasswordField}
+                  placeholder="Confirm Password"
+                  component={CustomInput}
                 />
                 <br />
                 <br />
@@ -102,11 +102,9 @@ const RegisterPage = (props) => {
                   style={submitButtonStyle}
                 >
                   Submit
-            </button>
+                </button>
               </div>
             </Form>
-
-
           )}
         </Formik>
       )}

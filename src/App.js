@@ -6,27 +6,27 @@ import './App.css';
 import AppProviderComponent from './context/AppProvider';
 
 const App = () => {
-return (
-  <AppProviderComponent>
- 
-  <BrowserRouter>
-    <Fragment>
-      <Header />
-      <Switch>
-        {routes.map(({path, component, exact}, index) => (
-          <Route
-            key={index}
-            path={path}
-            component={component}
-            exact={exact}
-          />
-        ))}
-      </Switch>
-    </Fragment>
-  </BrowserRouter>
-
-  </AppProviderComponent>
-)
+  return (
+    <div className="App">
+      <AppProviderComponent>
+        <BrowserRouter>
+          <Fragment>
+            <Header />
+            <Switch>
+              {routes.map(({ path, component, exact }, index) => (
+                <Route
+                  key={index}
+                  path={path}
+                  component={component}
+                  exact={exact}
+                />
+              ))}
+            </Switch>
+          </Fragment>
+        </BrowserRouter>
+      </AppProviderComponent>
+    </div>
+  )
 };
 
 export default App;

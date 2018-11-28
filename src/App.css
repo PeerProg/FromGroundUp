@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 .App-header {
@@ -17,6 +20,11 @@
   font-size: large;
 }
 
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

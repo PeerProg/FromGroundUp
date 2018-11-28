@@ -2,16 +2,14 @@ export const submitButtonStyle = {
   width: '200px',
   height: '40px',
   backgroundColor: '#2BB2ED',
-  fontSize: '30px',
-  borderRadius: '2px'
+  fontSize: '20px'
 }
 
 export const authFieldStyle = {
   width: '300px',
   height: '40px',
-  fontSize: '25px',
+  fontSize: '15px',
   backgroundColor: '#E3E4E5',
-  borderStyle: 'solid'
 }
 
 export const loginFormContainerStyle = {
@@ -36,4 +34,20 @@ export const headerStyles = {
     textDecoration: 'none',
     color: 'white'
   }
+}
+
+export const authDivContainerStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  height:'100%'
+}
+
+export const authFormContainerStyle = {
+  width: '40%',
+  boxShadow: '0 4px 8px 1px rgba(0, 0, 0, 0.3)',
+  padding: '20px 0',
+  textAlign: 'center',
+  backgroundColor: '#F1F1F1',
+  marginTop: '5%'
 }

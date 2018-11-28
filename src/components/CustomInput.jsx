@@ -1,32 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { authFieldStyle } from '../styles';
 
-const textInputStyle = {
-  width: '100%',
-  height: '80%'
-}
-
-const CustomInput = ({ type, style, width, height, containerStyle }) => {
-  if (width) width = style.width;
-  if (height) height = style.height;
+const CustomInput = ({
+  type,
+  style,
+  containerStyle,
+  field,
+  ...props
+}) => {
 
   return (
     <div style={containerStyle}>
       <input
+        {...field}
+        {...props}
         type={type}
-        style={style || textInputStyle}
-        width={width}
-        height={height}
+        style={style || authFieldStyle}
       />
     </div>
   );
 };
 
 CustomInput.propTypes = {
+  field: PropTypes.object,
+  props: PropTypes.object,
   type: PropTypes.string,
   style: PropTypes.object,
-  width: PropTypes.string,
-  height: PropTypes.string
 }
 
 CustomInput.defaultProps = {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import requestHandler from '../services/requestHandler';
 import { AppConsumer } from '../context';
-import { AuthInputTextField, AuthInputPasswordField } from '.';
+import { CustomInput } from '.';
 import { submitButtonStyle, loginFormContainerStyle } from '../styles';
 import { loginValidator } from '../helpers';
 
@@ -16,12 +16,14 @@ const LoginPage = (props) => {
           initialValues={initialValues}
           validate={values => loginValidator(values)}
           onSubmit={(values, { setSubmitting }) => {
-            requestHandler.loginUser(values).then(res => {
-              handleUsernameChange(res.data.username)
-              props.history.push('/')
-            }).catch((err) => {
-              alert('Incorrect Login Information')
-            })
+            requestHandler.loginUser(values)
+              .then(res => {
+                handleUsernameChange(res.data.username)
+                props.history.push('/')
+              })
+              .catch((err) => {
+                alert('Incorrect Login Information')
+              })
             setSubmitting(false);
           }}
         >
@@ -31,8 +33,8 @@ const LoginPage = (props) => {
                 <Field
                   type="text"
                   name="identifier"
-                  placeholder="Username"
-                  component={AuthInputTextField}
+                  placeholder="Username/Email"
+                  component={CustomInput}
                 />
                 <br />
                 <br />
@@ -40,8 +42,8 @@ const LoginPage = (props) => {
                 <Field
                   type="password"
                   name="password"
-                  placeholder="password"
-                  component={AuthInputPasswordField}
+                  placeholder="Password"
+                  component={CustomInput}
                 />
                 <ErrorMessage name="password" component="div" />
                 <br />

@@ -36,7 +36,7 @@ const styles = theme => ({
 
 });
 
-const initialValues = { username: '', email: '', password: '' };
+const initialValues = { username: '', email: '', password: '', confirmPassword: '' };
 
 const RegisterPage = (props) => {
   return (
@@ -46,10 +46,11 @@ const RegisterPage = (props) => {
           initialValues={initialValues}
           validate={values => signupValidator(values)}
           onSubmit={(values, { setSubmitting }) => {
+            delete values.confirmPassword
             requestHandler.registerUser(values)
               .then(res => {
                 handleUsernameChange(res.data.username);
-                props.history.push('/login')
+                props.history.push('/')
               })
               .catch((err) => {
                 alert('Request Not Completed, try again ')

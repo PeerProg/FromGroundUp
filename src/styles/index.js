@@ -24,6 +24,7 @@ export const headerStyles = {
   },
   grow: {
     flexGrow: 1,
+    textAlign: 'left',
   },
   menuButton: {
     marginLeft: -12,

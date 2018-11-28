@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import requestHandler from '../services/requestHandler';
 import { CustomInput } from '.'
 import { submitButtonStyle, loginFormContainerStyle } from '../styles';
@@ -68,7 +68,6 @@ const RegisterPage = (props) => {
                 />
                 <br />
                 <br />
-                <ErrorMessage name="username" component="div" />
                 <Field
                   type="email"
                   name="email"
@@ -77,7 +76,6 @@ const RegisterPage = (props) => {
                 />
                 <br />
                 <br />
-                <ErrorMessage name="email" component="div" />
                 <Field
                   type="password"
                   name="password"
@@ -86,7 +84,6 @@ const RegisterPage = (props) => {
                 />
                 <br />
                 <br />
-                <ErrorMessage name="password" component="div" />
                 <Field
                   type="password"
                   name="confirmPassword"
@@ -95,7 +92,6 @@ const RegisterPage = (props) => {
                 />
                 <br />
                 <br />
-                <ErrorMessage name="confirmPassword" component="div" />
                 <button
                   type="submit"
                   disabled={isSubmitting}

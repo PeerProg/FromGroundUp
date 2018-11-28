@@ -9,7 +9,6 @@ export const authFieldStyle = {
   width: '300px',
   height: '40px',
   fontSize: '15px',
-  backgroundColor: '#E3E4E5',
 }
 
 export const loginFormContainerStyle = {

@@ -3,16 +3,18 @@ import { Link } from 'react-router-dom';
 import { LoginPage, RegisterPage } from '.';
 import { authDivContainerStyle, authFormContainerStyle } from '../styles';
 
-export default function AuthenticationContainer({ location }) {
-  const isLoginForm = location.pathname === '/login';
+function AuthenticationContainer(props) {
+  const isLoginForm = props.location.pathname === '/login';
   const linkText = isLoginForm ? 'Don\'t have an account? Signup' : 'Login';
   return (
     <div style={authDivContainerStyle}>
       <div style={authFormContainerStyle}>
-        {isLoginForm ? <LoginPage /> : <RegisterPage />}
+        {isLoginForm ? <LoginPage {...props} /> : <RegisterPage {...props} />}
         <br />
         <Link to={isLoginForm ? "/register" : "login"}>{linkText}</Link>
       </div>
     </div>
   );
 }
+
+export default AuthenticationContainer;

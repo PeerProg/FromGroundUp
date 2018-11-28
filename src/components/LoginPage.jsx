@@ -1,5 +1,6 @@
 import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
+
 import requestHandler from '../services/requestHandler';
 import { AppConsumer } from '../context';
 import { CustomInput } from '.';
@@ -18,11 +19,11 @@ const LoginPage = (props) => {
           onSubmit={(values, { setSubmitting }) => {
             requestHandler.loginUser(values)
               .then(res => {
-                handleUsernameChange(res.data.username)
-                props.history.push('/')
+                props.history.push('/');
+                handleUsernameChange(res.data.username);
               })
               .catch((err) => {
-                alert('Incorrect Login Information')
+                alert('Incorrect Login Information');
               })
             setSubmitting(false);
           }}
@@ -38,14 +39,12 @@ const LoginPage = (props) => {
                 />
                 <br />
                 <br />
-                <ErrorMessage name="identifier" component="div" />
                 <Field
                   type="password"
                   name="password"
                   placeholder="Password"
                   component={CustomInput}
                 />
-                <ErrorMessage name="password" component="div" />
                 <br />
                 <br />
                 <button

@@ -25,7 +25,14 @@ html, body {
   width: 100%;
   margin: 0;
 }
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.error {
+  font-style: italic;
+  color: red;
+  font-size: 10px
 }

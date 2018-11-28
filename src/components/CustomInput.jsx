@@ -7,9 +7,9 @@ const CustomInput = ({
   style,
   containerStyle,
   field,
+  form: { touched, errors },
   ...props
 }) => {
-
   return (
     <div style={containerStyle}>
       <input
@@ -18,6 +18,8 @@ const CustomInput = ({
         type={type}
         style={style || authFieldStyle}
       />
+      {touched[field.name] &&
+        errors[field.name] && <div className="error">{errors[field.name]}</div>}
     </div>
   );
 };

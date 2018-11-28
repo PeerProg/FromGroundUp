@@ -1,4 +1,4 @@
-import { AboutPage, LandingPage, RegisterPage, LoginPage } from '../components';
+import { AboutPage, LandingPage, AuthenticationContainer } from '../components';
 
 export default [
   {
@@ -14,11 +14,11 @@ export default [
   {
     path: '/login',
     exact: true,
-    component: LoginPage
+    component: AuthenticationContainer
   },
   {
     path: '/register',
     exact: true,
-    component: RegisterPage
+    component: AuthenticationContainer
   },
 ];

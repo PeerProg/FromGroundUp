@@ -40,82 +40,77 @@ const initialValues = { username: '', email: '', password: '' };
 
 const RegisterPage = (props) => {
   return (
-    <div>
-      <h1>This is the registerPage</h1>
-      <AppConsumer>
-        {({ handleUsernameChange }) => (
-      <Formik
-        initialValues={initialValues}
-        validate={values => signupValidator(values)}
-        onSubmit={(values, { setSubmitting }) => {
-          requestHandler.registerUser(values)
-            .then(res => {
-              handleUsernameChange(res.data.username);
-              props.history.push('/login')
-            })
-            .catch((err) => {
-            alert('Request Not Completed, try again ')
-          })
-          setSubmitting(false);
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <div style={loginFormContainerStyle}>
-            <Field
-              type="text"
-              name="username"
-              placeholder="Username"
-              component={AuthInputTextField}
-            />
-            <br />
-            <br />
-            <ErrorMessage name="username" component="div" />
-            <Field
-              type="email"
-              name="email"
-              placeholder="Email"
-              component={AuthInputTextField}
-            />
-            <br />
-            <br />
-            <ErrorMessage name="email" component="div" />
-            <Field
-              type="password"
-              name="password"
-              placeholder="password"
-              component={AuthInputPasswordField}
-            />
-            <br/>
-            <br />
-            <ErrorMessage name="password" component="div" />
-            <Field
-              type="password"
-              name="confirmPassword"
-              placeholder="confirm password"
-              component={AuthInputPasswordField}
-            />
-            <br/>
-            <br />
-            <ErrorMessage name="confirmPassword" component="div" />
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              style={submitButtonStyle}
-            >
-              Submit
+    <AppConsumer>
+      {({ handleUsernameChange }) => (
+        <Formik
+          initialValues={initialValues}
+          validate={values => signupValidator(values)}
+          onSubmit={(values, { setSubmitting }) => {
+            requestHandler.registerUser(values)
+              .then(res => {
+                handleUsernameChange(res.data.username);
+                props.history.push('/login')
+              })
+              .catch((err) => {
+                alert('Request Not Completed, try again ')
+              })
+            setSubmitting(false);
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <div style={loginFormContainerStyle}>
+                <Field
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  component={AuthInputTextField}
+                />
+                <br />
+                <br />
+                <ErrorMessage name="username" component="div" />
+                <Field
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  component={AuthInputTextField}
+                />
+                <br />
+                <br />
+                <ErrorMessage name="email" component="div" />
+                <Field
+                  type="password"
+                  name="password"
+                  placeholder="password"
+                  component={AuthInputPasswordField}
+                />
+                <br />
+                <br />
+                <ErrorMessage name="password" component="div" />
+                <Field
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="confirm password"
+                  component={AuthInputPasswordField}
+                />
+                <br />
+                <br />
+                <ErrorMessage name="confirmPassword" component="div" />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  style={submitButtonStyle}
+                >
+                  Submit
             </button>
-            </div>
-          </Form>
+              </div>
+            </Form>
 
 
-        )}
-      </Formik>
-        )}
-      </AppConsumer>
-
-
-    </div>
+          )}
+        </Formik>
+      )}
+    </AppConsumer>
   );
 };
 

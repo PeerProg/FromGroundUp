@@ -20,3 +20,20 @@ export const loginFormContainerStyle = {
   alignItems: 'center',
   justifyContent: 'center',
 }
+
+export const headerStyles = {
+  root: {
+    flexGrow: 1,
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+  linkText: {
+    textDecoration: 'none',
+    color: 'white'
+  }
+}

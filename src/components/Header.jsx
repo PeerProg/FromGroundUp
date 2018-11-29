@@ -17,7 +17,7 @@ const Header = (props) => {
     <AppConsumer>
       {({ username, handleUsernameChange }) => (
         <div className={classes.root}>
-          <AppBar position="static">
+          <AppBar position="static" style={styles.AppBar}>
             <Toolbar>
               <Link to="/" style={styles.linkText}>
                 <img src={logo} width="90" height="60" alt="logo" style={styles.menuButton}/>

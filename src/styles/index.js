@@ -1,8 +1,10 @@
 export const submitButtonStyle = {
   width: '200px',
   height: '40px',
-  backgroundColor: '#2BB2ED',
-  fontSize: '20px'
+  backgroundColor: '#2096F3',
+  fontSize: '20px',
+  boxShadow: '0 4px 8px 1px rgba(0, 0, 0, 0.3)',
+
 }
 
 export const authFieldStyle = {
@@ -21,6 +23,9 @@ export const loginFormContainerStyle = {
 export const headerStyles = {
   root: {
     flexGrow: 1,
+  },
+  AppBar: {
+    backgroundColor: '#2096F3',
   },
   grow: {
     flexGrow: 1,

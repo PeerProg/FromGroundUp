@@ -23,7 +23,7 @@ const App = () => {
         </Fragment>
       </BrowserRouter>
     </AppProviderComponent>
-  )
+  );
 };
 
 export default App;

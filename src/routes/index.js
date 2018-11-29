@@ -20,5 +20,5 @@ export default [
     path: '/register',
     exact: true,
     component: AuthenticationContainer
-  },
+  }
 ];

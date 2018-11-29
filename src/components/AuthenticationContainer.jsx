@@ -5,13 +5,13 @@ import { authDivContainerStyle, authFormContainerStyle } from '../styles';
 
 function AuthenticationContainer(props) {
   const isLoginForm = props.location.pathname === '/login';
-  const linkText = isLoginForm ? 'Don\'t have an account? Signup' : 'Login';
+  const linkText = isLoginForm ? "Don't have an account? Signup" : 'Login';
   return (
     <div style={authDivContainerStyle}>
       <div style={authFormContainerStyle}>
         {isLoginForm ? <LoginPage {...props} /> : <RegisterPage {...props} />}
         <br />
-        <Link to={isLoginForm ? "/register" : "login"}>{linkText}</Link>
+        <Link to={isLoginForm ? '/register' : 'login'}>{linkText}</Link>
       </div>
     </div>
   );

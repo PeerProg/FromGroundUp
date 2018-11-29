@@ -5,7 +5,7 @@ const LandingPage = () => {
     <div className="App">
       <h1>Welcome to the habit tracker application</h1>
     </div>
-  )
+  );
 };
 
 export default LandingPage;

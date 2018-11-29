@@ -10,7 +10,7 @@ import logo from '../images/logo.png';
 import { AppConsumer } from '../context';
 import { headerStyles as styles } from '../styles';
 
-const Header = (props) => {
+const Header = props => {
   const { classes } = props;
 
   return (
@@ -20,28 +20,48 @@ const Header = (props) => {
           <AppBar position="static" style={styles.AppBar}>
             <Toolbar>
               <Link to="/" style={styles.linkText}>
-                <img src={logo} width="90" height="60" alt="logo" style={styles.menuButton}/>
+                <img
+                  src={logo}
+                  width="90"
+                  height="60"
+                  alt="logo"
+                  style={styles.menuButton}
+                />
               </Link>
               <Typography variant="h6" color="inherit" className={classes.grow}>
-                <Link to="/about" style={styles.linkText}>About</Link>
+                <Link to="/about" style={styles.linkText}>
+                  About
+                </Link>
               </Typography>
 
-              {!username && <Link to="/login" style={styles.linkText}>
-                <Button color="inherit">Login</Button>
-              </Link> }
+              {!username && (
+                <Link to="/login" style={styles.linkText}>
+                  <Button color="inherit">Login</Button>
+                </Link>
+              )}
 
-              {username && <Link to="/" style={styles.linkText}>
-                <Button color="inherit" onClick={() => handleUsernameChange('')}>
-                  Logout
-                </Button>
-              </Link>}
+              {username && (
+                <Link to="/" style={styles.linkText}>
+                  <Button
+                    color="inherit"
+                    onClick={() => handleUsernameChange('')}
+                  >
+                    Logout
+                  </Button>
+                </Link>
+              )}
 
-              {!username && <Link to="/register" style={styles.linkText}>
-                <Button color="inherit">Signup</Button>
-              </Link>}
+              {!username && (
+                <Link to="/register" style={styles.linkText}>
+                  <Button color="inherit">Signup</Button>
+                </Link>
+              )}
 
-              {username && <p>Welcome, <strong>{username}</strong></p>}
-
+              {username && (
+                <p>
+                  Welcome, <strong>{username}</strong>
+                </p>
+              )}
             </Toolbar>
           </AppBar>
         </div>
@@ -51,7 +71,7 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
+  classes: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(Header);

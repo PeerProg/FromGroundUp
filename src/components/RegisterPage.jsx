@@ -3,42 +3,25 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Formik, Form, Field } from 'formik';
 import requestHandler from '../services/requestHandler';
-import { CustomInput } from '.'
-import { submitButtonStyle, loginFormContainerStyle } from '../styles';
+import { CustomInput } from '.';
+import {
+  submitButtonStyle,
+  loginFormContainerStyle,
+  registerPageStyles
+} from '../styles';
 import { AppConsumer } from '../context';
 import { signupValidator } from '../helpers';
 
+const styles = theme => registerPageStyles(theme);
 
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  dense: {
-    marginTop: 19,
-  },
-  menu: {
-    width: 200,
-  },
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
+const initialValues = {
+  username: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
+};
 
-});
-
-const initialValues = { username: '', email: '', password: '', confirmPassword: '' };
-
-const RegisterPage = (props) => {
+const RegisterPage = props => {
   return (
     <AppConsumer>
       {({ handleUsernameChange }) => (
@@ -46,15 +29,16 @@ const RegisterPage = (props) => {
           initialValues={initialValues}
           validate={values => signupValidator(values)}
           onSubmit={(values, { setSubmitting }) => {
-            delete values.confirmPassword
-            requestHandler.registerUser(values)
+            delete values.confirmPassword;
+            requestHandler
+              .registerUser(values)
               .then(res => {
                 handleUsernameChange(res.data.username);
-                props.history.push('/')
+                props.history.push('/');
               })
-              .catch((err) => {
-                alert('Request Not Completed, try again ')
-              })
+              .catch(err => {
+                alert('Request Not Completed, try again ');
+              });
             setSubmitting(false);
           }}
         >
@@ -110,7 +94,7 @@ const RegisterPage = (props) => {
 };
 
 RegisterPage.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(RegisterPage);

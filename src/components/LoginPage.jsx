@@ -1,6 +1,5 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
-
 import requestHandler from '../services/requestHandler';
 import { AppConsumer } from '../context';
 import { CustomInput } from '.';
@@ -9,7 +8,7 @@ import { loginValidator } from '../helpers';
 
 const initialValues = { identifier: '', password: '' };
 
-const LoginPage = (props) => {
+const LoginPage = props => {
   return (
     <AppConsumer>
       {({ handleUsernameChange }) => (
@@ -17,14 +16,15 @@ const LoginPage = (props) => {
           initialValues={initialValues}
           validate={values => loginValidator(values)}
           onSubmit={(values, { setSubmitting }) => {
-            requestHandler.loginUser(values)
+            requestHandler
+              .loginUser(values)
               .then(res => {
                 props.history.push('/');
                 handleUsernameChange(res.data.username);
               })
-              .catch((err) => {
+              .catch(err => {
                 alert('Incorrect Login Information');
-              })
+              });
             setSubmitting(false);
           }}
         >
@@ -53,7 +53,7 @@ const LoginPage = (props) => {
                   style={submitButtonStyle}
                 >
                   Submit
-                  </button>
+                </button>
               </div>
             </Form>
           )}

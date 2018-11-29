@@ -6,7 +6,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject",
-    "lint": "eslint ./ || true"
+    "lint": "eslint ./ || true",
+    "precommit": "npm run lint",
+    "prepush": "npm run test"
   },
   "dependencies": {
     "@material-ui/core": "^3.5.1",

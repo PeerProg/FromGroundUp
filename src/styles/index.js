@@ -2,9 +2,9 @@ export const submitButtonStyle = {
   width: '200px',
   height: '40px',
   backgroundColor: '#2096F3',
-  fontSize: '20px',
+  fontSize: '17px',
   boxShadow: '0 4px 8px 1px rgba(0, 0, 0, 0.3)',
-
+  textTransform: 'uppercase'
 }
 
 export const authFieldStyle = {
@@ -37,7 +37,8 @@ export const headerStyles = {
   },
   linkText: {
     textDecoration: 'none',
-    color: 'white'
+    color: 'white',
+    fontFamily: 'Roboto'
   }
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import swal from 'sweetalert2';
 import { withStyles } from '@material-ui/core/styles';
 import { Formik, Form, Field } from 'formik';
 import requestHandler from '../services/requestHandler';
@@ -35,9 +36,24 @@ const RegisterPage = props => {
               .then(res => {
                 handleUsernameChange(res.data.username);
                 props.history.push('/');
+                swal({
+                  type: 'success',
+                  position: 'top-end',
+                  title: 'Signup Successful',
+                  toast: true,
+                  showConfirmButton: false,
+                  timer: 3000
+                });
               })
               .catch(err => {
-                alert('Request Not Completed, try again ');
+                swal({
+                  type: 'error',
+                  position: 'top-end',
+                  title: 'Request Not Completed, try again',
+                  toast: true,
+                  showConfirmButton: false,
+                  timer: 3000
+                });
               });
             setSubmitting(false);
           }}

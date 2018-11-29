@@ -1,4 +1,5 @@
 import React from 'react';
+import swal from 'sweetalert2';
 import { Formik, Form, Field } from 'formik';
 import requestHandler from '../services/requestHandler';
 import { AppConsumer } from '../context';
@@ -19,11 +20,26 @@ const LoginPage = props => {
             requestHandler
               .loginUser(values)
               .then(res => {
-                props.history.push('/');
                 handleUsernameChange(res.data.username);
+                props.history.push('/');
+                swal({
+                  type: 'success',
+                  position: 'top-end',
+                  title: 'Login Successful',
+                  toast: true,
+                  showConfirmButton: false,
+                  timer: 3000
+                });
               })
               .catch(err => {
-                alert('Incorrect Login Information');
+                swal({
+                  type: 'error',
+                  position: 'top-end',
+                  title: 'Incorrect Login Information',
+                  toast: true,
+                  showConfirmButton: false,
+                  timer: 3000
+                });
               });
             setSubmitting(false);
           }}

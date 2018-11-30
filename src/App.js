@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import routes from './routes';
 import { Header } from './components';
 import { UserProviderComponent } from './contexts';
@@ -8,7 +8,7 @@ const App = () => {
   return (
     <UserProviderComponent>
       <BrowserRouter>
-        <Fragment>
+        <div className="App">
           <Header />
           <Switch>
             {routes.map(({ path, component, exact }, index) => (
@@ -19,8 +19,9 @@ const App = () => {
                 exact={exact}
               />
             ))}
+            <Redirect to="/" />
           </Switch>
-        </Fragment>
+        </div>
       </BrowserRouter>
     </UserProviderComponent>
   );

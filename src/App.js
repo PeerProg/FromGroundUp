@@ -2,11 +2,11 @@ import React, { Fragment } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import routes from './routes';
 import { Header } from './components';
-import AppProviderComponent from './context/AppProvider';
+import { UserProviderComponent } from './contexts';
 
 const App = () => {
   return (
-    <AppProviderComponent>
+    <UserProviderComponent>
       <BrowserRouter>
         <Fragment>
           <Header />
@@ -22,7 +22,7 @@ const App = () => {
           </Switch>
         </Fragment>
       </BrowserRouter>
-    </AppProviderComponent>
+    </UserProviderComponent>
   );
 };
 

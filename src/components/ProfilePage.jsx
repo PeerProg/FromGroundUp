@@ -11,7 +11,7 @@ import {
   loginFormContainerStyle,
   registerPageStyles
 } from '../styles';
-import { AppConsumer } from '../context';
+import { UserConsumer } from '../contexts';
 import { profilePageValidator } from '../helpers';
 
 const styles = theme => registerPageStyles(theme);
@@ -19,7 +19,7 @@ const styles = theme => registerPageStyles(theme);
 const ProfilePage = props => {
   const { classes } = props;
   return (
-    <AppConsumer>
+    <UserConsumer>
       {({ user, handleUserData }) => (
         <Formik
           initialValues={{ username: user.username, email: user.email }}
@@ -85,7 +85,7 @@ const ProfilePage = props => {
           )}
         </Formik>
       )}
-    </AppConsumer>
+    </UserConsumer>
   );
 };
 

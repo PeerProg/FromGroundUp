@@ -11,7 +11,7 @@ import {
   loginFormContainerStyle,
   registerPageStyles
 } from '../styles';
-import { AppConsumer } from '../context';
+import { UserConsumer } from '../contexts';
 import { signupValidator } from '../helpers';
 import { setAuthorizationToken } from '../utils';
 
@@ -27,7 +27,7 @@ const initialValues = {
 const RegisterPage = props => {
   const { classes } = props;
   return (
-    <AppConsumer>
+    <UserConsumer>
       {({ handleUserData }) => (
         <Formik
           initialValues={initialValues}
@@ -114,7 +114,7 @@ const RegisterPage = props => {
           )}
         </Formik>
       )}
-    </AppConsumer>
+    </UserConsumer>
   );
 };
 

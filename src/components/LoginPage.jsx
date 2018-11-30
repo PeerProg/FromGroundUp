@@ -4,7 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import { loginUser } from '../services';
-import { AppConsumer } from '../context';
+import { UserConsumer } from '../contexts';
 import { CustomInput } from '.';
 import { submitButtonStyle, loginFormContainerStyle } from '../styles';
 import { loginValidator } from '../helpers';
@@ -24,7 +24,7 @@ const styles = theme => ({
 const LoginPage = props => {
   const { classes } = props;
   return (
-    <AppConsumer>
+    <UserConsumer>
       {({ handleUserData }) => (
         <Formik
           initialValues={initialValues}
@@ -92,7 +92,7 @@ const LoginPage = props => {
           )}
         </Formik>
       )}
-    </AppConsumer>
+    </UserConsumer>
   );
 };
 

@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Toolbar, Typography, Button, AppBar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.png';
-import { AppConsumer } from '../context';
+import { UserConsumer } from '../contexts';
 import { headerStyles as styles } from '../styles';
 import { setAuthorizationToken, initialUserState } from '../utils';
 
@@ -12,7 +12,7 @@ const Header = props => {
   const { classes } = props;
 
   return (
-    <AppConsumer>
+    <UserConsumer>
       {({ handleUserData, user }) => (
         <div className={classes.root}>
           <AppBar position="static" style={styles.AppBar}>
@@ -68,7 +68,7 @@ const Header = props => {
           </AppBar>
         </div>
       )}
-    </AppConsumer>
+    </UserConsumer>
   );
 };
 

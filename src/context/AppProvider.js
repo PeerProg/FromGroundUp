@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import appContext from './context';
+import { initialUserState } from '../utils';
 
 const AppProvider = appContext.Provider;
 
-const AppProviderComponent = ({ children }) => {
-  const [username, setUsername] = useState('');
+const reducer = (previousState, newState) => {
+  return { ...previousState, ...newState };
+};
 
-  const handleUsernameChange = (value) => setUsername(value);
-    return (
-    <AppProvider value={{ username, handleUsernameChange }}>
-      {children}
-    </AppProvider>
-  )
-}
+const AppProviderComponent = ({ children }) => {
+  const [user, setUser] = useReducer(reducer, initialUserState);
+
+  const handleUserData = value => setUser(value);
+
+  return <AppProvider value={{ user, handleUserData }}>{children}</AppProvider>;
+};
 
 export default AppProviderComponent;

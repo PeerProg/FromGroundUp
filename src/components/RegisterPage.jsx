@@ -31,9 +31,11 @@ const RegisterPage = props => {
         <Formik
           initialValues={initialValues}
           validate={values => signupValidator(values)}
-          onSubmit={(values, { setSubmitting }) => {
-            delete values.confirmPassword;
-            registerUser(values)
+          onSubmit={async (
+            { username, email, password },
+            { setSubmitting }
+          ) => {
+            registerUser({ username, email, password })
               .then(res => {
                 handleUsernameChange(res.data.username);
                 props.history.push('/');
@@ -71,7 +73,7 @@ const RegisterPage = props => {
                 <br />
                 <br />
                 <Field
-                  type="email"
+                  type="text"
                   name="email"
                   placeholder="Email"
                   component={CustomInput}

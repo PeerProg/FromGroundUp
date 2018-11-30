@@ -1,55 +1,96 @@
-import React  from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import requestHandler from '../services/requestHandler';
+import React from 'react';
+import swal from 'sweetalert2';
+import { Formik, Form, Field } from 'formik';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import { loginUser } from '../services';
 import { AppConsumer } from '../context';
+import { CustomInput } from '.';
+import { submitButtonStyle, loginFormContainerStyle } from '../styles';
+import { loginValidator } from '../helpers';
 
-const LoginPage = (props) => {
+const initialValues = { identifier: '', password: '' };
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit
+  },
+  input: {
+    display: 'none'
+  }
+});
+
+const LoginPage = props => {
+  const { classes } = props;
   return (
     <AppConsumer>
       {({ handleUsernameChange }) => (
-
-    <div>
-      <h1>This is the LoginPage</h1>
-
-
-      <Formik
-        initialValues={{ identifier: '',  password: '' }}
-        validate={values => {
-          let errors = {};
-          if ( !values.identifier || !values.password) {
-            errors.identifier = !values.identifier ? 'Username or Email Required' : undefined;
-            errors.password = !values.password ? 'Password Required' : undefined;
-          } 
-          return errors;
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          requestHandler.loginUser(values).then(res => {
-            handleUsernameChange(res.data.username)          
-            // Redirect to the homepage
-            props.history.push('/')
-          }).catch((err) => {
-            alert('Incorrect Login Information')
-          })
-          setSubmitting(false);
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <Field type="text" name="identifier" placeholder="Username" />
-            <ErrorMessage name="identifier" component="div" />
-            <Field type="password" name="password" placeholder="password" />
-            <ErrorMessage name="password" component="div" />
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-          </button>
-          </Form>
-        )}
-      </Formik>
-
-    </div>
+        <Formik
+          initialValues={initialValues}
+          validate={values => loginValidator(values)}
+          onSubmit={(values, { setSubmitting }) => {
+            loginUser(values)
+              .then(res => {
+                handleUsernameChange(res.data.username);
+                props.history.push('/');
+                swal({
+                  type: 'success',
+                  position: 'top-end',
+                  title: 'Login Successful',
+                  toast: true,
+                  showConfirmButton: false,
+                  timer: 3000
+                });
+              })
+              .catch(err => {
+                swal({
+                  type: 'error',
+                  position: 'top-end',
+                  title: err.message,
+                  toast: true,
+                  showConfirmButton: false,
+                  timer: 3000
+                });
+              });
+            setSubmitting(false);
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <div style={loginFormContainerStyle}>
+                <Field
+                  type="text"
+                  name="identifier"
+                  placeholder="Username/Email"
+                  component={CustomInput}
+                />
+                <br />
+                <br />
+                <Field
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  component={CustomInput}
+                />
+                <br />
+                <br />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  type="submit"
+                  disabled={isSubmitting}
+                  style={submitButtonStyle}
+                >
+                  Submit
+                </Button>
+              </div>
+            </Form>
+          )}
+        </Formik>
       )}
     </AppConsumer>
-  )
+  );
 };
 
-export default LoginPage;
+export default withStyles(styles)(LoginPage);

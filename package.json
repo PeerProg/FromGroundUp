@@ -6,7 +6,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject",
-    "lint": "eslint ./ || true"
+    "lint": "eslint --ext .js --ext .jsx ."
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run test"
+    }
   },
   "dependencies": {
     "@material-ui/core": "^3.5.1",
@@ -17,6 +23,7 @@
     "react-dom": "^16.7.0-alpha.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
+    "sweetalert2": "^7.29.2",
     "typeface-roboto": "^0.0.54"
   },
   "devDependencies": {
@@ -30,6 +37,7 @@
     "eslint-plugin-import": "^2.6.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
+    "husky": "^1.2.0",
     "prop-types": "^15.6.2",
     "react-test-renderer": "^16.6.3"
   }

@@ -1,93 +1,122 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import swal from 'sweetalert2';
 import { withStyles } from '@material-ui/core/styles';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import requestHandler from '../services/requestHandler';
+import Button from '@material-ui/core/Button';
+import { Formik, Form, Field } from 'formik';
+import { registerUser } from '../services';
+import { CustomInput } from '.';
+import {
+  submitButtonStyle,
+  loginFormContainerStyle,
+  registerPageStyles
+} from '../styles';
+import { AppConsumer } from '../context';
+import { signupValidator } from '../helpers';
 
+const styles = theme => registerPageStyles(theme);
 
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  dense: {
-    marginTop: 19,
-  },
-  menu: {
-    width: 200,
-  },
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
+const initialValues = {
+  username: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
+};
 
-});
-
-
-
-const RegisterPage = (props) => {
-
+const RegisterPage = props => {
+  const { classes } = props;
   return (
-
-    <div>
-
-      <h1>This is the registerPage</h1>
-      <Formik
-        initialValues={{ username: '', email: '', password: '' }}
-        validate={values => {
-          let errors = {};
-          if (!values.email || !values.username || !values.password) {
-            errors.email = !values.email ? 'Email Required' : undefined;
-            errors.username = !values.username ? 'Username Required' : undefined;
-            errors.password = !values.password ? 'Password Required' : undefined;
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-          ) {
-            errors.email = 'Invalid email address';
-          }
-          return errors;
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          requestHandler.registerUser(values).then(res => props.history.push('/login'))
-          .catch((err) => {
-            alert('Request Not Completed, try again ')
-          })
-          setSubmitting(false);
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <Field type="text" name="username" placeholder="Username" />
-            <ErrorMessage name="username" component="div" />
-            <Field type="email" name="email" placeholder="Email" />
-            <ErrorMessage name="email" component="div" />
-            <Field type="password" name="password" placeholder="password" />
-            <ErrorMessage name="password" component="div" />
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-          </button>
-          </Form>
-
-
-        )}
-      </Formik>
-
-
-    </div>
+    <AppConsumer>
+      {({ handleUsernameChange }) => (
+        <Formik
+          initialValues={initialValues}
+          validate={values => signupValidator(values)}
+          onSubmit={async (
+            { username, email, password },
+            { setSubmitting }
+          ) => {
+            registerUser({ username, email, password })
+              .then(res => {
+                handleUsernameChange(res.data.username);
+                props.history.push('/');
+                swal({
+                  type: 'success',
+                  position: 'top-end',
+                  title: 'Signup Successful',
+                  toast: true,
+                  showConfirmButton: false,
+                  timer: 3000
+                });
+              })
+              .catch(err => {
+                swal({
+                  type: 'error',
+                  position: 'top-end',
+                  title: err.message,
+                  toast: true,
+                  showConfirmButton: false,
+                  timer: 3000
+                });
+              });
+            setSubmitting(false);
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <div style={loginFormContainerStyle}>
+                <Field
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  component={CustomInput}
+                />
+                <br />
+                <br />
+                <Field
+                  type="text"
+                  name="email"
+                  placeholder="Email"
+                  component={CustomInput}
+                />
+                <br />
+                <br />
+                <Field
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  component={CustomInput}
+                />
+                <br />
+                <br />
+                <Field
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  component={CustomInput}
+                />
+                <br />
+                <br />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  type="submit"
+                  disabled={isSubmitting}
+                  style={submitButtonStyle}
+                >
+                  Submit
+                </Button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      )}
+    </AppConsumer>
   );
 };
 
 RegisterPage.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(RegisterPage);

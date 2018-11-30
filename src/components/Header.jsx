@@ -1,21 +1,19 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { Toolbar, Typography, Button, AppBar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.png';
 import { AppConsumer } from '../context';
 import { headerStyles as styles } from '../styles';
+import { setAuthorizationToken, initialUserState } from '../utils';
 
 const Header = props => {
   const { classes } = props;
 
   return (
     <AppConsumer>
-      {({ username, handleUsernameChange }) => (
+      {({ handleUserData, user }) => (
         <div className={classes.root}>
           <AppBar position="static" style={styles.AppBar}>
             <Toolbar>
@@ -34,33 +32,37 @@ const Header = props => {
                 </Link>
               </Typography>
 
-              {!username && (
-                <Link to="/login" style={styles.linkText}>
-                  <Button color="inherit">Login</Button>
-                </Link>
+              {!user.username && (
+                <Fragment>
+                  <Link to="/login" style={styles.linkText}>
+                    <Button color="inherit">Login</Button>
+                  </Link>
+                  <Link to="/register" style={styles.linkText}>
+                    <Button color="inherit">Signup</Button>
+                  </Link>
+                </Fragment>
               )}
 
-              {username && (
-                <Link to="/" style={styles.linkText}>
-                  <Button
-                    color="inherit"
-                    onClick={() => handleUsernameChange('')}
-                  >
-                    Logout
-                  </Button>
-                </Link>
-              )}
-
-              {!username && (
-                <Link to="/register" style={styles.linkText}>
-                  <Button color="inherit">Signup</Button>
-                </Link>
-              )}
-
-              {username && (
-                <p>
-                  Welcome, <strong>{username}</strong>
-                </p>
+              {user.username && (
+                <Fragment>
+                  <Link to={`/profile/${user.id}`} style={styles.linkText}>
+                    <Button color="inherit">My Profile</Button>
+                  </Link>
+                  <Link to="/" style={styles.linkText}>
+                    <Button
+                      color="inherit"
+                      onClick={() => {
+                        handleUserData(initialUserState);
+                        setAuthorizationToken();
+                      }}
+                    >
+                      Logout
+                    </Button>
+                  </Link>
+                  <p>
+                    Welcome, <strong>{user.username}</strong>
+                  </p>
+                </Fragment>
               )}
             </Toolbar>
           </AppBar>

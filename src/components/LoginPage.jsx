@@ -8,6 +8,7 @@ import { AppConsumer } from '../context';
 import { CustomInput } from '.';
 import { submitButtonStyle, loginFormContainerStyle } from '../styles';
 import { loginValidator } from '../helpers';
+import { setAuthorizationToken } from '../utils';
 
 const initialValues = { identifier: '', password: '' };
 
@@ -24,14 +25,16 @@ const LoginPage = props => {
   const { classes } = props;
   return (
     <AppConsumer>
-      {({ handleUsernameChange }) => (
+      {({ handleUserData }) => (
         <Formik
           initialValues={initialValues}
           validate={values => loginValidator(values)}
           onSubmit={(values, { setSubmitting }) => {
             loginUser(values)
               .then(res => {
-                handleUsernameChange(res.data.username);
+                handleUserData(res.data);
+                setAuthorizationToken(res.data.token);
+
                 props.history.push('/');
                 swal({
                   type: 'success',

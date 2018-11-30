@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert2';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import { Formik, Form, Field } from 'formik';
-import requestHandler from '../services/requestHandler';
+import { registerUser } from '../services';
 import { CustomInput } from '.';
 import {
   submitButtonStyle,
@@ -23,6 +24,7 @@ const initialValues = {
 };
 
 const RegisterPage = props => {
+  const { classes } = props;
   return (
     <AppConsumer>
       {({ handleUsernameChange }) => (
@@ -31,8 +33,7 @@ const RegisterPage = props => {
           validate={values => signupValidator(values)}
           onSubmit={(values, { setSubmitting }) => {
             delete values.confirmPassword;
-            requestHandler
-              .registerUser(values)
+            registerUser(values)
               .then(res => {
                 handleUsernameChange(res.data.username);
                 props.history.push('/');
@@ -49,7 +50,7 @@ const RegisterPage = props => {
                 swal({
                   type: 'error',
                   position: 'top-end',
-                  title: 'Request Not Completed, try again',
+                  title: err.message,
                   toast: true,
                   showConfirmButton: false,
                   timer: 3000
@@ -93,13 +94,16 @@ const RegisterPage = props => {
                 />
                 <br />
                 <br />
-                <button
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
                   type="submit"
                   disabled={isSubmitting}
                   style={submitButtonStyle}
                 >
                   Submit
-                </button>
+                </Button>
               </div>
             </Form>
           )}

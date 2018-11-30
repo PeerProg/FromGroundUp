@@ -1,7 +1,9 @@
 import React from 'react';
 import swal from 'sweetalert2';
 import { Formik, Form, Field } from 'formik';
-import requestHandler from '../services/requestHandler';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import { loginUser } from '../services';
 import { AppConsumer } from '../context';
 import { CustomInput } from '.';
 import { submitButtonStyle, loginFormContainerStyle } from '../styles';
@@ -9,7 +11,17 @@ import { loginValidator } from '../helpers';
 
 const initialValues = { identifier: '', password: '' };
 
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit
+  },
+  input: {
+    display: 'none'
+  }
+});
+
 const LoginPage = props => {
+  const { classes } = props;
   return (
     <AppConsumer>
       {({ handleUsernameChange }) => (
@@ -17,8 +29,7 @@ const LoginPage = props => {
           initialValues={initialValues}
           validate={values => loginValidator(values)}
           onSubmit={(values, { setSubmitting }) => {
-            requestHandler
-              .loginUser(values)
+            loginUser(values)
               .then(res => {
                 handleUsernameChange(res.data.username);
                 props.history.push('/');
@@ -35,7 +46,7 @@ const LoginPage = props => {
                 swal({
                   type: 'error',
                   position: 'top-end',
-                  title: 'Incorrect Login Information',
+                  title: err.message,
                   toast: true,
                   showConfirmButton: false,
                   timer: 3000
@@ -63,13 +74,16 @@ const LoginPage = props => {
                 />
                 <br />
                 <br />
-                <button
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
                   type="submit"
                   disabled={isSubmitting}
                   style={submitButtonStyle}
                 >
                   Submit
-                </button>
+                </Button>
               </div>
             </Form>
           )}
@@ -79,4 +93,4 @@ const LoginPage = props => {
   );
 };
 
-export default LoginPage;
+export default withStyles(styles)(LoginPage);

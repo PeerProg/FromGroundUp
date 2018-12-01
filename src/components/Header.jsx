@@ -7,7 +7,7 @@ import { setAuthorizationToken, initialUserState } from '../utils';
 const Header = () => {
   return (
     <UserConsumer>
-      {({ handleUserData, user }) => (
+      {({ handleUserData, user, isAuthenticated, handleAuthStatus }) => (
         <nav className="navbar navbar-light" style={styles.AppBar}>
           <ul className="nav justify-content-start">
             <li className="nav-item">
@@ -17,16 +17,9 @@ const Header = () => {
                 </button>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link to="/about" className="nav-link">
-                <button className="btn btn-outline-primary customBtn">
-                  ABOUT
-                </button>
-              </Link>
-            </li>
           </ul>
           <ul className="nav justify-content-end">
-            {!user.username && (
+            {!isAuthenticated && (
               <Fragment>
                 <li className="nav-item">
                   <Link to="/login" className="nav-link">
@@ -45,7 +38,7 @@ const Header = () => {
               </Fragment>
             )}
 
-            {user.username && (
+            {isAuthenticated && (
               <Fragment>
                 <li className="nav-item">
                   <Link to={`/profile/${user.id}`} className="nav-link">
@@ -60,6 +53,9 @@ const Header = () => {
                       className="btn btn-outline-primary customBtn"
                       onClick={() => {
                         handleUserData(initialUserState);
+                        handleAuthStatus(false);
+                        localStorage.removeItem('jwtToken');
+                        localStorage.removeItem('userDetails');
                         setAuthorizationToken();
                       }}
                     >
@@ -68,8 +64,8 @@ const Header = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <p className="nav-link" style={{ paddingTop: '8%' }}>
-                    Welcome, <strong>{user.username}</strong>
+                  <p className="nav-link" style={{ paddingTop: '12%' }}>
+                    <strong>{user.username}</strong>
                   </p>
                 </li>
               </Fragment>

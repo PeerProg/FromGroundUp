@@ -10,8 +10,8 @@ const App = () => {
       <BrowserRouter>
         <React.Fragment>
           <Header />
-          <Switch>
-            <div className="container">
+          <div className="container">
+            <Switch>
               {routes.map(({ path, component, exact }, index) => (
                 <Route
                   key={index}
@@ -21,8 +21,8 @@ const App = () => {
                 />
               ))}
               <Redirect to="/" />
-            </div>
-          </Switch>
+            </Switch>
+          </div>
         </React.Fragment>
       </BrowserRouter>
     </UserProviderComponent>

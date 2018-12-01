@@ -28,7 +28,7 @@ const RegisterPage = props => {
   const { classes } = props;
   return (
     <UserConsumer>
-      {({ handleUserData }) => (
+      {({ handleUserData, handleAuthStatus }) => (
         <Formik
           initialValues={initialValues}
           validate={values => signupValidator(values)}
@@ -39,6 +39,9 @@ const RegisterPage = props => {
             registerUser({ username, email, password })
               .then(res => {
                 handleUserData(res.data);
+                handleAuthStatus(true);
+                localStorage.setItem('userDetails', JSON.stringify(res.data));
+                localStorage.setItem('jwtToken', res.data.token);
                 setAuthorizationToken(res.data.token);
 
                 props.history.push('/');

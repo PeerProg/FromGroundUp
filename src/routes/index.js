@@ -28,6 +28,7 @@ export default [
   },
   {
     path: '/profile/:userId',
-    component: ProfilePage
+    component: ProfilePage,
+    exact: true
   }
 ];

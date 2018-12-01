@@ -26,7 +26,7 @@ const ProfilePage = props => {
             initialValues={{ username: user.username, email: user.email }}
             validate={values => profilePageValidator(values)}
             onSubmit={async ({ username, email }, { setSubmitting }) => {
-              updateUserInfo({ username, email, id: user.id })
+              updateUserInfo({ username, email, id: props.match.params.userId })
                 .then(res => {
                   handleUserData({ username, email });
                   swal({

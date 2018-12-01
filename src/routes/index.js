@@ -25,7 +25,10 @@ export default [
     path: '/register',
     exact: true,
     component: AuthenticationContainer
-  },
+  }
+];
+
+export const protectedRoutes = [
   {
     path: '/profile/:userId',
     component: ProfilePage,

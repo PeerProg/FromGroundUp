@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import routes from './routes';
+import routes, { protectedRoutes } from './routes';
 import { Header } from './components';
+import ProtectedRoute from './components/ProtectedRoute';
 import { UserProviderComponent } from './contexts';
 
 const App = () => {
@@ -14,6 +15,14 @@ const App = () => {
             <Switch>
               {routes.map(({ path, component, exact }, index) => (
                 <Route
+                  key={index}
+                  path={path}
+                  component={component}
+                  exact={exact}
+                />
+              ))}
+              {protectedRoutes.map(({ path, component, exact }, index) => (
+                <ProtectedRoute
                   key={index}
                   path={path}
                   component={component}

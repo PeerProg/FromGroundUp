@@ -11,8 +11,9 @@ import {
   loginFormContainerStyle,
   registerPageStyles
 } from '../styles';
-import { AppConsumer } from '../context';
+import { UserConsumer } from '../contexts';
 import { signupValidator } from '../helpers';
+import { setAuthorizationToken } from '../utils';
 
 const styles = theme => registerPageStyles(theme);
 
@@ -26,8 +27,8 @@ const initialValues = {
 const RegisterPage = props => {
   const { classes } = props;
   return (
-    <AppConsumer>
-      {({ handleUsernameChange }) => (
+    <UserConsumer>
+      {({ handleUserData }) => (
         <Formik
           initialValues={initialValues}
           validate={values => signupValidator(values)}
@@ -37,7 +38,9 @@ const RegisterPage = props => {
           ) => {
             registerUser({ username, email, password })
               .then(res => {
-                handleUsernameChange(res.data.username);
+                handleUserData(res.data);
+                setAuthorizationToken(res.data.token);
+
                 props.history.push('/');
                 swal({
                   type: 'success',
@@ -111,7 +114,7 @@ const RegisterPage = props => {
           )}
         </Formik>
       )}
-    </AppConsumer>
+    </UserConsumer>
   );
 };
 

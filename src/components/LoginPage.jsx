@@ -4,10 +4,11 @@ import { Formik, Form, Field } from 'formik';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import { loginUser } from '../services';
-import { AppConsumer } from '../context';
+import { UserConsumer } from '../contexts';
 import { CustomInput } from '.';
 import { submitButtonStyle, loginFormContainerStyle } from '../styles';
 import { loginValidator } from '../helpers';
+import { setAuthorizationToken } from '../utils';
 
 const initialValues = { identifier: '', password: '' };
 
@@ -23,15 +24,17 @@ const styles = theme => ({
 const LoginPage = props => {
   const { classes } = props;
   return (
-    <AppConsumer>
-      {({ handleUsernameChange }) => (
+    <UserConsumer>
+      {({ handleUserData }) => (
         <Formik
           initialValues={initialValues}
           validate={values => loginValidator(values)}
           onSubmit={(values, { setSubmitting }) => {
             loginUser(values)
               .then(res => {
-                handleUsernameChange(res.data.username);
+                handleUserData(res.data);
+                setAuthorizationToken(res.data.token);
+
                 props.history.push('/');
                 swal({
                   type: 'success',
@@ -89,7 +92,7 @@ const LoginPage = props => {
           )}
         </Formik>
       )}
-    </AppConsumer>
+    </UserConsumer>
   );
 };
 

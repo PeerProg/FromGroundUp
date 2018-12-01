@@ -1,4 +1,9 @@
-import { AboutPage, LandingPage, AuthenticationContainer } from '../components';
+import {
+  AboutPage,
+  LandingPage,
+  AuthenticationContainer,
+  ProfilePage
+} from '../components';
 
 export default [
   {
@@ -20,5 +25,9 @@ export default [
     path: '/register',
     exact: true,
     component: AuthenticationContainer
+  },
+  {
+    path: '/profile/:userId',
+    component: ProfilePage
   }
 ];

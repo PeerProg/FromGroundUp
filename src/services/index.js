@@ -1,1 +1,1 @@
-export { registerUser, loginUser } from './userServices';
+export { registerUser, loginUser, updateUserInfo } from './userServices';

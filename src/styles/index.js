@@ -46,16 +46,18 @@ export const authDivContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  height: '100%'
+  height: '100%',
+  marginTop: '10%',
+  marginRight: 'auto',
+  marginLeft: 'auto',
+  width: '40%'
 };
 
 export const authFormContainerStyle = {
-  width: '40%',
-  boxShadow: '0 4px 8px 1px rgba(0, 0, 0, 0.3)',
-  padding: '20px 0',
-  textAlign: 'center',
-  backgroundColor: '#F1F1F1',
-  marginTop: '5%'
+  width: '100%',
+  paddingLeft: '0',
+  paddingRight: '0',
+  textAlign: 'center'
 };
 
 export const registerPageStyles = theme => ({

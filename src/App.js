@@ -1,8 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import routes, { protectedRoutes } from './routes';
-import { Header } from './components';
-import ProtectedRoute from './components/ProtectedRoute';
+import { Header, ProtectedRoute } from './components';
 import { UserProviderComponent } from './contexts';
 
 const App = () => {

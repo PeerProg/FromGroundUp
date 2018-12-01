@@ -47,7 +47,7 @@ export const authDivContainerStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   height: '100%',
-  marginTop: '10%',
+  justifyContent: 'center',
   marginRight: 'auto',
   marginLeft: 'auto',
   width: '40%'

@@ -22,12 +22,6 @@ body {
   }
 }
 
-.error {
-  font-style: italic;
-  color: red;
-  font-size: 10px;
-}
-
 .profile-paper {
   width: 40%;
   height: 300px;

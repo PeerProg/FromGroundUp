@@ -1,4 +1,5 @@
 export { default as Header } from './Header';
+export { default as ProtectedRoute } from './ProtectedRoute';
 export { default as CustomInput } from './CustomInput';
 export { default as LandingPage } from './LandingPage';
 export { default as AboutPage } from './AboutPage';

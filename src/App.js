@@ -8,20 +8,22 @@ const App = () => {
   return (
     <UserProviderComponent>
       <BrowserRouter>
-        <div className="App">
+        <React.Fragment>
           <Header />
           <Switch>
-            {routes.map(({ path, component, exact }, index) => (
-              <Route
-                key={index}
-                path={path}
-                component={component}
-                exact={exact}
-              />
-            ))}
-            <Redirect to="/" />
+            <div className="container">
+              {routes.map(({ path, component, exact }, index) => (
+                <Route
+                  key={index}
+                  path={path}
+                  component={component}
+                  exact={exact}
+                />
+              ))}
+              <Redirect to="/" />
+            </div>
           </Switch>
-        </div>
+        </React.Fragment>
       </BrowserRouter>
     </UserProviderComponent>
   );

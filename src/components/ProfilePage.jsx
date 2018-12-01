@@ -1,27 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import swal from 'sweetalert2';
-import { withStyles } from '@material-ui/core/styles';
-import { Button, Paper } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import { updateUserInfo } from '../services';
 import { CustomInput } from '.';
 import {
   submitButtonStyle,
   loginFormContainerStyle,
-  registerPageStyles
+  profileCard
 } from '../styles';
 import { UserConsumer } from '../contexts';
 import { profilePageValidator } from '../helpers';
 
-const styles = theme => registerPageStyles(theme);
-
 const ProfilePage = props => {
-  const { classes } = props;
   return (
-    <UserConsumer>
-      {({ user, handleUserData }) => (
-        <Paper className="profile-paper">
+    <div className="card" style={profileCard}>
+      <UserConsumer>
+        {({ user, handleUserData }) => (
           <Formik
             initialValues={{ username: user.username, email: user.email }}
             validate={values => profilePageValidator(values)}
@@ -52,7 +46,7 @@ const ProfilePage = props => {
             }}
           >
             {({ isSubmitting }) => (
-              <Form className="profile-formix-form">
+              <Form>
                 <div style={loginFormContainerStyle}>
                   <Field
                     type="text"
@@ -70,28 +64,22 @@ const ProfilePage = props => {
                   />
                   <br />
                   <br />
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
+                  <button
+                    className="btn btn-outline-primary customBtn"
                     type="submit"
                     disabled={isSubmitting}
                     style={submitButtonStyle}
                   >
                     Submit
-                  </Button>
+                  </button>
                 </div>
               </Form>
             )}
           </Formik>
-        </Paper>
-      )}
-    </UserConsumer>
+        )}
+      </UserConsumer>
+    </div>
   );
 };
 
-ProfilePage.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(ProfilePage);
+export default ProfilePage;

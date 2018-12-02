@@ -1,5 +1,4 @@
 import {
-  AboutPage,
   LandingPage,
   AuthenticationContainer,
   ProfilePage,

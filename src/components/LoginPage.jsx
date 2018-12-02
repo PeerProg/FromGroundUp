@@ -26,7 +26,7 @@ const LoginPage = props => {
                 localStorage.setItem('jwtToken', res.data.token);
                 setAuthorizationToken(res.data.token);
 
-                props.history.push('/');
+                props.history.push('/dashboard');
                 swal({
                   type: 'success',
                   position: 'top-end',

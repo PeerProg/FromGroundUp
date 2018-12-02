@@ -1,79 +1,80 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { Toolbar, Typography, Button, AppBar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import logo from '../images/logo.png';
 import { UserConsumer } from '../contexts';
 import { headerStyles as styles } from '../styles';
 import { setAuthorizationToken, initialUserState } from '../utils';
 
-const Header = props => {
-  const { classes } = props;
-
+const Header = () => {
   return (
     <UserConsumer>
-      {({ handleUserData, user }) => (
-        <div className={classes.root}>
-          <AppBar position="static" style={styles.AppBar}>
-            <Toolbar>
-              <Link to="/" style={styles.linkText}>
-                <img
-                  src={logo}
-                  width="90"
-                  height="60"
-                  alt="logo"
-                  style={styles.menuButton}
-                />
+      {({ handleUserData, user, isAuthenticated, handleAuthStatus }) => (
+        <nav className="navbar navbar-light" style={styles.AppBar}>
+          <ul className="nav justify-content-start">
+            <li className="nav-item">
+              <Link to="/" className="nav-link">
+                <button className="btn btn-outline-primary customBtn">
+                  HBT
+                </button>
               </Link>
-              <Typography variant="h6" color="inherit" className={classes.grow}>
-                <Link to="/about" style={styles.linkText}>
-                  About
-                </Link>
-              </Typography>
+            </li>
+          </ul>
+          <ul className="nav justify-content-end">
+            {!isAuthenticated && (
+              <Fragment>
+                <li className="nav-item">
+                  <Link to="/login" className="nav-link">
+                    <button className="btn btn-outline-primary customBtn">
+                      LOGIN
+                    </button>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/register" className="nav-link">
+                    <button className="btn btn-outline-primary customBtn">
+                      SIGNUP
+                    </button>
+                  </Link>
+                </li>
+              </Fragment>
+            )}
 
-              {!user.username && (
-                <Fragment>
-                  <Link to="/login" style={styles.linkText}>
-                    <Button color="inherit">Login</Button>
+            {isAuthenticated && (
+              <Fragment>
+                <li className="nav-item">
+                  <Link to={`/profile/${user.id}`} className="nav-link">
+                    <button className="btn btn-outline-primary customBtn">
+                      My Profile
+                    </button>
                   </Link>
-                  <Link to="/register" style={styles.linkText}>
-                    <Button color="inherit">Signup</Button>
-                  </Link>
-                </Fragment>
-              )}
-
-              {user.username && (
-                <Fragment>
-                  <Link to={`/profile/${user.id}`} style={styles.linkText}>
-                    <Button color="inherit">My Profile</Button>
-                  </Link>
-                  <Link to="/" style={styles.linkText}>
-                    <Button
-                      color="inherit"
+                </li>
+                <li className="nav-item">
+                  <Link to="/" className="nav-link">
+                    <button
+                      className="btn btn-outline-primary customBtn"
                       onClick={() => {
                         handleUserData(initialUserState);
+                        handleAuthStatus(false);
+                        localStorage.removeItem('jwtToken');
+                        localStorage.removeItem('userDetails');
                         setAuthorizationToken();
                       }}
                     >
-                      Logout
-                    </Button>
+                      LOGOUT
+                    </button>
                   </Link>
-                  <p>
-                    Welcome, <strong>{user.username}</strong>
+                </li>
+                <li className="nav-item">
+                  <p className="nav-link" style={{ paddingTop: '12%' }}>
+                    <strong>{user.username}</strong>
                   </p>
-                </Fragment>
-              )}
-            </Toolbar>
-          </AppBar>
-        </div>
+                </li>
+              </Fragment>
+            )}
+          </ul>
+        </nav>
       )}
     </UserConsumer>
   );
 };
 
-Header.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(Header);
+export default Header;

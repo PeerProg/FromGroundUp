@@ -7,8 +7,8 @@ function AuthenticationContainer(props) {
   const isLoginForm = props.location.pathname === '/login';
   const linkText = isLoginForm ? "Don't have an account? Signup" : 'Login';
   return (
-    <div style={authDivContainerStyle}>
-      <div style={authFormContainerStyle}>
+    <div className="card" style={authDivContainerStyle}>
+      <div className="card-body" style={authFormContainerStyle}>
         {isLoginForm ? <LoginPage {...props} /> : <RegisterPage {...props} />}
         <br />
         <Link to={isLoginForm ? '/register' : 'login'}>{linkText}</Link>

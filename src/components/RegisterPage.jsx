@@ -1,21 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import swal from 'sweetalert2';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import { Formik, Form, Field } from 'formik';
 import { registerUser } from '../services';
 import { CustomInput } from '.';
-import {
-  submitButtonStyle,
-  loginFormContainerStyle,
-  registerPageStyles
-} from '../styles';
+import { submitButtonStyle, loginFormContainerStyle } from '../styles';
 import { UserConsumer } from '../contexts';
 import { signupValidator } from '../helpers';
 import { setAuthorizationToken } from '../utils';
-
-const styles = theme => registerPageStyles(theme);
 
 const initialValues = {
   username: '',
@@ -25,10 +16,9 @@ const initialValues = {
 };
 
 const RegisterPage = props => {
-  const { classes } = props;
   return (
     <UserConsumer>
-      {({ handleUserData }) => (
+      {({ handleUserData, handleAuthStatus }) => (
         <Formik
           initialValues={initialValues}
           validate={values => signupValidator(values)}
@@ -39,6 +29,9 @@ const RegisterPage = props => {
             registerUser({ username, email, password })
               .then(res => {
                 handleUserData(res.data);
+                handleAuthStatus(true);
+                localStorage.setItem('userDetails', JSON.stringify(res.data));
+                localStorage.setItem('jwtToken', res.data.token);
                 setAuthorizationToken(res.data.token);
 
                 props.history.push('/');
@@ -99,16 +92,14 @@ const RegisterPage = props => {
                 />
                 <br />
                 <br />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
+                <button
+                  className="btn btn-outline-primary customBtn"
                   type="submit"
                   disabled={isSubmitting}
                   style={submitButtonStyle}
                 >
                   Submit
-                </Button>
+                </button>
               </div>
             </Form>
           )}
@@ -118,8 +109,4 @@ const RegisterPage = props => {
   );
 };
 
-RegisterPage.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(RegisterPage);
+export default RegisterPage;

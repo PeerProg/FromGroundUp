@@ -1,8 +1,6 @@
 import React from 'react';
 import swal from 'sweetalert2';
 import { Formik, Form, Field } from 'formik';
-import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
 import { loginUser } from '../services';
 import { UserConsumer } from '../contexts';
 import { CustomInput } from '.';
@@ -12,20 +10,10 @@ import { setAuthorizationToken } from '../utils';
 
 const initialValues = { identifier: '', password: '' };
 
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit
-  },
-  input: {
-    display: 'none'
-  }
-});
-
 const LoginPage = props => {
-  const { classes } = props;
   return (
     <UserConsumer>
-      {({ handleUserData }) => (
+      {({ handleUserData, handleAuthStatus }) => (
         <Formik
           initialValues={initialValues}
           validate={values => loginValidator(values)}
@@ -33,6 +21,9 @@ const LoginPage = props => {
             loginUser(values)
               .then(res => {
                 handleUserData(res.data);
+                handleAuthStatus(true);
+                localStorage.setItem('userDetails', JSON.stringify(res.data));
+                localStorage.setItem('jwtToken', res.data.token);
                 setAuthorizationToken(res.data.token);
 
                 props.history.push('/');
@@ -77,16 +68,14 @@ const LoginPage = props => {
                 />
                 <br />
                 <br />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
+                <button
+                  className="btn btn-outline-primary customBtn"
                   type="submit"
                   disabled={isSubmitting}
                   style={submitButtonStyle}
                 >
                   Submit
-                </Button>
+                </button>
               </div>
             </Form>
           )}
@@ -96,4 +85,4 @@ const LoginPage = props => {
   );
 };
 
-export default withStyles(styles)(LoginPage);
+export default LoginPage;

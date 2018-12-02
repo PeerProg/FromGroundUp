@@ -1,27 +1,37 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import routes from './routes';
-import { Header } from './components';
+import routes, { protectedRoutes } from './routes';
+import { Header, ProtectedRoute } from './components';
 import { UserProviderComponent } from './contexts';
 
 const App = () => {
   return (
     <UserProviderComponent>
       <BrowserRouter>
-        <div className="App">
+        <React.Fragment>
           <Header />
-          <Switch>
-            {routes.map(({ path, component, exact }, index) => (
-              <Route
-                key={index}
-                path={path}
-                component={component}
-                exact={exact}
-              />
-            ))}
-            <Redirect to="/" />
-          </Switch>
-        </div>
+          <div className="container">
+            <Switch>
+              {routes.map(({ path, component, exact }, index) => (
+                <Route
+                  key={index}
+                  path={path}
+                  component={component}
+                  exact={exact}
+                />
+              ))}
+              {protectedRoutes.map(({ path, component, exact }, index) => (
+                <ProtectedRoute
+                  key={index}
+                  path={path}
+                  component={component}
+                  exact={exact}
+                />
+              ))}
+              <Redirect to="/" />
+            </Switch>
+          </div>
+        </React.Fragment>
       </BrowserRouter>
     </UserProviderComponent>
   );

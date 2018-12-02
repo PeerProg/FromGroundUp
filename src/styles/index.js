@@ -21,19 +21,8 @@ export const loginFormContainerStyle = {
 };
 
 export const headerStyles = {
-  root: {
-    flexGrow: 1
-  },
   AppBar: {
     backgroundColor: '#2096F3'
-  },
-  grow: {
-    flexGrow: 1,
-    textAlign: 'left'
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
   },
   linkText: {
     textDecoration: 'none',
@@ -46,40 +35,28 @@ export const authDivContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  height: '100%'
-};
-
-export const authFormContainerStyle = {
+  height: '100%',
+  justifyContent: 'center',
+  marginRight: 'auto',
+  marginLeft: 'auto',
   width: '40%',
-  boxShadow: '0 4px 8px 1px rgba(0, 0, 0, 0.3)',
-  padding: '20px 0',
-  textAlign: 'center',
-  backgroundColor: '#F1F1F1',
   marginTop: '5%'
 };
 
-export const registerPageStyles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap'
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200
-  },
-  dense: {
-    marginTop: 19
-  },
-  menu: {
-    width: 200
-  },
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary
-  }
-});
+export const authFormContainerStyle = {
+  width: '100%',
+  paddingLeft: '0',
+  paddingRight: '0',
+  textAlign: 'center',
+  marginTop: '3%'
+};
+
+export const profileCard = {
+  width: '40%',
+  height: '300px',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  display: 'flex',
+  marginTop: '5%',
+  justifyContent: 'center'
+};

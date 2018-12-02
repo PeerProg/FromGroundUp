@@ -11,10 +11,7 @@ const CustomInput = ({
   ...props
 }) => {
   return (
-    <div
-      // style={containerStyle}
-      className="form-group"
-    >
+    <div className="form-group">
       <input
         {...field}
         {...props}
@@ -23,6 +20,8 @@ const CustomInput = ({
         className={
           touched[field.name] && errors[field.name]
             ? 'form-control is-invalid'
+            : touched[field.name] && !errors[field.name]
+            ? 'form-control is-valid'
             : 'form-control'
         }
       />

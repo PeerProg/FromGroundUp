@@ -17,6 +17,13 @@ const Header = () => {
                 </button>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="/dashboard" className="nav-link">
+                <button className="btn btn-outline-primary customBtn">
+                  Dashboard
+                </button>
+              </Link>
+            </li>
           </ul>
           <ul className="nav justify-content-end">
             {!isAuthenticated && (

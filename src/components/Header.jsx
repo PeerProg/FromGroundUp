@@ -55,6 +55,13 @@ const Header = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
+                  <Link to={`/habits/${user.id}`} className="nav-link">
+                    <button className="btn btn-outline-primary customBtn">
+                      My Habits
+                    </button>
+                  </Link>
+                </li>
+                <li className="nav-item">
                   <Link to="/" className="nav-link">
                     <button
                       className="btn btn-outline-primary customBtn"

@@ -71,17 +71,17 @@ const Dashboard = () => {
                   <div className="tab-content" id="nav-tabContent">
                     <div className="row">
                       <div className="col-md-4">
-                        <button type="button" class="btn btn-primary btn-lg">
+                        <button type="button" className="btn btn-primary btn-lg">
                           Current Mood
                         </button>
                       </div>
                       <div className="col-md-4">
-                        <button type="button" class="btn btn-secondary btn-lg">
+                        <button type="button" className="btn btn-secondary btn-lg">
                           Ceate New Habit
                         </button>
                       </div>
                       <div className="col-md-4">
-                        <button type="button" class="btn btn-success btn-lg">
+                        <button type="button" className="btn btn-success btn-lg">
                           Create New Note
                         </button>
                       </div>

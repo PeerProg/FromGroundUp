@@ -2,7 +2,8 @@ import {
   AboutPage,
   LandingPage,
   AuthenticationContainer,
-  ProfilePage
+  ProfilePage,
+  Dashboard
 } from '../components';
 
 export default [
@@ -10,11 +11,6 @@ export default [
     path: '/',
     exact: true,
     component: LandingPage
-  },
-  {
-    path: '/about',
-    exact: true,
-    component: AboutPage
   },
   {
     path: '/login',
@@ -31,7 +27,10 @@ export default [
 export const protectedRoutes = [
   {
     path: '/profile/:userId',
-    component: ProfilePage,
-    exact: true
+    component: ProfilePage
+  },
+  {
+    path: '/dashboard',
+    component: Dashboard
   }
 ];

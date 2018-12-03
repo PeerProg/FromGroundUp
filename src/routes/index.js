@@ -2,7 +2,8 @@ import {
   LandingPage,
   AuthenticationContainer,
   ProfilePage,
-  Dashboard
+  Dashboard,
+  HabitsPage
 } from '../components';
 
 export default [
@@ -31,5 +32,9 @@ export const protectedRoutes = [
   {
     path: '/dashboard',
     component: Dashboard
+  },
+  {
+    path: '/my-habits',
+    component: HabitsPage
   }
 ];

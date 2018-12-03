@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { UserConsumer } from '../contexts';
 
 const Dashboard = () => {
@@ -34,16 +35,11 @@ const Dashboard = () => {
                     >
                       My Profile
                     </a>
-                    <a
-                      className="list-group-item list-group-item-action"
-                      id="list-messages-list"
-                      data-toggle="list"
-                      href="#list-messages"
-                      role="tab"
-                      aria-controls="messages"
-                    >
-                      My Habits
-                    </a>
+                    <Link to="/my-habits" className="dashboardTabLink">
+                      <p className="list-group-item list-group-item-action">
+                        My Habits
+                      </p>
+                    </Link>
                     <a
                       className="list-group-item list-group-item-action"
                       id="list-messages-list"

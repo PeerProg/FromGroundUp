@@ -25,3 +25,7 @@ body {
 .customBtn {
   color: black;
 }
+
+.dashboardTabLink {
+  text-decoration: none !important;
+}

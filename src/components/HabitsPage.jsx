@@ -28,7 +28,7 @@ function HabitsPage() {
   return (
     <React.Fragment>
       <h1>Track your habits and milestones</h1>
-      {habits && habits.map(habit => <p key={habit.id}>{habit.name}</p>)}
+      {habits && habits.map(habit => <p key={habit.name}>{habit.name}</p>)}
     </React.Fragment>
   );
 }

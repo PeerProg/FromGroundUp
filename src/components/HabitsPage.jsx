@@ -1,6 +1,8 @@
 import React, { useEffect, useContext, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { userContext } from '../contexts';
 import { showMyHabits } from '../services';
+import FancyDiv from './FancyDiv';
 
 const getUserHabits = async userId => {
   try {
@@ -26,10 +28,30 @@ function HabitsPage() {
   );
 
   return (
-    <React.Fragment>
-      <h1>Track your habits and milestones</h1>
-      {habits && habits.map(habit => <p key={habit.name}>{habit.name}</p>)}
-    </React.Fragment>
+    <div className="card">
+      <h1 className="h1 blockquote text-center">
+        Track your habits and milestones
+      </h1>
+      {habits &&
+        habits.map((habit, index) => (
+          <FancyDiv
+            key={habit.name}
+            color={index % 2 === 0 ? '#F8F9FA' : 'white'}
+            style={{
+              height: '40px',
+              marginBottom: '2px',
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
+            <span>{habit.name}</span>
+            <span className="text-right">
+              <FontAwesomeIcon icon="edit" />
+              <FontAwesomeIcon icon="trash-alt" />
+            </span>
+          </FancyDiv>
+        ))}
+    </div>
   );
 }
 

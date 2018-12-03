@@ -75,12 +75,14 @@ const Dashboard = () => {
                         </button>
                       </div>
                       <div className="col-md-4">
-                        <button
-                          type="button"
-                          className="btn btn-secondary btn-lg"
-                        >
-                          Create New Habit
-                        </button>
+                        <Link to="/add-new-habit">
+                          <button
+                            type="button"
+                            className="btn btn-secondary btn-lg"
+                          >
+                            Create New Habit
+                          </button>
+                        </Link>
                       </div>
                       <div className="col-md-4">
                         <button

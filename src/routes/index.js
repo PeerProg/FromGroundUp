@@ -3,7 +3,8 @@ import {
   AuthenticationContainer,
   ProfilePage,
   Dashboard,
-  HabitsPage
+  HabitsPage,
+  HabitsForm
 } from '../components';
 
 export default [
@@ -36,5 +37,9 @@ export const protectedRoutes = [
   {
     path: '/my-habits',
     component: HabitsPage
+  },
+  {
+    path: '/add-new-habit',
+    component: HabitsForm
   }
 ];

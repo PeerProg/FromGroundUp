@@ -35,3 +35,14 @@ export const profilePageValidator = inputObject => {
   }
   return errors;
 };
+
+export const habitNameValidator = inputObject => {
+  let errors = {};
+  const inputValue = inputObject.name.trim();
+  if (!inputValue.length) {
+    errors.name = 'Habit name cannot be blank';
+  } else if (inputValue.length < 3) {
+    errors.name = 'Habit name must be 3 characters or more';
+  }
+  return errors;
+};

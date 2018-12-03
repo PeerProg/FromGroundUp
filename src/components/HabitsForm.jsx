@@ -18,7 +18,6 @@ function HabitsForm() {
         onSubmit={async ({ name }, { setSubmitting }) => {
           createNewHabit({ name })
             .then(res => {
-              console.log('Habit created? ', res);
               swal({
                 type: 'success',
                 position: 'top-end',
@@ -29,7 +28,6 @@ function HabitsForm() {
               });
             })
             .catch(err => {
-              console.log('Habit failed', err);
               swal({
                 type: 'error',
                 position: 'top-end',

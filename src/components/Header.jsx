@@ -17,6 +17,15 @@ const Header = () => {
                 </button>
               </Link>
             </li>
+            {isAuthenticated && (
+              <li className="nav-item">
+                <Link to="/dashboard" className="nav-link">
+                  <button className="btn btn-outline-primary customBtn">
+                    Dashboard
+                  </button>
+                </Link>
+              </li>
+            )}
           </ul>
           <ul className="nav justify-content-end">
             {!isAuthenticated && (
@@ -44,6 +53,13 @@ const Header = () => {
                   <Link to={`/profile/${user.id}`} className="nav-link">
                     <button className="btn btn-outline-primary customBtn">
                       My Profile
+                    </button>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to={`/habits/${user.id}`} className="nav-link">
+                    <button className="btn btn-outline-primary customBtn">
+                      My Habits
                     </button>
                   </Link>
                 </li>

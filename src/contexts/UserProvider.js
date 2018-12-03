@@ -7,15 +7,20 @@ const reducer = (previousState, newState) => {
 };
 
 const UserProviderComponent = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const jwtToken = Boolean(localStorage.getItem('jwtToken'));
+
+  const [isAuthenticated, setIsAuthenticated] = useState(jwtToken);
   const [user, setUser] = useReducer(reducer, initialUserState);
 
-  useEffect(() => {
-    const userDetails =
-      JSON.parse(localStorage.getItem('userDetails')) || initialUserState;
-    localStorage.getItem('jwtToken') && setIsAuthenticated(true);
-    setUser(userDetails);
-  }, []);
+  useEffect(
+    () => {
+      jwtToken && setIsAuthenticated(jwtToken);
+      const userDetails =
+        JSON.parse(localStorage.getItem('userDetails')) || initialUserState;
+      setUser(userDetails);
+    },
+    [jwtToken]
+  );
 
   const handleAuthStatus = value => setIsAuthenticated(value);
 

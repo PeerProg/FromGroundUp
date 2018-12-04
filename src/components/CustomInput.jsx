@@ -7,11 +7,12 @@ const CustomInput = ({
   style,
   containerStyle,
   field,
+  inputClass,
   form: { touched, errors },
   ...props
 }) => {
   return (
-    <div className="form-group">
+    <div className={inputClass}>
       <input
         {...field}
         {...props}
@@ -40,7 +41,8 @@ CustomInput.propTypes = {
 };
 
 CustomInput.defaultProps = {
-  type: 'text'
+  type: 'text',
+  inputClass: 'form-group'
 };
 
 export default CustomInput;

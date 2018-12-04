@@ -20,8 +20,8 @@ const getUserHabits = async userId => {
 
 const HabitsPage = () => {
   const context = useContext(userContext);
-  const [{ clicked, habits }, setState] = useReducer(reducer, {
-    clicked: -1,
+  const [{ indexOfHabitClicked, habits }, setState] = useReducer(reducer, {
+    indexOfHabitClicked: -1,
     habits: []
   });
 
@@ -35,8 +35,8 @@ const HabitsPage = () => {
   );
 
   const showSubContent = index => {
-    const clickedValue = index === clicked ? -1 : index;
-    setState({ clicked: clickedValue });
+    const clickedValue = index === indexOfHabitClicked ? -1 : index;
+    setState({ indexOfHabitClicked: clickedValue });
   };
 
   return (
@@ -72,7 +72,7 @@ const HabitsPage = () => {
                   />
                 </span>
               </FancyDiv>
-              {index === clicked && <Milestones />}
+              {index === indexOfHabitClicked && <Milestones />}
             </div>
           ))}
       </React.Fragment>

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useReducer } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { userContext } from '../contexts';
-import { showMyHabits } from '../services';
+import { fetchMyHabits } from '../services';
 import FancyDiv from './FancyDiv';
 import Milestones from './Milestones';
 
@@ -11,7 +11,7 @@ const reducer = (previousState, newState) => {
 
 const getUserHabits = async userId => {
   try {
-    const response = await showMyHabits(userId);
+    const response = await fetchMyHabits(userId);
     return response;
   } catch (error) {
     return error;

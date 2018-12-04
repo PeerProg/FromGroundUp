@@ -1,6 +1,6 @@
 import Api from './Api';
 
-export const showMyHabits = userId => {
+export const fetchMyHabits = userId => {
   return Api()
     .get(`api/v1/habit/user/${userId}/all-habits`)
     .then(res => Promise.resolve(res.data))

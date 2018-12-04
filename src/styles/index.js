@@ -1,7 +1,5 @@
 export const submitButtonStyle = {
-  width: '200px',
-  height: '40px',
-  backgroundColor: '#2096F3',
+  minWidth: '120px',
   fontSize: '17px',
   boxShadow: '0 4px 8px 1px rgba(0, 0, 0, 0.3)',
   textTransform: 'uppercase'

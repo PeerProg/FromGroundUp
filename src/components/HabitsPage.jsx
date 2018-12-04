@@ -28,29 +28,39 @@ function HabitsPage() {
   );
 
   return (
-    <div className="card">
-      <h1 className="h1 blockquote text-center">
-        Track your habits and milestones
-      </h1>
-      {habits &&
-        habits.map((habit, index) => (
-          <FancyDiv
-            key={habit.name}
-            color={index % 2 === 0 ? '#F8F9FA' : 'white'}
-            style={{
-              height: '40px',
-              marginBottom: '2px',
-              display: 'flex',
-              alignItems: 'center'
-            }}
-          >
-            <span>{habit.name}</span>
-            <span className="text-right">
-              <FontAwesomeIcon icon="edit" />
-              <FontAwesomeIcon icon="trash-alt" />
-            </span>
-          </FancyDiv>
-        ))}
+    <div className="align-items-center">
+      <div
+        className="card d-flex bd-highlight mt-3 mb-4 text-center"
+        style={{ backgroundColor: '#F8F9FA', padding: '8px' }}
+      >
+        <h2 className="text-monospace">Track your habits and milestones</h2>
+      </div>
+      <React.Fragment>
+        {habits &&
+          habits.map((habit, index) => (
+            <FancyDiv
+              key={habit.name}
+              className="d-flex bd-highlight mb-2"
+              color={index % 2 === 0 ? '#F7F7F7' : 'white'}
+            >
+              <span className="mr-auto p-2 bd-highlight font-weight-bold text-monospace">
+                {habit.name}
+              </span>
+              <span className="p-2 bd-highlight">
+                <FontAwesomeIcon
+                  icon="edit"
+                  className="mr-4 fa-lg"
+                  color="#76B439"
+                />
+                <FontAwesomeIcon
+                  icon="trash-alt"
+                  color="#8F1012"
+                  className="fa-lg"
+                />
+              </span>
+            </FancyDiv>
+          ))}
+      </React.Fragment>
     </div>
   );
 }

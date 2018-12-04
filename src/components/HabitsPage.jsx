@@ -1,8 +1,13 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useReducer } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { userContext } from '../contexts';
 import { showMyHabits } from '../services';
 import FancyDiv from './FancyDiv';
+import Milestones from './Milestones';
+
+const reducer = (previousState, newState) => {
+  return { ...previousState, ...newState };
+};
 
 const getUserHabits = async userId => {
   try {
@@ -13,19 +18,26 @@ const getUserHabits = async userId => {
   }
 };
 
-function HabitsPage() {
+const HabitsPage = () => {
   const context = useContext(userContext);
-  const [habits, setHabits] = useState([]);
+  const [{ clicked, habits }, setState] = useReducer(reducer, {
+    clicked: -1,
+    habits: []
+  });
 
   useEffect(
     () => {
       getUserHabits(context.user.id).then(result => {
-        setHabits(result.data);
+        setState({ habits: result.data });
       });
     },
-
     [context.user.id]
   );
+
+  const showSubContent = index => {
+    const clickedValue = index === clicked ? -1 : index;
+    setState({ clicked: clickedValue });
+  };
 
   return (
     <div className="align-items-center">
@@ -38,31 +50,34 @@ function HabitsPage() {
       <React.Fragment>
         {habits &&
           habits.map((habit, index) => (
-            <FancyDiv
-              key={habit.name}
-              className="d-flex bd-highlight mb-2"
-              color={index % 2 === 0 ? '#F7F7F7' : 'white'}
-            >
-              <span className="mr-auto p-2 bd-highlight font-weight-bold text-monospace">
-                {habit.name}
-              </span>
-              <span className="p-2 bd-highlight">
-                <FontAwesomeIcon
-                  icon="edit"
-                  className="mr-4 fa-lg"
-                  color="#76B439"
-                />
-                <FontAwesomeIcon
-                  icon="trash-alt"
-                  color="#8F1012"
-                  className="fa-lg"
-                />
-              </span>
-            </FancyDiv>
+            <div key={habit.name}>
+              <FancyDiv
+                className="d-flex bd-highlight mb-2"
+                color={index % 2 === 0 ? '#F7F7F7' : 'white'}
+                onClick={() => showSubContent(index)}
+              >
+                <span className="mr-auto p-2 bd-highlight font-weight-bold text-monospace">
+                  {habit.name}
+                </span>
+                <span className="p-2 bd-highlight">
+                  <FontAwesomeIcon
+                    icon="edit"
+                    className="mr-4 fa-lg"
+                    color="#76B439"
+                  />
+                  <FontAwesomeIcon
+                    icon="trash-alt"
+                    color="#8F1012"
+                    className="fa-lg"
+                  />
+                </span>
+              </FancyDiv>
+              {index === clicked && <Milestones />}
+            </div>
           ))}
       </React.Fragment>
     </div>
   );
-}
+};
 
 export default HabitsPage;

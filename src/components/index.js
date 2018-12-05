@@ -7,3 +7,6 @@ export { default as RegisterPage } from './RegisterPage';
 export { default as AuthenticationContainer } from './AuthenticationContainer';
 export { default as ProfilePage } from './ProfilePage';
 export { default as Dashboard } from './Dashboard';
+export { default as Milestones } from './Milestones';
+export { default as HabitsForm } from './HabitsForm';
+export { default as HabitsPage } from './HabitsPage';

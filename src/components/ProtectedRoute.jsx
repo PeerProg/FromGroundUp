@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { UserConsumer } from '../contexts';
+import { userContext } from '../contexts';
+import { setAuthorizationToken } from '../utils';
 
 function ProtectedRoute(props) {
-  return (
-    <UserConsumer>
-      {({ isAuthenticated }) =>
-        isAuthenticated ? <Route {...props} /> : <Redirect to="/login" />
-      }
-    </UserConsumer>
+  const context = useContext(userContext);
+  setAuthorizationToken(context.user.token);
+
+  return context.isAuthenticated ? (
+    <Route {...props} />
+  ) : (
+    <Redirect to="/login" />
   );
 }
 

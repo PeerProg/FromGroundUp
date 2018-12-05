@@ -93,7 +93,7 @@ const RegisterPage = props => {
                 <br />
                 <br />
                 <button
-                  className="btn btn-outline-primary customBtn"
+                  className="btn btn-primary customBtn"
                   type="submit"
                   disabled={isSubmitting}
                   style={submitButtonStyle}

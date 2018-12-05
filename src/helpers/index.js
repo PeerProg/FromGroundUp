@@ -2,7 +2,8 @@ export { isEmpty } from './helperFunctions';
 export {
   signupValidator,
   loginValidator,
-  profilePageValidator
+  profilePageValidator,
+  habitNameValidator
 } from './validators';
 export {
   invalidEmailObject,

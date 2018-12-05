@@ -61,14 +61,28 @@ const HabitsPage = () => {
                 </span>
                 <span className="p-2 bd-highlight">
                   <FontAwesomeIcon
+                    icon="plus-circle"
+                    className="mr-4 fa-lg"
+                    color="#76B439"
+                    data-toggle="tooltip"
+                    title="Show Milestones"
+                    style={{ cursor: 'pointer' }}
+                  />
+                  <FontAwesomeIcon
                     icon="edit"
                     className="mr-4 fa-lg"
                     color="#76B439"
+                    data-toggle="tooltip"
+                    title="Edit Habit"
+                    style={{ cursor: 'pointer' }}
                   />
                   <FontAwesomeIcon
                     icon="trash-alt"
                     color="#8F1012"
                     className="fa-lg"
+                    data-toggle="tooltip"
+                    title="Delete Habit"
+                    style={{ cursor: 'pointer' }}
                   />
                 </span>
               </FancyDiv>

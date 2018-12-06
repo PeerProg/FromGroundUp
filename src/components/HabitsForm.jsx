@@ -13,6 +13,34 @@ const reducer = (previousState, newState) => {
   return { ...previousState, ...newState };
 };
 
+// Placed this outside the component to make it a composed component on its own
+// Might consider abstracting the submit functions out of respective components.
+const submitHabitForm = ({ name }, { setSubmitting, resetForm }) => {
+  createNewHabit({ name })
+    .then(() => {
+      swal({
+        type: 'success',
+        position: 'top-end',
+        title: 'Habit created successfully',
+        toast: true,
+        showConfirmButton: false,
+        timer: 3000
+      });
+      resetForm();
+    })
+    .catch(err => {
+      swal({
+        type: 'error',
+        position: 'top-end',
+        title: err.message,
+        toast: true,
+        showConfirmButton: false,
+        timer: 3000
+      });
+    });
+  setSubmitting(false);
+};
+
 function HabitsForm() {
   const [{ habitFormVisible }, setState] = useReducer(reducer, {
     habitFormVisible: false
@@ -41,29 +69,8 @@ function HabitsForm() {
           <Formik
             initialValues={initialValues}
             validate={values => habitNameValidator(values)}
-            onSubmit={async ({ name }, { setSubmitting }) => {
-              createNewHabit({ name })
-                .then(res => {
-                  swal({
-                    type: 'success',
-                    position: 'top-end',
-                    title: 'Habit created successfully',
-                    toast: true,
-                    showConfirmButton: false,
-                    timer: 3000
-                  });
-                })
-                .catch(err => {
-                  swal({
-                    type: 'error',
-                    position: 'top-end',
-                    title: err.message,
-                    toast: true,
-                    showConfirmButton: false,
-                    timer: 3000
-                  });
-                });
-              setSubmitting(false);
+            onSubmit={async ({ name }, { setSubmitting, resetForm }) => {
+              submitHabitForm({ name }, { setSubmitting, resetForm });
             }}
           >
             {({ isSubmitting }) => (

@@ -48,13 +48,3 @@ export const authFormContainerStyle = {
   textAlign: 'center',
   marginTop: '3%'
 };
-
-export const profileCard = {
-  width: '40%',
-  height: '300px',
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  display: 'flex',
-  marginTop: '5%',
-  justifyContent: 'center'
-};

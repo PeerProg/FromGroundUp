@@ -44,7 +44,7 @@ const ProfilePage = props => {
                   <li className="list-group-item d-flex justify-content-between align-items-center">
                     Name
                     <span className="badge badge-primary badge-pill">
-                      {user.username}
+                      {user.username.toUpperCase()}
                     </span>
                   </li>
                   <li className="list-group-item d-flex justify-content-between align-items-center">

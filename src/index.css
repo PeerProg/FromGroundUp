@@ -29,3 +29,50 @@ body {
 .dashboardTabLink {
   text-decoration: none !important;
 }
+
+.noUrl {
+  color: #eeeeee;
+  padding: 1.6em 0 0 1.3em;
+}
+
+.profileCard {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  margin-top: 5%;
+  justify-content: center;
+  padding-bottom: 1em;
+  border-radius: 7px;
+}
+
+.profileImgBoxBackground {
+  background: url(https://i.pinimg.com/736x/6f/d6/8c/6fd68ced202b643053e9f281de52a016.jpg);
+  background-size: cover;
+}
+
+.profileImgBox {
+  width: 120px;
+  height: 120px;
+}
+
+.profileImg {
+  width: 100%;
+  height: 100%;
+  border-radius: 7px;
+  border: 2px solid #fff;
+  margin: 4em 0 0 1em;
+}
+
+.profileDetails {
+  padding-left: 11em;
+}
+
+.editButton {
+  float: right;
+  margin: 6em 0.5em 0 0;
+}
+
+.formStyle {
+  padding-top: 1em;
+}

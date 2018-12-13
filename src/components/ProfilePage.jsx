@@ -11,18 +11,7 @@ import imageUrl from '../images/imageURL.jpg';
 import noImageUrl from '../images/noImageUrl.png';
 
 const ProfilePage = props => {
-  const [editStatus, setEditStatus] = useState(false);
-  const [editButtonName, seteditButtonName] = useState('Edit Profile');
-
-  const handleOnEdit = () => {
-    if (editButtonName === 'Edit Profile') {
-      seteditButtonName('Finished');
-      setEditStatus(!editStatus);
-    } else {
-      seteditButtonName('Edit Profile');
-      setEditStatus(!editStatus);
-    }
-  };
+  const [isEditing, setisEditing] = useState(false);
 
   return (
     <div>
@@ -33,10 +22,10 @@ const ProfilePage = props => {
               <div className="editButton">
                 <button
                   type="button"
-                  onClick={() => handleOnEdit()}
+                  onClick={() => setisEditing(!isEditing)}
                   className="btn btn-primary"
                 >
-                  {editButtonName}
+                  {isEditing ? 'Done' : 'Edit Profile'}
                 </button>
               </div>
               <div className="profileImgBox">
@@ -49,12 +38,32 @@ const ProfilePage = props => {
               </div>
             </div>
 
-            <div className="profileDetails">
-              <h3>
-                Name: <span>{user.username}</span> <br />
-                Email: <span>{user.email}</span> <br />
-              </h3>
-            </div>
+            {!isEditing && (
+              <div>
+                <div className="profileDetails">
+                  <h4>
+                    <span>{user.username}</span> <br />
+                    <a href="http">{user.email}</a>
+                    <br />
+                  </h4>
+                </div>
+
+                <ul className="list-group ">
+                  <li className="list-group-item d-flex justify-content-between align-items-center">
+                    Admin Status
+                    <span className="badge badge-primary badge-pill">
+                      {user.isAdmin.toString().toUpperCase()}
+                    </span>
+                  </li>
+                  <li className="list-group-item d-flex justify-content-between align-items-center">
+                    SuperAdmin Status
+                    <span className="badge badge-primary badge-pill">
+                      {user.isSuperAdmin.toString().toUpperCase()}
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            )}
 
             <Formik
               initialValues={{
@@ -101,9 +110,9 @@ const ProfilePage = props => {
               }}
             >
               {({ isSubmitting }) => (
-                <Form className="formStyle">
-                  {editStatus && (
-                    <div style={loginFormContainerStyle}>
+                <Form>
+                  {isEditing && (
+                    <div className="formStyle" style={loginFormContainerStyle}>
                       <Field
                         type="text"
                         name="username"

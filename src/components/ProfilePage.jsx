@@ -50,13 +50,13 @@ const ProfilePage = props => {
 
                 <ul className="list-group ">
                   <li className="list-group-item d-flex justify-content-between align-items-center">
-                    Admin Status
+                    Admin
                     <span className="badge badge-primary badge-pill">
                       {user.isAdmin.toString().toUpperCase()}
                     </span>
                   </li>
                   <li className="list-group-item d-flex justify-content-between align-items-center">
-                    SuperAdmin Status
+                    SuperAdmin
                     <span className="badge badge-primary badge-pill">
                       {user.isSuperAdmin.toString().toUpperCase()}
                     </span>

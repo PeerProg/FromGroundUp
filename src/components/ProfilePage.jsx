@@ -40,15 +40,19 @@ const ProfilePage = props => {
 
             {!isEditing && (
               <div>
-                <div className="profileDetails">
-                  <h4>
-                    <span>{user.username}</span> <br />
-                    <a href="http">{user.email}</a>
-                    <br />
-                  </h4>
-                </div>
-
-                <ul className="list-group ">
+                <ul className="list-group profileDetails ">
+                  <li className="list-group-item d-flex justify-content-between align-items-center">
+                    Name
+                    <span className="badge badge-primary badge-pill">
+                      {user.username}
+                    </span>
+                  </li>
+                  <li className="list-group-item d-flex justify-content-between align-items-center">
+                    Email
+                    <span className="badge badge-primary badge-pill">
+                      {user.email}
+                    </span>
+                  </li>
                   <li className="list-group-item d-flex justify-content-between align-items-center">
                     Admin
                     <span className="badge badge-primary badge-pill">
@@ -76,7 +80,7 @@ const ProfilePage = props => {
                 { username, email, imageURL },
                 { setSubmitting }
               ) => {
-                if (imageURL.length === 0) {
+                if (!imageURL) {
                   imageURL = null;
                 }
                 updateUserInfo({

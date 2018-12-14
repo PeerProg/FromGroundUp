@@ -73,16 +73,14 @@ const ProfilePage = props => {
               initialValues={{
                 username: user.username,
                 email: user.email,
-                imageURL: user.imageURL
+                imageURL: user.imageURL || ''
               }}
               validate={values => profilePageValidator(values)}
               onSubmit={async (
                 { username, email, imageURL },
                 { setSubmitting }
               ) => {
-                if (!imageURL) {
-                  imageURL = null;
-                }
+                imageURL = imageURL || null;
                 updateUserInfo({
                   username,
                   email,

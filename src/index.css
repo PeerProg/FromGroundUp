@@ -47,7 +47,7 @@ body {
 }
 
 .profileImgBoxBackground {
-  background: url(https://i.pinimg.com/736x/6f/d6/8c/6fd68ced202b643053e9f281de52a016.jpg);
+  background: url('./images/profileBackground.jpg');
   background-size: cover;
 }
 

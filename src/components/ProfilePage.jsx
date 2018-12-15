@@ -13,6 +13,10 @@ import noImageUrl from '../images/noImageUrl.png';
 const ProfilePage = props => {
   const [isEditing, setisEditing] = useState(false);
 
+  const handleCancel = () => {
+    setisEditing(!isEditing);
+  };
+
   return (
     <div>
       <UserConsumer>
@@ -22,10 +26,10 @@ const ProfilePage = props => {
               <div className="editButton">
                 <button
                   type="button"
-                  onClick={() => setisEditing(!isEditing)}
+                  onClick={handleCancel}
                   className="btn btn-primary"
                 >
-                  {isEditing ? 'Done' : 'Edit Profile'}
+                  {isEditing ? 'Cancel' : 'Edit Profile'}
                 </button>
               </div>
               <div className="profileImgBox">
@@ -69,51 +73,51 @@ const ProfilePage = props => {
               </div>
             )}
 
-            <Formik
-              initialValues={{
-                username: user.username,
-                email: user.email,
-                imageURL: user.imageURL || ''
-              }}
-              validate={values => profilePageValidator(values)}
-              onSubmit={async (
-                { username, email, imageURL },
-                { setSubmitting }
-              ) => {
-                imageURL = imageURL || null;
-                updateUserInfo({
-                  username,
-                  email,
-                  imageURL,
-                  id: props.match.params.userId
-                })
-                  .then(res => {
-                    handleUserData({ username, email, imageURL });
-                    swal({
-                      type: 'success',
-                      position: 'top-end',
-                      title: 'Update Successful',
-                      toast: true,
-                      showConfirmButton: false,
-                      timer: 3000
-                    });
+            {isEditing && (
+              <Formik
+                initialValues={{
+                  username: user.username,
+                  email: user.email,
+                  imageURL: user.imageURL || ''
+                }}
+                validate={values => profilePageValidator(values)}
+                onSubmit={async (
+                  { username, email, imageURL },
+                  { setSubmitting }
+                ) => {
+                  imageURL = imageURL || null;
+                  updateUserInfo({
+                    username,
+                    email,
+                    imageURL,
+                    id: props.match.params.userId
                   })
-                  .catch(err => {
-                    swal({
-                      type: 'error',
-                      position: 'top-end',
-                      title: err.message,
-                      toast: true,
-                      showConfirmButton: false,
-                      timer: 3000
+                    .then(res => {
+                      handleUserData({ username, email, imageURL });
+                      swal({
+                        type: 'success',
+                        position: 'top-end',
+                        title: 'Update Successful',
+                        toast: true,
+                        showConfirmButton: false,
+                        timer: 3000
+                      });
+                    })
+                    .catch(err => {
+                      swal({
+                        type: 'error',
+                        position: 'top-end',
+                        title: err.message,
+                        toast: true,
+                        showConfirmButton: false,
+                        timer: 3000
+                      });
                     });
-                  });
-                setSubmitting(false);
-              }}
-            >
-              {({ isSubmitting }) => (
-                <Form>
-                  {isEditing && (
+                  setSubmitting(false);
+                }}
+              >
+                {({ isSubmitting }) => (
+                  <Form>
                     <div className="formStyle" style={loginFormContainerStyle}>
                       <Field
                         type="text"
@@ -148,10 +152,10 @@ const ProfilePage = props => {
                         Submit
                       </button>
                     </div>
-                  )}
-                </Form>
-              )}
-            </Formik>
+                  </Form>
+                )}
+              </Formik>
+            )}
           </div>
         )}
       </UserConsumer>

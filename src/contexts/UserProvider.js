@@ -16,7 +16,7 @@ const UserProviderComponent = ({ children }) => {
 
   const handleAuthStatus = value => setIsAuthenticated(value);
 
-  const handleUserData = value => setUser(value);
+  const handleUserData = value => setUser({ ...user, ...value });
 
   return (
     <UserProvider

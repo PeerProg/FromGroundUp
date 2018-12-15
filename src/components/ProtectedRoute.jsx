@@ -4,14 +4,13 @@ import { userContext } from '../contexts';
 import { setAuthorizationToken } from '../utils';
 
 function ProtectedRoute(props) {
-  const context = useContext(userContext);
-  setAuthorizationToken(context.user.token);
+  const {
+    user: { token },
+    isAuthenticated
+  } = useContext(userContext);
+  setAuthorizationToken(token);
 
-  return context.isAuthenticated ? (
-    <Route {...props} />
-  ) : (
-    <Redirect to="/login" />
-  );
+  return isAuthenticated ? <Route {...props} /> : <Redirect to="/login" />;
 }
 
 export default ProtectedRoute;

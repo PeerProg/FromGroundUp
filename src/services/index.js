@@ -1,2 +1,7 @@
-export { registerUser, loginUser, updateUserInfo } from './userServices';
+export {
+  registerUser,
+  loginUser,
+  updateUserInfo,
+  validateToken
+} from './userServices';
 export { fetchMyHabits, createNewHabit } from './habitServices';

@@ -9,10 +9,11 @@ import { userContext } from '../contexts';
 import { profilePageValidator } from '../helpers';
 import imageUrl from '../images/imageURL.jpg';
 import noImageUrl from '../images/noImageUrl.png';
+import { setAuthorizationToken, initialUserState } from '../utils';
 
 const ProfilePage = props => {
   const [isEditing, setisEditing] = useState(false);
-  const { user, handleUserData } = useContext(userContext);
+  const { user, handleUserData, handleAuthStatus } = useContext(userContext);
 
   const toggleEditStatus = () => setisEditing(!isEditing);
 
@@ -114,6 +115,13 @@ const ProfilePage = props => {
                     showConfirmButton: false,
                     timer: 3000
                   });
+                  handleUserData(initialUserState);
+                  handleAuthStatus(false);
+                  localStorage.removeItem('userDetails');
+                  localStorage.removeItem('jwtToken');
+                  setAuthorizationToken('');
+
+                  props.history.push('/login');
                 });
               setSubmitting(false);
             }}

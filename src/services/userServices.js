@@ -23,7 +23,7 @@ export const updateUserInfo = credentials => {
 
 export const validateToken = credentials => {
   return Api()
-    .get(`api/v1/user/${credentials.id}`)
+    .get(`api/v1/user/validateToken/${credentials.id}`)
     .then(res => Promise.resolve(res.data))
     .catch(err => Promise.reject(err.response.data.error));
 };

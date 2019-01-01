@@ -20,3 +20,10 @@ export const updateUserInfo = credentials => {
     .then(res => Promise.resolve(res.data))
     .catch(err => Promise.reject(err.response.data.error));
 };
+
+export const validateToken = userId => {
+  return Api()
+    .get(`api/v1/user/validateToken/${userId}`)
+    .then(res => Promise.resolve(res.data))
+    .catch(err => Promise.reject(err.response.data.error));
+};

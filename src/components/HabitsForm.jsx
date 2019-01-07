@@ -6,8 +6,9 @@ import { submitButtonStyle } from '../styles';
 import { createNewHabit } from '../services';
 import { habitNameValidator } from '../helpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as moment from 'moment';
 
-const initialValues = { name: '' };
+const initialValues = { name: '', days: '' };
 
 const reducer = (previousState, newState) => {
   return { ...previousState, ...newState };
@@ -15,7 +16,7 @@ const reducer = (previousState, newState) => {
 
 // Placed this outside the component to make it a composed component on its own
 // Might consider abstracting the submit functions out of respective components.
-const submitHabitForm = ({ name }, { setSubmitting, resetForm }) => {
+const submitHabitForm = ({ name, days }, { setSubmitting, resetForm }) => {
   createNewHabit({ name })
     .then(() => {
       swal({
@@ -26,6 +27,17 @@ const submitHabitForm = ({ name }, { setSubmitting, resetForm }) => {
         showConfirmButton: false,
         timer: 3000
       });
+      localStorage.setItem(
+        'habitInfo',
+        JSON.stringify({
+          name,
+          days,
+          todayDate: moment().calendar(),
+          expiresDate: moment()
+            .add(days, 'days')
+            .calendar()
+        })
+      );
       resetForm();
     })
     .catch(err => {
@@ -41,7 +53,7 @@ const submitHabitForm = ({ name }, { setSubmitting, resetForm }) => {
   setSubmitting(false);
 };
 
-function HabitsForm() {
+const HabitsForm = () => {
   const [{ habitFormVisible }, setState] = useReducer(reducer, {
     habitFormVisible: false
   });
@@ -65,41 +77,54 @@ function HabitsForm() {
         />
       </div>
       {habitFormVisible && (
-        <div className="card mt-3">
-          <Formik
-            initialValues={initialValues}
-            validate={values => habitNameValidator(values)}
-            onSubmit={async ({ name }, { setSubmitting, resetForm }) => {
-              submitHabitForm({ name }, { setSubmitting, resetForm });
-            }}
-          >
-            {({ isSubmitting }) => (
-              <Form className="d-flex align-items-center p-2">
-                <React.Fragment>
-                  <Field
-                    type="text"
-                    name="name"
-                    inputClass="form-group align-items-center mt-auto mb-auto"
-                    style={{ minWidth: '400px' }}
-                    placeholder="Habit Name"
-                    component={CustomInput}
-                  />
-                  <button
-                    className="btn ml-auto bg-primary btn-sm"
-                    type="submit"
-                    disabled={isSubmitting}
-                    style={submitButtonStyle}
-                  >
-                    Add
-                  </button>
-                </React.Fragment>
-              </Form>
-            )}
-          </Formik>
+        <div>
+          <div className="card mt-3">
+            <Formik
+              initialValues={initialValues}
+              validate={values => habitNameValidator(values)}
+              onSubmit={async (
+                { name, days },
+                { setSubmitting, resetForm }
+              ) => {
+                submitHabitForm({ name, days }, { setSubmitting, resetForm });
+              }}
+            >
+              {({ isSubmitting }) => (
+                <Form className="d-flex align-items-center p-2">
+                  <React.Fragment>
+                    <Field
+                      type="text"
+                      name="name"
+                      inputClass="form-group align-items-center mt-auto mb-auto"
+                      style={{ minWidth: '400px' }}
+                      placeholder="Habit Name"
+                      component={CustomInput}
+                    />
+                    <Field
+                      type="number"
+                      name="days"
+                      inputClass="form-group align-items-center mt-auto mb-auto"
+                      style={{ minWidth: '300px', marginLeft: '15px' }}
+                      placeholder="No of Days"
+                      component={CustomInput}
+                    />
+                    <button
+                      className="btn ml-auto bg-primary btn-sm"
+                      type="submit"
+                      disabled={isSubmitting}
+                      style={submitButtonStyle}
+                    >
+                      Add
+                    </button>
+                  </React.Fragment>
+                </Form>
+              )}
+            </Formik>
+          </div>
         </div>
       )}
     </div>
   );
-}
+};
 
 export default HabitsForm;

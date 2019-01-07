@@ -38,11 +38,15 @@ export const profilePageValidator = inputObject => {
 
 export const habitNameValidator = inputObject => {
   let errors = {};
-  const inputValue = inputObject.name.trim();
-  if (!inputValue.length) {
-    errors.name = 'Habit name cannot be blank';
-  } else if (inputValue.length < 3) {
+  const inputValueName = inputObject.name.trim();
+  const inputValueDay = inputObject.days;
+  if (!inputValueName || !inputValueDay) {
+    errors.name = !inputValueName ? 'Habit name cannot be blank' : undefined;
+    errors.days = !inputValueDay ? 'Number of Days cannot be blank' : undefined;
+  } else if (inputValueName.length < 3) {
     errors.name = 'Habit name must be 3 characters or more';
+  } else if (typeof inputValueDay === 'string') {
+    errors.days = 'Number of Days must be a number';
   }
   return errors;
 };

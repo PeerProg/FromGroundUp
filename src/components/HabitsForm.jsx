@@ -16,8 +16,17 @@ const reducer = (previousState, newState) => {
 
 // Placed this outside the component to make it a composed component on its own
 // Might consider abstracting the submit functions out of respective components.
-const submitHabitForm = ({ name, days }, { setSubmitting, resetForm }) => {
-  createNewHabit({ name })
+const submitHabitForm = (
+  { name, days },
+  { setSubmitting, resetForm },
+  props
+) => {
+  const expiresAt = moment()
+    .add(days, 'days')
+    .calendar();
+  const daysBeforeExpiration = `${days.toString()} days remaining `;
+
+  createNewHabit({ name, expiresAt, daysBeforeExpiration })
     .then(() => {
       swal({
         type: 'success',
@@ -27,18 +36,9 @@ const submitHabitForm = ({ name, days }, { setSubmitting, resetForm }) => {
         showConfirmButton: false,
         timer: 3000
       });
-      localStorage.setItem(
-        'habitInfo',
-        JSON.stringify({
-          name,
-          days,
-          todayDate: moment().calendar(),
-          expiresDate: moment()
-            .add(days, 'days')
-            .calendar()
-        })
-      );
+
       resetForm();
+      props.history.push('/my-habits');
     })
     .catch(err => {
       swal({
@@ -53,7 +53,7 @@ const submitHabitForm = ({ name, days }, { setSubmitting, resetForm }) => {
   setSubmitting(false);
 };
 
-const HabitsForm = () => {
+const HabitsForm = props => {
   const [{ habitFormVisible }, setState] = useReducer(reducer, {
     habitFormVisible: false
   });
@@ -86,7 +86,11 @@ const HabitsForm = () => {
                 { name, days },
                 { setSubmitting, resetForm }
               ) => {
-                submitHabitForm({ name, days }, { setSubmitting, resetForm });
+                submitHabitForm(
+                  { name, days },
+                  { setSubmitting, resetForm },
+                  props
+                );
               }}
             >
               {({ isSubmitting }) => (

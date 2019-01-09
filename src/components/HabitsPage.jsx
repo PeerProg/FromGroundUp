@@ -2,13 +2,8 @@ import React, { useEffect, useContext, useReducer } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { userContext } from '../contexts';
 import { fetchMyHabits } from '../services';
-
-const initialVaues = {
-  name: '',
-  days: '',
-  todayDate: '',
-  expiresDate: ''
-};
+import Milestones from './Milestones';
+import * as moment from 'moment';
 
 const reducer = (previousState, newState) => {
   return { ...previousState, ...newState };
@@ -25,14 +20,15 @@ const getUserHabits = async userId => {
 
 const HabitsPage = () => {
   const context = useContext(userContext);
-  const [{ indexOfHabitClicked, habits, habitInfo }, setState] = useReducer(
-    reducer,
-    {
-      indexOfHabitClicked: -1,
-      habits: [],
-      habitInfo: JSON.parse(localStorage.getItem('habitInfo')) || initialVaues
-    }
-  );
+  const [
+    { indexOfHabitClicked, habits, toggleMilestone, toggleButtonName },
+    setState
+  ] = useReducer(reducer, {
+    indexOfHabitClicked: -1,
+    habits: [],
+    toggleMilestone: false,
+    toggleButtonName: 'Click to View'
+  });
 
   useEffect(
     () => {
@@ -43,10 +39,17 @@ const HabitsPage = () => {
     [context.user.id]
   );
 
-  const showSubContent = index => {
+  const handleToggleMilestone = index => {
+    setState({ toggleMilestone: !toggleMilestone });
+    setState({
+      toggleButtonName:
+        toggleButtonName === 'Click to View' ? 'Minimize View' : 'Click to View'
+    });
     const clickedValue = index === indexOfHabitClicked ? -1 : index;
     setState({ indexOfHabitClicked: clickedValue });
   };
+
+  const toggleClassName = toggleMilestone ? 'toggler toggler1 ' : 'toggler';
 
   return (
     <div className="align-items-center">
@@ -58,35 +61,46 @@ const HabitsPage = () => {
       </div>
       <React.Fragment>
         <div className="table-responsive">
-          <table className="table table-d table-striped table-bordered">
+          <table className="table table-d table-striped table-bordered custom-table">
             <thead className="thead-dark">
               <tr>
-                <th scope="col">Properties</th>
                 <th scope="col">#</th>
                 <th scope="col">Habit Title</th>
+                <th scope="col">Milestones</th>
                 <th scope="col">Date Created</th>
                 <th scope="col">Expected Date of Completion</th>
                 <th scope="col">Number of Days Remaining</th>
+                <th scope="col">Properties</th>
               </tr>
             </thead>
-            <tbody>
-              {habits &&
-                habits.map((habit, index) => (
-                  <tr
-                    key={habit.name}
-                    data-toggle="modal"
-                    data-target="#exampleModal"
-                    onClick={() => showSubContent(index)}
-                  >
+            {habits &&
+              habits.map((habit, index) => (
+                <tbody className="borderColor" key={habit.name}>
+                  <tr className="page-header">
+                    <th scope="row">{index + 1}</th>
+                    <td> {habit.name}</td>
                     <td>
-                      <FontAwesomeIcon
-                        icon="plus-circle"
-                        className="mr-4 fa-lg"
-                        color="#76B439"
-                        data-toggle="tooltip"
-                        title="Show Milestones"
-                        style={{ cursor: 'pointer' }}
-                      />
+                      <button
+                        type="button"
+                        className="tbtn"
+                        onClick={() => handleToggleMilestone(index)}
+                      >
+                        {index === indexOfHabitClicked
+                          ? toggleButtonName
+                          : 'Click to View'}
+                      </button>
+                    </td>
+
+                    <td>
+                      {moment(habit.createdAt).format(
+                        'MMMM DD YYYY, h:mm:ss a'
+                      )}
+                    </td>
+
+                    <td>{habit.expiresAt}</td>
+
+                    <td>{habit.daysBeforeExpiration}</td>
+                    <td>
                       <FontAwesomeIcon
                         icon="edit"
                         className="mr-4 fa-lg"
@@ -104,21 +118,17 @@ const HabitsPage = () => {
                         style={{ cursor: 'pointer' }}
                       />
                     </td>
-                    <th scope="row">{index + 1}</th>
-                    <td> {habit.name}</td>
-                    {habit.name.toLowerCase() ===
-                      habitInfo.name.toLowerCase() && (
-                      <td>{habitInfo.todayDate}</td>
-                    )}
-                    {habit.name.toLowerCase() ===
-                      habitInfo.name.toLowerCase() && (
-                      <td>{habitInfo.expiresDate}</td>
-                    )}
-                    {habit.name.toLowerCase() ===
-                      habitInfo.name.toLowerCase() && <td>{habitInfo.days}</td>}
                   </tr>
-                ))}
-            </tbody>
+                  {index === indexOfHabitClicked && (
+                    <tr className={toggleClassName}>
+                      <td colSpan="2" />
+                      <td colSpan="20">
+                        <Milestones />
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              ))}
           </table>
         </div>
       </React.Fragment>

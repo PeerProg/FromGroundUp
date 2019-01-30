@@ -2,8 +2,10 @@ import React, { useEffect, useContext, useReducer } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { userContext } from '../contexts';
 import { fetchMyHabits } from '../services';
+import { HabitButtons } from '.';
+import { habitContext } from '../contexts';
+
 import Milestones from './Milestones';
-import * as moment from 'moment';
 
 const reducer = (previousState, newState) => {
   return { ...previousState, ...newState };
@@ -20,20 +22,33 @@ const getUserHabits = async userId => {
 
 const HabitsPage = () => {
   const context = useContext(userContext);
+  const { handleHabitData } = useContext(habitContext);
   const [
-    { indexOfHabitClicked, habits, toggleMilestone, toggleButtonName },
+    {
+      indexOfHabitClicked,
+      habits,
+      habitDays,
+      toggleMilestone,
+      toggleButtonName,
+      habitCheckboxIndex,
+      activateCheckbox
+    },
     setState
   ] = useReducer(reducer, {
     indexOfHabitClicked: -1,
     habits: [],
+    habitDays: [],
     toggleMilestone: false,
-    toggleButtonName: 'Click to View'
+    toggleButtonName: 'Click to View',
+    habitCheckboxIndex: -1,
+    activateCheckbox: false
   });
 
   useEffect(
     () => {
       getUserHabits(context.user.id).then(result => {
         setState({ habits: result.data });
+        setState({ habitDays: handleDaysRemaining(result.data) });
       });
     },
     [context.user.id]
@@ -47,6 +62,32 @@ const HabitsPage = () => {
     });
     const clickedValue = index === indexOfHabitClicked ? -1 : index;
     setState({ indexOfHabitClicked: clickedValue });
+
+    handleHabitData(habits[index]);
+    localStorage.setItem('habitDetails', JSON.stringify(habits[index]));
+  };
+
+  const handleDaysRemaining = habits => {
+    let results = [];
+    habits &&
+      habits.forEach(element => {
+        let startDate = new Date(element.startsAt);
+        let expiryDate = new Date(element.expiresAt);
+        let timeDiff = Math.abs(startDate.getTime() - expiryDate.getTime());
+        let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        results.push(diffDays);
+      });
+    return results;
+  };
+
+  const handleCheckbox = index => {
+    setState({ habitCheckboxIndex: index });
+
+    activateCheckbox
+      ? setState({
+          activateCheckbox: false
+        })
+      : setState({ activateCheckbox: true });
   };
 
   const toggleClassName = toggleMilestone ? 'toggler toggler1 ' : 'toggler';
@@ -59,15 +100,25 @@ const HabitsPage = () => {
       >
         <h2 className="text-monospace">Track your habits and milestones</h2>
       </div>
+
+      <div>
+        <HabitButtons
+          habitCheckboxIndex={habitCheckboxIndex}
+          activateCheckbox={activateCheckbox}
+          habits={habits}
+        />
+      </div>
+
       <React.Fragment>
         <div className="table-responsive">
           <table className="table table-d table-striped table-bordered custom-table">
             <thead className="thead-dark">
               <tr>
+                <th scope="col">Select</th>
                 <th scope="col">#</th>
                 <th scope="col">Habit Title</th>
                 <th scope="col">Milestones</th>
-                <th scope="col">Date Created</th>
+                <th scope="col">Habit Start Date</th>
                 <th scope="col">Expected Date of Completion</th>
                 <th scope="col">Number of Days Remaining</th>
                 <th scope="col">Properties</th>
@@ -77,6 +128,15 @@ const HabitsPage = () => {
               habits.map((habit, index) => (
                 <tbody className="borderColor" key={habit.name}>
                   <tr className="page-header">
+                    <th>
+                      <input
+                        type="checkbox"
+                        disabled={
+                          habitCheckboxIndex !== index && activateCheckbox
+                        }
+                        onChange={() => handleCheckbox(index)}
+                      />
+                    </th>
                     <th scope="row">{index + 1}</th>
                     <td> {habit.name}</td>
                     <td>
@@ -91,15 +151,11 @@ const HabitsPage = () => {
                       </button>
                     </td>
 
-                    <td>
-                      {moment(habit.createdAt).format(
-                        'MMMM DD YYYY, h:mm:ss a'
-                      )}
-                    </td>
+                    <td>{habit.startsAt}</td>
 
                     <td>{habit.expiresAt}</td>
 
-                    <td>{habit.daysBeforeExpiration}</td>
+                    <td>{`${habitDays[index]} day(s) remaining `}</td>
                     <td>
                       <FontAwesomeIcon
                         icon="edit"

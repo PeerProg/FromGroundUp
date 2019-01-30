@@ -3,7 +3,8 @@ export {
   signupValidator,
   loginValidator,
   profilePageValidator,
-  habitNameValidator
+  habitNameValidator,
+  milestoneValidator
 } from './validators';
 export {
   invalidEmailObject,

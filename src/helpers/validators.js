@@ -50,3 +50,22 @@ export const habitNameValidator = inputObject => {
   }
   return errors;
 };
+
+export const milestoneValidator = inputObject => {
+  let errors = {};
+  const inputValueHabit = inputObject.habit.trim();
+  const inputValueMilestone = inputObject.milestone;
+  if (!inputValueHabit || !inputValueMilestone) {
+    errors.habit = !inputValueHabit
+      ? 'Habit name field cannot be blank'
+      : undefined;
+    errors.milestone = !inputValueMilestone
+      ? 'Milestone field cannot be blank'
+      : undefined;
+  } else if (inputValueHabit.length < 3 || inputValueMilestone.length < 3) {
+    errors.habit = 'Habit name must be 3 characters or more';
+    errors.milestones = 'Milestone must be 3 characters or more';
+  }
+
+  return errors;
+};

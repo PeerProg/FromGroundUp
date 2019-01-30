@@ -8,7 +8,6 @@ function Milestones() {
       style={{ backgroundColor: '#F1F1F1', width: '80%' }}
     >
       <MilestoneItem />
-      <MilestoneItem />
     </div>
   );
 }

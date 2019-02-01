@@ -72,6 +72,7 @@ body {
   float: right;
   margin: 6em 0.5em 0 0;
 }
+
 .badge {
   font-size: 100% !important;
   font-weight: 400 !important;
@@ -86,6 +87,7 @@ body {
   width: 100%;
   border: solid 1px #c0c0c0;
 }
+
 .custom-table th,
 .custom-table td {
   text-align: left;
@@ -102,16 +104,25 @@ body {
   color: white;
   border-radius: 0.25em;
 }
+
 .toggler {
   display: none;
 }
+
 .toggler1 {
   display: table-row;
 }
+
 .page-header {
   background-color: transparent !important;
   border: solid 1px #c0c0c0 !important;
 }
+
 .borderColor {
   border-top: none !important;
+}
+
+.no-items {
+  font-size: 18px;
+  font-weight: bold;
 }

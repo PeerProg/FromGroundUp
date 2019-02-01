@@ -11,3 +11,5 @@ export { default as MilestoneItem } from './MilestoneItem';
 export { default as Milestones } from './Milestones';
 export { default as HabitsForm } from './HabitsForm';
 export { default as HabitsPage } from './HabitsPage';
+export { default as HabitButtons } from './HabitButtons';
+export { default as MilestonesForm } from './MilestonesForm';

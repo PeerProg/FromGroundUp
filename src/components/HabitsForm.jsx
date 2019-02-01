@@ -23,10 +23,9 @@ const submitHabitForm = (
 ) => {
   const expiresAt = moment()
     .add(days, 'days')
-    .calendar();
-  const daysBeforeExpiration = `${days.toString()} days remaining `;
-
-  createNewHabit({ name, expiresAt, daysBeforeExpiration })
+    .format('MMMM DD YYYY, h:mm:ss a');
+  const startsAt = moment().format('MMMM DD YYYY, h:mm:ss a');
+  createNewHabit({ name, startsAt, expiresAt })
     .then(() => {
       swal({
         type: 'success',

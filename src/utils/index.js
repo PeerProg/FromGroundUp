@@ -1,3 +1,3 @@
 export { default as setAuthorizationToken } from './setAuthorizationToken';
-export { initialUserState } from './initalUserState';
-export { initialHabitState } from './initalHabitState';
+export { initialUserState } from './initialUserState';
+export { initialHabitState } from './initialHabitState';

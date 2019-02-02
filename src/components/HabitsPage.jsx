@@ -9,15 +9,6 @@ const reducer = (previousState, newState) => {
   return { ...previousState, ...newState };
 };
 
-const getUserHabits = async userId => {
-  try {
-    const response = await fetchMyHabits(userId);
-    return response;
-  } catch (error) {
-    return error;
-  }
-};
-
 const HabitsPage = () => {
   const context = useContext(userContext);
   const { handleHabitData } = useContext(habitContext);
@@ -42,9 +33,9 @@ const HabitsPage = () => {
 
   useEffect(
     () => {
-      getUserHabits(context.user.id).then(result => {
-        setState({ habits: result.data });
-      });
+      fetchMyHabits(context.user.id)
+        .then(result => setState({ habits: result.data }))
+        .catch(error => error);
     },
     [context.user.id]
   );
@@ -62,7 +53,9 @@ const HabitsPage = () => {
     localStorage.setItem('habitDetails', JSON.stringify(habits[index]));
   };
 
-  const TIME_REMAINING_LIST = habits.map(habit => getDurationToExpiration(habit.expiresAt))
+  const TIME_REMAINING_LIST = habits.map(habit =>
+    getDurationToExpiration(habit.expiresAt)
+  );
 
   const handleCheckbox = index => {
     setState({ habitCheckboxIndex: index });

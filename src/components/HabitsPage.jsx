@@ -1,11 +1,9 @@
 import React, { useEffect, useContext, useReducer } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { userContext } from '../contexts';
+import { userContext, habitContext } from '../contexts';
 import { fetchMyHabits } from '../services';
-import { HabitButtons } from '.';
-import { habitContext } from '../contexts';
-
-import Milestones from './Milestones';
+import { HabitButtons, Milestones } from '.';
+import { getDurationToExpiration } from '../helpers';
 
 const reducer = (previousState, newState) => {
   return { ...previousState, ...newState };
@@ -27,7 +25,6 @@ const HabitsPage = () => {
     {
       indexOfHabitClicked,
       habits,
-      habitDays,
       toggleMilestone,
       toggleButtonName,
       habitCheckboxIndex,
@@ -37,7 +34,6 @@ const HabitsPage = () => {
   ] = useReducer(reducer, {
     indexOfHabitClicked: -1,
     habits: [],
-    habitDays: [],
     toggleMilestone: false,
     toggleButtonName: 'Click to View',
     habitCheckboxIndex: -1,
@@ -48,7 +44,6 @@ const HabitsPage = () => {
     () => {
       getUserHabits(context.user.id).then(result => {
         setState({ habits: result.data });
-        setState({ habitDays: handleDaysRemaining(result.data) });
       });
     },
     [context.user.id]
@@ -67,18 +62,7 @@ const HabitsPage = () => {
     localStorage.setItem('habitDetails', JSON.stringify(habits[index]));
   };
 
-  const handleDaysRemaining = habits => {
-    let results = [];
-    habits &&
-      habits.forEach(element => {
-        let startDate = new Date(element.startsAt);
-        let expiryDate = new Date(element.expiresAt);
-        let timeDiff = Math.abs(startDate.getTime() - expiryDate.getTime());
-        let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        results.push(diffDays);
-      });
-    return results;
-  };
+  const TIME_REMAINING_LIST = habits.map(habit => getDurationToExpiration(habit.expiresAt))
 
   const handleCheckbox = index => {
     setState({ habitCheckboxIndex: index });
@@ -120,7 +104,7 @@ const HabitsPage = () => {
                 <th scope="col">Milestones</th>
                 <th scope="col">Habit Start Date</th>
                 <th scope="col">Expected Date of Completion</th>
-                <th scope="col">Number of Days Remaining</th>
+                <th scope="col">Time Remaining</th>
                 <th scope="col">Properties</th>
               </tr>
             </thead>
@@ -155,7 +139,7 @@ const HabitsPage = () => {
 
                     <td>{habit.expiresAt}</td>
 
-                    <td>{`${habitDays[index]} day(s) remaining `}</td>
+                    <td>{TIME_REMAINING_LIST[index]}</td>
                     <td>
                       <FontAwesomeIcon
                         icon="edit"

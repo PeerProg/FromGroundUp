@@ -11,7 +11,7 @@ const App = () => {
         <BrowserRouter>
           <React.Fragment>
             <Header />
-            <div className="container">
+            <div className="habit-container">
               <Switch>
                 {routes.map(({ path, component, exact }, index) => (
                   <Route

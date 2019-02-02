@@ -126,3 +126,8 @@ body {
   font-size: 18px;
   font-weight: bold;
 }
+
+.habit-container {
+  width: 80%;
+  margin: 0 auto;
+}

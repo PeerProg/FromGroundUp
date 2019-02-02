@@ -12,3 +12,4 @@ export {
   unmatchingPasswordObject
 } from './testData';
 export { default as getDurationToExpiration } from './getDurationToExpiration';
+export { default as standardizeDate } from './standardizeDate';

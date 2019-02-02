@@ -11,3 +11,4 @@ export {
   validRequestObject,
   unmatchingPasswordObject
 } from './testData';
+export { default as getDurationToExpiration } from './getDurationToExpiration';

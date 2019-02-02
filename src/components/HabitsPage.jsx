@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { userContext, habitContext } from '../contexts';
 import { fetchMyHabits } from '../services';
 import { HabitButtons, Milestones } from '.';
-import { getDurationToExpiration } from '../helpers';
+import { getDurationToExpiration, standardizeDate } from '../helpers';
 
 const reducer = (previousState, newState) => {
   return { ...previousState, ...newState };
@@ -135,9 +135,9 @@ const HabitsPage = () => {
                       </button>
                     </td>
 
-                    <td>{habit.startsAt}</td>
+                    <td>{standardizeDate(habit.startsAt)}</td>
 
-                    <td>{habit.expiresAt}</td>
+                    <td>{standardizeDate(habit.expiresAt)}</td>
 
                     <td>{TIME_REMAINING_LIST[index]}</td>
                     <td>

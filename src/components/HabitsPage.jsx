@@ -10,6 +10,7 @@ import {
   standardizeDate,
   habitNameValidator
 } from '../helpers';
+import { habitNameFormEditButton } from '../styles';
 
 const reducer = (previousState, newState) => {
   return { ...previousState, ...newState };
@@ -26,7 +27,7 @@ const HabitsPage = () => {
       toggleButtonName,
       habitCheckboxIndex,
       activateCheckbox,
-      isBeingEdited
+      idOfHabitBeingEdited
     },
     setState
   ] = useReducer(reducer, {
@@ -36,7 +37,7 @@ const HabitsPage = () => {
     toggleButtonName: 'Click to View',
     habitCheckboxIndex: -1,
     activateCheckbox: false,
-    isBeingEdited: -1
+    idOfHabitBeingEdited: -1
   });
 
   useEffect(
@@ -100,7 +101,11 @@ const HabitsPage = () => {
     }
   };
 
-  const displayNameEditForm = habitId => setState({ isBeingEdited: habitId });
+  const toggleNameEditForm = habitId => {
+    idOfHabitBeingEdited === -1
+      ? setState({ idOfHabitBeingEdited: habitId })
+      : setState({ idOfHabitBeingEdited: -1 });
+  };
 
   const toggleClassName = toggleMilestone ? 'toggler toggler1 ' : 'toggler';
 
@@ -133,7 +138,7 @@ const HabitsPage = () => {
                 <th scope="col">Habit Start Date</th>
                 <th scope="col">Expected Date of Completion</th>
                 <th scope="col">Time Remaining</th>
-                <th scope="col">Properties</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             {habits &&
@@ -151,7 +156,7 @@ const HabitsPage = () => {
                     </th>
                     <th scope="row">{index + 1}</th>
                     <td>
-                      {isBeingEdited === habit.habitId ? (
+                      {idOfHabitBeingEdited === habit.habitId ? (
                         <Formik
                           initialValues={{ name: habit.name }}
                           validate={values => habitNameValidator(values)}
@@ -162,9 +167,14 @@ const HabitsPage = () => {
                               userId: context.user.id
                             }).then(res => {
                               const newHabitsList = habits.map(item => {
-                                return item.habitId === habit.habitId ? res.data : item;
-                              })
-                              setState({ isBeingEdited: -1, habits: newHabitsList })
+                                return item.habitId === habit.habitId
+                                  ? res.data
+                                  : item;
+                              });
+                              setState({
+                                idOfHabitBeingEdited: -1,
+                                habits: newHabitsList
+                              });
                               swal({
                                 type: 'success',
                                 position: 'top-end',
@@ -197,12 +207,9 @@ const HabitsPage = () => {
                                 <button
                                   className="ml-3 btn btn-primary"
                                   type="submit"
-                                  style={{ backgroundColor: 'green', borderRadius: '25px', height: '40px' }}
+                                  style={habitNameFormEditButton}
                                 >
-                                <FontAwesomeIcon
-                                  icon={'check-circle'}
-                                  className="fa-lg"
-                                />
+                                  save
                                 </button>
                               </span>
                             </Form>
@@ -230,24 +237,36 @@ const HabitsPage = () => {
 
                     <td>{TIME_REMAINING_LIST[index]}</td>
                     <td>
-                      <FontAwesomeIcon
-                        icon="edit"
-                        className="mr-4 fa-lg"
-                        color="#76B439"
-                        data-toggle="tooltip"
-                        title="Edit Habit"
-                        onClick={() => displayNameEditForm(habit.habitId)}
-                        style={{ cursor: 'pointer' }}
-                      />
-                      <FontAwesomeIcon
-                        icon="trash-alt"
-                        color="#8F1012"
-                        className="fa-lg"
-                        data-toggle="tooltip"
-                        title="Delete Habit"
-                        onClick={() => handleHabitDelete(habit.habitId)}
-                        style={{ cursor: 'pointer' }}
-                      />
+                      <span className="d-flex justify-content-center align-items-center">
+                        <FontAwesomeIcon
+                          icon={
+                            idOfHabitBeingEdited === habit.habitId
+                              ? 'times-circle'
+                              : 'edit'
+                          }
+                          className={idOfHabitBeingEdited === habit.habitId ? "fa-lg" : "mr-4 fa-lg"}
+                          color={idOfHabitBeingEdited === habit.habitId ? "#8F1012" : "#76B439"}
+                          data-toggle="tooltip"
+                          title={
+                            idOfHabitBeingEdited === habit.habitId
+                              ? 'Cancel Editing'
+                              : 'Edit Habit'
+                          }
+                          onClick={() => toggleNameEditForm(habit.habitId)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        {idOfHabitBeingEdited !== habit.habitId && (
+                          <FontAwesomeIcon
+                            icon="trash-alt"
+                            color="#8F1012"
+                            className="fa-lg"
+                            data-toggle="tooltip"
+                            title="Delete Habit"
+                            onClick={() => handleHabitDelete(habit.habitId)}
+                            style={{ cursor: 'pointer' }}
+                          />
+                        )}
+                      </span>
                     </td>
                   </tr>
                   {index === indexOfHabitClicked && (

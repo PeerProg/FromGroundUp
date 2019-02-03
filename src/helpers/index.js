@@ -4,6 +4,7 @@ export {
   loginValidator,
   profilePageValidator,
   habitNameValidator,
+  habitObjectValidator,
   milestoneValidator
 } from './validators';
 export {

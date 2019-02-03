@@ -48,3 +48,9 @@ export const authFormContainerStyle = {
   textAlign: 'center',
   marginTop: '3%'
 };
+
+export const habitNameFormEditButton = {
+  backgroundColor: '#76B439',
+  borderRadius: '25px',
+  height: '40px'
+}

@@ -1,7 +1,8 @@
 import React, { useEffect, useContext, useReducer } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import swal from 'sweetalert2';
 import { userContext, habitContext } from '../contexts';
-import { fetchMyHabits } from '../services';
+import { fetchMyHabits, deleteHabit } from '../services';
 import { HabitButtons, Milestones } from '.';
 import { getDurationToExpiration, standardizeDate } from '../helpers';
 
@@ -66,6 +67,31 @@ const HabitsPage = () => {
         })
       : setState({ activateCheckbox: true });
   };
+
+  const handleHabitDelete = async (habitId) => {
+    try {
+      const response = await deleteHabit({ userId: context.user.id, habitId });
+      swal({
+        type: 'success',
+        position: 'top-end',
+        title: response.message,
+        toast: true,
+        showConfirmButton: false,
+        timer: 3000
+      });
+      const newHabits = habits.filter(habit => habit.habitId !== habitId);
+      setState({ habits: newHabits })
+    } catch (error) {
+      swal({
+        type: 'error',
+        position: 'top-end',
+        title: error.message,
+        toast: true,
+        showConfirmButton: false,
+        timer: 3000
+      });
+    }
+  }
 
   const toggleClassName = toggleMilestone ? 'toggler toggler1 ' : 'toggler';
 
@@ -148,6 +174,7 @@ const HabitsPage = () => {
                         className="fa-lg"
                         data-toggle="tooltip"
                         title="Delete Habit"
+                        onClick={() => handleHabitDelete(habit.habitId)}
                         style={{ cursor: 'pointer' }}
                       />
                     </td>

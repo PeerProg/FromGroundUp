@@ -4,7 +4,7 @@ import swal from 'sweetalert2';
 import { Formik, Form, Field } from 'formik';
 import { userContext, habitContext } from '../contexts';
 import { fetchMyHabits, deleteHabit, updateHabitName } from '../services';
-import { HabitButtons, Milestones, CustomInput } from '.';
+import { HabitButtons, Milestones, CustomInput, HabitTableHeader } from '.';
 import {
   getDurationToExpiration,
   standardizeDate,
@@ -129,18 +129,7 @@ const HabitsPage = () => {
       <React.Fragment>
         <div className="table-responsive">
           <table className="table table-d table-striped table-bordered custom-table">
-            <thead className="thead-dark">
-              <tr>
-                <th scope="col">Select</th>
-                <th scope="col">#</th>
-                <th scope="col">Habit Title</th>
-                <th scope="col">Milestones</th>
-                <th scope="col">Habit Start Date</th>
-                <th scope="col">Expected Date of Completion</th>
-                <th scope="col">Time Remaining</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
+            <HabitTableHeader />
             {habits &&
               habits.map((habit, index) => (
                 <tbody className="borderColor" key={habit.name}>
@@ -244,8 +233,16 @@ const HabitsPage = () => {
                               ? 'times-circle'
                               : 'edit'
                           }
-                          className={idOfHabitBeingEdited === habit.habitId ? "fa-lg" : "mr-4 fa-lg"}
-                          color={idOfHabitBeingEdited === habit.habitId ? "#8F1012" : "#76B439"}
+                          className={
+                            idOfHabitBeingEdited === habit.habitId
+                              ? 'fa-lg'
+                              : 'mr-4 fa-lg'
+                          }
+                          color={
+                            idOfHabitBeingEdited === habit.habitId
+                              ? '#8F1012'
+                              : '#76B439'
+                          }
                           data-toggle="tooltip"
                           title={
                             idOfHabitBeingEdited === habit.habitId

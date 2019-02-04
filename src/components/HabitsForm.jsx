@@ -4,7 +4,7 @@ import swal from 'sweetalert2';
 import { CustomInput } from '.';
 import { submitButtonStyle } from '../styles';
 import { createNewHabit } from '../services';
-import { habitNameValidator } from '../helpers';
+import { habitObjectValidator } from '../helpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as moment from 'moment';
 
@@ -80,7 +80,7 @@ const HabitsForm = props => {
           <div className="card mt-3">
             <Formik
               initialValues={initialValues}
-              validate={values => habitNameValidator(values)}
+              validate={values => habitObjectValidator(values)}
               onSubmit={async (
                 { name, days },
                 { setSubmitting, resetForm }

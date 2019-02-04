@@ -19,4 +19,11 @@ export const deleteHabit = ({ userId, habitId }) => {
     .delete(`api/v1/habit/user/${userId}/${habitId}`)
     .then(res => Promise.resolve(res.data))
     .catch(err => Promise.reject(err.response.data.error));
-}
+};
+
+export const updateHabitName = ({ userId, habitId, name }) => {
+  return Api()
+    .patch(`api/v1/habit/user/${userId}/${habitId}`, { name })
+    .then(res => Promise.resolve(res.data))
+    .catch(err => Promise.reject(err.response.data.error));
+};

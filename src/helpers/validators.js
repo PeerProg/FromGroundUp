@@ -36,7 +36,7 @@ export const profilePageValidator = inputObject => {
   return errors;
 };
 
-export const habitNameValidator = inputObject => {
+export const habitObjectValidator = inputObject => {
   let errors = {};
   const inputValueName = inputObject.name.trim();
   const inputValueDay = inputObject.days;
@@ -69,3 +69,14 @@ export const milestoneValidator = inputObject => {
 
   return errors;
 };
+
+export const habitNameValidator = inputObject => {
+  let errors = {};
+  const inputHabitName = inputObject.name.trim();
+  if (!inputHabitName) {
+    errors.name = 'You must supply a name';
+  } else if (inputHabitName.length < 3) {
+    errors.name = 'Habit name must be 3 characters or more';
+  }
+  return errors;
+}

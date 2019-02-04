@@ -1,9 +1,8 @@
 import React, { useEffect, useContext, useReducer } from 'react';
 import swal from 'sweetalert2';
-import HabitTableRow from './HabitTableRow';
 import { userContext, habitContext } from '../contexts';
 import { fetchMyHabits, deleteHabit } from '../services';
-import { HabitButtons, HabitTableHeader } from '.';
+import { HabitButtons, HabitTableHeader, HabitTableRow } from '.';
 import { getDurationToExpiration } from '../helpers';
 
 const reducer = (previousState, newState) => {

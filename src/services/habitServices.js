@@ -13,3 +13,10 @@ export const createNewHabit = credentials => {
     .then(res => Promise.resolve(res.data))
     .catch(err => Promise.reject(err.response.data.error));
 };
+
+export const deleteHabit = ({ userId, habitId }) => {
+  return Api()
+    .delete(`api/v1/habit/user/${userId}/${habitId}`)
+    .then(res => Promise.resolve(res.data))
+    .catch(err => Promise.reject(err.response.data.error));
+}

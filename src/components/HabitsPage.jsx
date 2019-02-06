@@ -34,11 +34,15 @@ const HabitsPage = () => {
     idOfHabitBeingEdited: -1
   });
 
+  const asyncFetchHabits = async () => {
+    const result = await fetchMyHabits(context.user.id);
+    const habits = result.data;
+    setState({ habits });
+  }
+
   useEffect(() => {
-    fetchMyHabits(context.user.id)
-      .then(result => setState({ habits: result.data }))
-      .catch(error => error);
-  }, [context.user.id, habits]);
+    asyncFetchHabits();
+  }, []);
 
   const handleToggleMilestone = index => {
     setState({ toggleMilestone: !toggleMilestone });
@@ -69,17 +73,28 @@ const HabitsPage = () => {
 
   const handleHabitDelete = async habitId => {
     try {
-      const response = await deleteHabit({ userId: context.user.id, habitId });
-      swal({
-        type: 'success',
-        position: 'top-end',
-        title: response.message,
-        toast: true,
-        showConfirmButton: false,
-        timer: 3000
-      });
-      const newHabits = habits.filter(habit => habit.habitId !== habitId);
-      setState({ habits: newHabits });
+      const confirmBeforeDelete = await swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#76B439',
+        cancelButtonColor: '#8F1012',
+        confirmButtonText: 'Yes, delete it!'
+      })
+      if(confirmBeforeDelete.value) {
+        const response = await deleteHabit({ userId: context.user.id, habitId });
+        swal({
+          type: 'success',
+          position: 'top-end',
+          title: response.message,
+          toast: true,
+          showConfirmButton: false,
+          timer: 3000
+        });
+        const newHabits = habits.filter(habit => habit.habitId !== habitId);
+        setState({ habits: newHabits });
+      }
     } catch (error) {
       swal({
         type: 'error',

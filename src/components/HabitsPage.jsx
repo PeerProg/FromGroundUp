@@ -4,6 +4,7 @@ import { userContext, habitContext } from '../contexts';
 import { fetchMyHabits, deleteHabit } from '../services';
 import { HabitButtons, HabitTableHeader, HabitTableRow } from '.';
 import { getDurationToExpiration } from '../helpers';
+import { saveToLocalStorage } from '../utils';
 
 const reducer = (previousState, newState) => {
   return { ...previousState, ...newState };
@@ -33,14 +34,11 @@ const HabitsPage = () => {
     idOfHabitBeingEdited: -1
   });
 
-  useEffect(
-    () => {
-      fetchMyHabits(context.user.id)
-        .then(result => setState({ habits: result.data }))
-        .catch(error => error);
-    },
-    [context.user.id, habits]
-  );
+  useEffect(() => {
+    fetchMyHabits(context.user.id)
+      .then(result => setState({ habits: result.data }))
+      .catch(error => error);
+  }, [context.user.id, habits]);
 
   const handleToggleMilestone = index => {
     setState({ toggleMilestone: !toggleMilestone });
@@ -52,7 +50,7 @@ const HabitsPage = () => {
     setState({ indexOfHabitClicked: clickedValue });
 
     handleHabitData(habits[index]);
-    localStorage.setItem('habitDetails', JSON.stringify(habits[index]));
+    saveToLocalStorage('habitDetails', habits[index]);
   };
 
   const TIME_REMAINING_LIST = habits.map(habit =>

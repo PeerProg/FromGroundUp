@@ -2,7 +2,11 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { UserConsumer } from '../contexts';
 import { headerStyles as styles } from '../styles';
-import { setAuthorizationToken, initialUserState } from '../utils';
+import {
+  setAuthorizationToken,
+  initialUserState,
+  deleteFromLocalStorage
+} from '../utils';
 
 const Header = () => {
   return (
@@ -70,8 +74,9 @@ const Header = () => {
                       onClick={() => {
                         handleUserData(initialUserState);
                         handleAuthStatus(false);
-                        localStorage.removeItem('jwtToken');
-                        localStorage.removeItem('userDetails');
+                        deleteFromLocalStorage('jwtToken');
+                        deleteFromLocalStorage('userDetails');
+                        deleteFromLocalStorage('habitDetails');
                         setAuthorizationToken();
                       }}
                     >

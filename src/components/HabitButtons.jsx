@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { habitContext } from '../contexts';
+import { saveToLocalStorage } from '../utils';
 
 const HabitButtons = props => {
   const { habitCheckboxIndex, activateCheckbox, habits } = props;
@@ -11,21 +12,18 @@ const HabitButtons = props => {
 
   const selectedhabit = habits[habitCheckboxIndex];
 
-  useEffect(
-    () => {
-      if (activateCheckbox) {
-        habits[habitCheckboxIndex].habitActive
-          ? setbuttonName('Stop Habit')
-          : setbuttonName('Start Habit');
+  useEffect(() => {
+    if (activateCheckbox) {
+      habits[habitCheckboxIndex].habitActive
+        ? setbuttonName('Stop Habit')
+        : setbuttonName('Start Habit');
 
-        handleHabitData(selectedhabit);
-        localStorage.setItem('habitDetails', JSON.stringify(selectedhabit));
-      } else {
-        setbuttonName('Start/Stop Habit');
-      }
-    },
-    [activateCheckbox]
-  );
+      handleHabitData(selectedhabit);
+      saveToLocalStorage('habitDetails', selectedhabit);
+    } else {
+      setbuttonName('Start/Stop Habit');
+    }
+  }, [activateCheckbox]);
 
   return (
     <div className="row  d-flex bd-highlight mt-3">

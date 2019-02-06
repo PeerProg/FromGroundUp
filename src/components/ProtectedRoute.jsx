@@ -1,7 +1,11 @@
 import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { userContext } from '../contexts';
-import { setAuthorizationToken, tokenIsValid } from '../utils';
+import {
+  setAuthorizationToken,
+  tokenIsValid,
+  deleteFromLocalStorage
+} from '../utils';
 import swal from 'sweetalert2';
 
 function ProtectedRoute(props) {
@@ -23,8 +27,9 @@ function ProtectedRoute(props) {
       timer: 3000
     });
     handleAuthStatus(false);
-    localStorage.removeItem('jwtToken');
-    localStorage.removeItem('userDetails');
+    deleteFromLocalStorage('jwtToken');
+    deleteFromLocalStorage('userDetails');
+    deleteFromLocalStorage('habitDetails');
   }
 
   return isAuthenticated ? <Route {...props} /> : <Redirect to="/login" />;

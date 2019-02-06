@@ -1,13 +1,13 @@
 import React, { useReducer } from 'react';
 import { HabitProvider } from './context';
-import { initialHabitState } from '../utils';
+import { initialHabitState, getFromLocalStorage } from '../utils';
 
 const reducer = (previousState, newState) => {
   return { ...previousState, ...newState };
 };
 
 const habitDetails =
-  JSON.parse(localStorage.getItem('habitDetails')) || initialHabitState;
+  JSON.parse(getFromLocalStorage('habitDetails')) || initialHabitState;
 
 const HabitProviderComponent = ({ children }) => {
   const [habit, setHabit] = useReducer(reducer, habitDetails);

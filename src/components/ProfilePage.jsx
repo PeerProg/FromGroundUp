@@ -7,6 +7,7 @@ import { CustomInput } from '.';
 import { submitButtonStyle, loginFormContainerStyle } from '../styles';
 import { userContext } from '../contexts';
 import { profilePageValidator } from '../helpers';
+import { saveToLocalStorage } from '../utils';
 import imageUrl from '../images/imageURL.jpg';
 import noImageUrl from '../images/noImageUrl.png';
 
@@ -90,10 +91,7 @@ const ProfilePage = props => {
               })
                 .then(res => {
                   handleUserData(res.data);
-                  localStorage.setItem(
-                    'userDetails',
-                    JSON.stringify({ ...user, ...res.data })
-                  );
+                  saveToLocalStorage('userDetails', { ...user, ...res.data });
 
                   swal({
                     type: 'success',

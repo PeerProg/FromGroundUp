@@ -52,7 +52,7 @@ const HabitPage = props => {
             <div className="card-header mb-2 text-monospace text-center d-flex justify-content-between">
               <h1 className="ml-auto mr-auto">Milestones</h1>
               <FontAwesomeIcon
-                icon="plus-circle"
+                icon={formIsVisible ? "minus-circle" : "plus-circle"}
                 className="fa-2x"
                 data-toggle="tooltip"
                 title="Click to add new milestone"

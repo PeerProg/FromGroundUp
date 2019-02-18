@@ -16,3 +16,6 @@ export { default as HabitTableRow } from './HabitTableRow';
 export { default as HabitsPage } from './HabitsPage';
 export { default as HabitButtons } from './HabitButtons';
 export { default as MilestonesForm } from './MilestonesForm';
+export { default as HabitsList } from './habits-list';
+export { default as HabitPage } from './habit-page';
+

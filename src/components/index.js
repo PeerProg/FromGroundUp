@@ -6,6 +6,8 @@ export { default as LoginPage } from './LoginPage';
 export { default as RegisterPage } from './RegisterPage';
 export { default as AuthenticationContainer } from './AuthenticationContainer';
 export { default as ProfilePage } from './ProfilePage';
+export { default as HabitsList } from './habits-list';
+export { default as HabitPage } from './habit-page';
 export { default as MilestoneItem } from './MilestoneItem';
 export { default as Milestones } from './Milestones';
 export { default as HabitsForm } from './HabitsForm';

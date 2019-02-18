@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { userContext, habitContext } from '../contexts';
 import { fetchHabit } from '../services';
 import { MilestonesForm } from '.';
-import Milestone from './milestone';
+// import Milestone from './milestone';
 import { standardizeDate } from '../helpers';
 
 const HabitPage = props => {
@@ -43,14 +43,14 @@ const HabitPage = props => {
       </div>
 
       <div className="col-sm-8">
-        {habit.name &&
+        {/* {habit.name &&
           habit.milestones.map(item => (
             <Milestone
               key={item.id}
               title={item.title}
               date={standardizeDate(item.createdAt)}
             />
-          ))}
+          ))} */}
       </div>
     </div>
   );

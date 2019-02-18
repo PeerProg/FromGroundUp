@@ -26,7 +26,7 @@ const LoginPage = props => {
                 saveToLocalStorage('jwtToken', res.data.token);
                 setAuthorizationToken(res.data.token);
 
-                props.history.push('/my-habits');
+                props.history.push('/habits');
                 swal({
                   type: 'success',
                   position: 'top-end',

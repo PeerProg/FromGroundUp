@@ -6,7 +6,7 @@ import { UserConsumer } from '../contexts';
 import { CustomInput } from '.';
 import { submitButtonStyle, loginFormContainerStyle } from '../styles';
 import { loginValidator } from '../helpers';
-import { setAuthorizationToken, saveToLocalStorage } from '../utils';
+import { setAuthorizationToken } from '../utils';
 
 const initialValues = { identifier: '', password: '' };
 
@@ -22,8 +22,6 @@ const LoginPage = props => {
               .then(res => {
                 handleUserData(res.data);
                 handleAuthStatus(true);
-                saveToLocalStorage('userDetails', res.data);
-                saveToLocalStorage('jwtToken', res.data.token);
                 setAuthorizationToken(res.data.token);
 
                 props.history.push('/habits');

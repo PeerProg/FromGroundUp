@@ -6,7 +6,7 @@ import { CustomInput } from '.';
 import { submitButtonStyle, loginFormContainerStyle } from '../styles';
 import { UserConsumer } from '../contexts';
 import { signupValidator } from '../helpers';
-import { setAuthorizationToken, saveToLocalStorage } from '../utils';
+import { setAuthorizationToken } from '../utils';
 
 const initialValues = {
   username: '',
@@ -30,8 +30,6 @@ const RegisterPage = props => {
               .then(res => {
                 handleUserData(res.data);
                 handleAuthStatus(true);
-                saveToLocalStorage('userDetails', res.data);
-                saveToLocalStorage('jwtToken', res.data.token);
                 setAuthorizationToken(res.data.token);
 
                 props.history.push('/habits');

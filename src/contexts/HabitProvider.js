@@ -20,9 +20,15 @@ const HabitProviderComponent = ({ children }) => {
     habits: initialHabitsArray
   });
 
-  const handleHabitData = value => setState({ habit: value });
+  const handleHabitData = value => {
+    setState({ habit: value });
+    saveToLocalStorage('habitDetails', habit);
+  }
 
-  const replaceHabits = value => setState({ habits: value });
+  const replaceHabits = value => {
+    setState({ habits: value });
+    saveToLocalStorage('habits', habits);
+  }
 
   const addToHabits = value => {
     const updatedHabits = [value].concat(habits);

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { habitContext } from '../contexts';
-import { saveToLocalStorage } from '../utils';
 
 const HabitButtons = props => {
   const { habitCheckboxIndex, activateCheckbox, habits } = props;
@@ -19,7 +18,6 @@ const HabitButtons = props => {
         : setbuttonName('Start Habit');
 
       handleHabitData(selectedhabit);
-      saveToLocalStorage('habitDetails', selectedhabit);
     } else {
       setbuttonName('Start/Stop Habit');
     }

@@ -5,7 +5,6 @@ import { fetchMyHabits, deleteHabit } from '../services';
 import HabitCard from './habit-card';
 import { getDurationToExpiration, standardizeDate } from '../helpers';
 import { HabitsForm } from '.';
-import { saveToLocalStorage } from '../utils';
 
 const HabitsList = (props) => {
   const { user: { id: userId }} = useContext(userContext);
@@ -15,7 +14,6 @@ const HabitsList = (props) => {
     const result = await fetchMyHabits(userId);
     const habits = result.data;
     replaceHabits(habits);
-    saveToLocalStorage('habits', habits);
   }
 
   useEffect(() => {
@@ -49,7 +47,6 @@ const HabitsList = (props) => {
         });
         const newHabits = habits.filter(habit => habit.habitId !== habitId);
         replaceHabits(newHabits);
-        saveToLocalStorage('habits', newHabits);
       }
     } catch (error) {
       swal({
@@ -77,6 +74,7 @@ const HabitsList = (props) => {
           dateCreated={standardizeDate(habit.createdAt)}
           handleHabitDelete={() => handleHabitDelete(habit.habitId)}
           habitId={habit.habitId}
+          habitActive={habit.habitActive}
         />
       </div>
     ))}

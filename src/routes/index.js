@@ -2,7 +2,6 @@ import {
   LandingPage,
   AuthenticationContainer,
   ProfilePage,
-  Dashboard,
   HabitsPage,
   HabitsForm,
   MilestonesForm
@@ -28,7 +27,6 @@ export default [
 
 export const protectedRoutes = [
   { path: '/profile/:userId', component: ProfilePage },
-  { path: '/dashboard', component: Dashboard },
   { path: '/my-habits', component: HabitsPage },
   { path: '/add-new-habit', component: HabitsForm },
   { path: '/add-milestones', component: MilestonesForm }

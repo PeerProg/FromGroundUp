@@ -37,7 +37,7 @@ const HabitCard = ({
           {durationTillExpiration !== 'Expired' && (
             <span className="text-muted font-italic">Expires in </span>
           )}
-          <span className="font-weight-bold text-danger">
+          <span className="font-weight-bold">
             {durationTillExpiration}
           </span>
         </span>
@@ -46,12 +46,6 @@ const HabitCard = ({
         <h5 className="card-title mb-0 text-monospace font-weight-bold">
           {name}
         </h5>
-      </div>
-      <div className="card-footer text-center">
-        <span className="text-monospace text-muted font-italic">
-          Created on{' '}
-        </span>
-        <span className="text-monospace">{dateCreated}</span>
       </div>
     </div>
   );

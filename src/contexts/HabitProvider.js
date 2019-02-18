@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import { HabitProvider } from './context';
-import { initialHabitState, getFromLocalStorage } from '../utils';
+import { initialHabitState, getFromLocalStorage, saveToLocalStorage } from '../utils';
 
 const reducer = (previousState, newState) => {
   return { ...previousState, ...newState };
@@ -27,6 +27,7 @@ const HabitProviderComponent = ({ children }) => {
   const addToHabits = value => {
     const updatedHabits = [value].concat(habits);
     setState({ habits: updatedHabits });
+    saveToLocalStorage('habits', habits);
   };
 
   const addMilestoneToHabit = ({ habitId, data }) => {
@@ -39,6 +40,8 @@ const HabitProviderComponent = ({ children }) => {
     const copiedHabit = { ...habit };
     copiedHabit.milestones.push(data);
     setState({ habits: newHabits, habit: copiedHabit });
+    saveToLocalStorage('habitDetails', habit);
+    saveToLocalStorage('habits', habits);
   };
 
   return (

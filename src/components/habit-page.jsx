@@ -1,11 +1,16 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { userContext, habitContext } from '../contexts';
 import { fetchHabit } from '../services';
 import { MilestonesForm } from '.';
-// import Milestone from './milestone';
+import Milestone from './milestone';
 import { standardizeDate } from '../helpers';
 
 const HabitPage = props => {
+  const [formIsVisible, setFormIsVisible] = useState(false);
+
+  const handleFormVisibility = () => setFormIsVisible(!formIsVisible);
+
   const {
     user: { id: userId }
   } = useContext(userContext);
@@ -30,27 +35,49 @@ const HabitPage = props => {
         {habit.name && (
           <React.Fragment>
             <div className="card">
-              <div className="card-body">
+              <div className="card-body text-monospace">
                 <h5 className="card-title">{habit.name}</h5>
                 <p className="card-text">
                   Expires on {standardizeDate(habit.expiresAt)}
                 </p>
               </div>
             </div>
-            <MilestonesForm {...props} habit={habit} />
           </React.Fragment>
         )}
       </div>
 
       <div className="col-sm-8">
-        {/* {habit.name &&
-          habit.milestones.map(item => (
-            <Milestone
-              key={item.id}
-              title={item.title}
-              date={standardizeDate(item.createdAt)}
-            />
-          ))} */}
+        {habit.name && (
+          <React.Fragment>
+            <div className="card-header mb-2 text-monospace text-center d-flex justify-content-between">
+              <h1 className="ml-auto mr-auto">Milestones</h1>
+              <FontAwesomeIcon
+                icon="plus-circle"
+                className="fa-2x"
+                data-toggle="tooltip"
+                title="Click to add new milestone"
+                style={{ height: '3rem', width: '3rem' }}
+                onClick={handleFormVisibility}
+              />
+            </div>
+            <div className="mb-3">
+              {formIsVisible && (
+                <MilestonesForm
+                  {...props}
+                  habit={habit}
+                  handleFormVisibility={handleFormVisibility}
+                />
+              )}
+            </div>
+            {habit.milestones.map(item => (
+              <Milestone
+                key={item.id}
+                title={item.title}
+                date={standardizeDate(item.createdAt)}
+              />
+            ))}
+          </React.Fragment>
+        )}
       </div>
     </div>
   );

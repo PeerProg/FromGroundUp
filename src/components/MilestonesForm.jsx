@@ -11,7 +11,7 @@ import { createNewMilestone } from '../services';
 const submitHabitForm = async (
   { habitId, milestone },
   { setSubmitting, resetForm },
-  cb,
+  cb
 ) => {
   try {
     const result = await createNewMilestone({ habitId, title: milestone });
@@ -45,10 +45,12 @@ const MilestonesForm = props => {
 
   const isHabitPage = props.location.pathname.includes('/habits/');
 
-  const initialValues = isHabitPage ? { milestone: '' } : { habit: name, milestone: '' };
+  const initialValues = isHabitPage
+    ? { milestone: '' }
+    : { habit: name, milestone: '' };
 
   return (
-    <div className="mt-3">
+    <div className="card">
       {!isHabitPage && (
         <React.Fragment>
           <div className="card mb-3">
@@ -67,70 +69,66 @@ const MilestonesForm = props => {
           </div>
         </React.Fragment>
       )}
-      <div>
-        <div className="card mt-3">
-          <Formik
-            initialValues={initialValues}
-            validate={values => {
-              isHabitPage ? milestoneTitleOnlyValidator(values): milestoneValidator(values)
-            }}
-            onSubmit={async ({ milestone }, { setSubmitting, resetForm }) => {
-              submitHabitForm(
-                { habitId: habitId || props.match.params.habitId, milestone },
-                { setSubmitting, resetForm },
-                addMilestoneToHabit
-              );
-            }}
-          >
-            {({ isSubmitting }) => (
-              <Form
-                className={
-                  isHabitPage
-                    ? 'd-flex flex-row justify-content-between'
-                    : 'd-flex align-items-center p-2'
-                }
-              >
-                <React.Fragment>
-                  {!isHabitPage && (
-                    <Field
-                      type="text"
-                      name="habit"
-                      disabled
-                      inputClass="form-group align-items-center mt-auto mb-auto"
-                      style={{ minWidth: '400px' }}
-                      placeholder="Habit Name"
-                      component={CustomInput}
-                    />
-                  )}
+      <div className="mt-3 mb-3">
+        <Formik
+          initialValues={initialValues}
+          validate={values => {
+            isHabitPage
+              ? milestoneTitleOnlyValidator(values)
+              : milestoneValidator(values);
+          }}
+          onSubmit={async ({ milestone }, { setSubmitting, resetForm }) => {
+            submitHabitForm(
+              { habitId: habitId || props.match.params.habitId, milestone },
+              { setSubmitting, resetForm },
+              addMilestoneToHabit
+            );
+            props.handleFormVisibility();
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form
+              className={
+                isHabitPage
+                  ? 'd-flex flex-row justify-content-between'
+                  : 'd-flex align-items-center p-2'
+              }
+            >
+              <React.Fragment>
+                {!isHabitPage && (
                   <Field
-                    type="test"
-                    name="milestone"
+                    type="text"
+                    name="habit"
+                    disabled
                     inputClass="form-group align-items-center mt-auto mb-auto"
-                    style={
-                      isHabitPage
-                        ? { minWidth: '15rem', marginRight: '5rem' }
-                        : { minWidth: '300px', marginLeft: '15px' }
-                    }
-                    placeholder={isHabitPage ? "Add new milestone" : "milestone item"}
+                    style={{ minWidth: '400px' }}
+                    placeholder="Habit Name"
                     component={CustomInput}
                   />
-                  <button
-                    className={
-                      isHabitPage
-                        ? 'btn bg-primary btn-sm'
-                        : 'btn ml-auto bg-primary btn-sm'
-                    }
-                    type="submit"
-                    disabled={isSubmitting}
-                    style={submitButtonStyle}
-                  >
-                    Add
-                  </button>
-                </React.Fragment>
-              </Form>
-            )}
-          </Formik>
-        </div>
+                )}
+                <Field
+                  type="test"
+                  name="milestone"
+                  inputClass="form-group align-items-center mt-auto mb-auto text-monospace ml-3"
+                  style={
+                    !isHabitPage ? { minWidth: '300px', marginLeft: '15px' }
+                    : { minWidth: '35rem' }
+                  }
+                  placeholder={isHabitPage ? 'Type a milestone title here' : 'milestone item'}
+                  component={CustomInput}
+                />
+                <button
+                  className='btn mr-3 bg-primary btn-sm'
+                  type="submit"
+                  disabled={isSubmitting}
+                  style={submitButtonStyle}
+                >
+                  Add
+                </button>
+              </React.Fragment>
+            </Form>
+          )}
+        </Formik>
       </div>
     </div>
   );

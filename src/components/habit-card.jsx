@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ActivateHabitButton from './activate-habit-button';
 
 const HabitCard = ({
   name,
   durationTillExpiration,
   dateCreated,
   handleHabitDelete,
-  habitId
+  habitId,
+  habitActive
 }) => {
   return (
     <div className="card mt-4">
@@ -42,10 +44,11 @@ const HabitCard = ({
           </span>
         </span>
       </div>
-      <div className="card-body text-center">
+      <div className="card-body d-flex justify-content-between">
         <h5 className="card-title mb-0 text-monospace font-weight-bold">
           {name}
         </h5>
+        <ActivateHabitButton habitActive={habitActive} />
       </div>
     </div>
   );

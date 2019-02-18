@@ -27,3 +27,10 @@ export const updateHabitName = ({ userId, habitId, name }) => {
     .then(res => Promise.resolve(res.data))
     .catch(err => Promise.reject(err.response.data.error));
 };
+
+export const fetchHabit = ({ userId, habitId }) => {
+  return Api()
+    .get(`api/v1/habit/user/${userId}/${habitId}`)
+    .then(res => Promise.resolve(res.data))
+    .catch(err => Promise.reject(err.response.data.error));
+}

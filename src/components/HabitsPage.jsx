@@ -4,7 +4,6 @@ import { userContext, habitContext } from '../contexts';
 import { fetchMyHabits, deleteHabit } from '../services';
 import { HabitButtons, HabitTableHeader, HabitTableRow } from '.';
 import { getDurationToExpiration } from '../helpers';
-import { saveToLocalStorage } from '../utils';
 
 const reducer = (previousState, newState) => {
   return { ...previousState, ...newState };
@@ -54,7 +53,6 @@ const HabitsPage = () => {
     setState({ indexOfHabitClicked: clickedValue });
 
     handleHabitData(habits[index]);
-    saveToLocalStorage('habitDetails', habits[index]);
   };
 
   const TIME_REMAINING_LIST = habits.map(habit =>

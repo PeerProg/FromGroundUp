@@ -5,7 +5,8 @@ export {
   profilePageValidator,
   habitNameValidator,
   habitObjectValidator,
-  milestoneValidator
+  milestoneValidator,
+  milestoneTitleOnlyValidator
 } from './validators';
 export {
   invalidEmailObject,

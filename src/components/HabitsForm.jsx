@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Formik, Field } from 'formik';
 import swal from 'sweetalert2';
 import { CustomInput } from '.';
@@ -6,72 +6,77 @@ import { submitButtonStyle } from '../styles';
 import { createNewHabit } from '../services';
 import { habitObjectValidator } from '../helpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import * as moment from 'moment';
+import moment from 'moment';
+import { habitContext } from '../contexts';
 
 const initialValues = { name: '', days: '' };
 
-const reducer = (previousState, newState) => {
-  return { ...previousState, ...newState };
-};
-
 // Placed this outside the component to make it a composed component on its own
 // Might consider abstracting the submit functions out of respective components.
-const submitHabitForm = (
+const submitHabitForm = async (
   { name, days },
   { setSubmitting, resetForm },
-  props
+  props,
+  cb
 ) => {
-  const expiresAt = moment()
-    .add(days, 'days')
-    .format('MMMM DD YYYY, h:mm:ss a');
-  const startsAt = moment().format('MMMM DD YYYY, h:mm:ss a');
-  createNewHabit({ name, startsAt, expiresAt })
-    .then(() => {
-      swal({
-        type: 'success',
-        position: 'top-end',
-        title: 'Habit created successfully',
-        toast: true,
-        showConfirmButton: false,
-        timer: 3000
-      });
-
-      resetForm();
-      props.history.push('/my-habits');
-    })
-    .catch(err => {
-      swal({
-        type: 'error',
-        position: 'top-end',
-        title: err.message,
-        toast: true,
-        showConfirmButton: false,
-        timer: 3000
-      });
+  try {
+    const expiresAt = moment()
+      .add(days, 'days')
+      .format('MMMM DD YYYY, h:mm:ss a');
+    const startsAt = moment().format('MMMM DD YYYY, h:mm:ss a');
+    const result = await createNewHabit({ name, startsAt, expiresAt });
+    const newHabitObject = {
+      name: result.data.name,
+      startsAt: result.data.startsAt,
+      expiresAt: result.data.expiresAt,
+      habitId: result.data.id,
+      habitActive: result.data.habitActive,
+      createdAt: result.data.createdAt,
+      updatedAt: result.data.updatedAt,
+      milestones: result.data.milestones
+    }
+    cb(newHabitObject);
+    swal({
+      type: 'success',
+      position: 'top-end',
+      title: 'Habit created successfully',
+      toast: true,
+      showConfirmButton: false,
+      timer: 3000
     });
+    resetForm();
+    props.location.pathname !== '/habits' && props.history.push('/my-habits');
+  } catch (err) {
+    swal({
+      type: 'error',
+      position: 'top-end',
+      title: err.message,
+      toast: true,
+      showConfirmButton: false,
+      timer: 3000
+    });
+  }
   setSubmitting(false);
 };
 
 const HabitsForm = props => {
-  const [{ habitFormVisible }, setState] = useReducer(reducer, {
-    habitFormVisible: false
-  });
+  const [habitFormVisible, setHabitFormIsVisible] = useState(false);
+  const { addToHabits } = useContext(habitContext);
 
-  const handleFormVisibility = () =>
-    setState({ habitFormVisible: !habitFormVisible });
+  const handleFormVisibility = () => setHabitFormIsVisible(!habitFormVisible);
 
   return (
     <div className="mt-3">
-      <div className="card mb-3">
+      {props.location.pathname !== '/habits' && <div className="card mb-3">
         <h1 className="text-center text-monospace">Add New Habit</h1>
-      </div>
-      <div className="d-flex p-1" style={{ backgroundColor: '#A8A8A8' }}>
-        <span className="d-flex align-items-center text-monospace font-italic font-weight-bold">
+      </div>}
+      <div className="card-header d-flex flex-row justify-content-between align-middle">
+        <h6 className="d-flex align-items-center text-monospace font-weight-bold mb-0">
           Click "+" to add a new Habit
-        </span>
+        </h6>
         <FontAwesomeIcon
-          icon="plus-circle"
-          className="fa-2x ml-auto"
+          icon={habitFormVisible ? "minus-circle" : "plus-circle"}
+          className="fa-2x"
           onClick={handleFormVisibility}
         />
       </div>
@@ -88,8 +93,10 @@ const HabitsForm = props => {
                 submitHabitForm(
                   { name, days },
                   { setSubmitting, resetForm },
-                  props
+                  props,
+                  addToHabits
                 );
+                handleFormVisibility();
               }}
             >
               {({ isSubmitting }) => (

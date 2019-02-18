@@ -80,3 +80,14 @@ export const habitNameValidator = inputObject => {
   }
   return errors;
 }
+
+export const milestoneTitleOnlyValidator = inputObject => {
+  let errors = {};
+  const inputValueMilestone = inputObject.milestone.trim();
+  if (!inputValueMilestone) {
+    errors.milestone = 'Milestone field cannot be blank';
+  } else if (inputValueMilestone.length < 3) {
+    errors.milestone = 'Milestone must be 3 characters or more';
+  }
+  return errors;
+};

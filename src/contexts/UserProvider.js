@@ -1,6 +1,6 @@
 import React, { useReducer, useState } from 'react';
 import { UserProvider } from './context';
-import { initialUserState, getFromLocalStorage } from '../utils';
+import { initialUserState, getFromLocalStorage, saveToLocalStorage } from '../utils';
 
 const reducer = (previousState, newState) => {
   return { ...previousState, ...newState };
@@ -16,7 +16,11 @@ const UserProviderComponent = ({ children }) => {
 
   const handleAuthStatus = value => setIsAuthenticated(value);
 
-  const handleUserData = value => setUser({ ...user, ...value });
+  const handleUserData = value => {
+    setUser({ ...user, ...value });
+    saveToLocalStorage('userDetails', user);
+    saveToLocalStorage('jwtToken', user.token);
+  }
 
   return (
     <UserProvider

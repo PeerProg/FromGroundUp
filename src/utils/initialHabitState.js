@@ -1,4 +1,4 @@
-export const initalHabitState = {
+export const initialHabitState = {
   name: '',
   startsAt: '',
   expiresAt: '',

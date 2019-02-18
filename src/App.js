@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import routes, { protectedRoutes } from './routes';
-import { Header, ProtectedRoute } from './components';
+import { Header, ProtectedRoute, AddHabitButton } from './components';
 import { UserProviderComponent, HabitProviderComponent } from './contexts';
 
 const App = () => {
@@ -32,6 +32,7 @@ const App = () => {
                 <Redirect to="/" />
               </Switch>
             </div>
+            <AddHabitButton className="fixed-bottom" />
           </React.Fragment>
         </BrowserRouter>
       </HabitProviderComponent>

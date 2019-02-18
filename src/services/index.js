@@ -7,6 +7,7 @@ export {
   fetchMyHabits,
   createNewHabit,
   deleteHabit,
-  updateHabitName
+  updateHabitName,
+  fetchHabit
 } from './habitServices';
 export { createNewMilestone, fetchMilestones } from './milestoneServices';

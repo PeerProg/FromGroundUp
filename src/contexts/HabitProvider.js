@@ -6,16 +6,54 @@ const reducer = (previousState, newState) => {
   return { ...previousState, ...newState };
 };
 
-const habitDetails =
-  JSON.parse(getFromLocalStorage('habitDetails')) || initialHabitState;
+const habitDetails = Boolean(getFromLocalStorage('habitDetails'))
+  ? JSON.parse(getFromLocalStorage('habitDetails'))
+  : initialHabitState;
+
+const initialHabitsArray = Boolean(getFromLocalStorage('habits'))
+  ? JSON.parse(getFromLocalStorage('habits'))
+  : [];
 
 const HabitProviderComponent = ({ children }) => {
-  const [habit, setHabit] = useReducer(reducer, habitDetails);
+  const [{ habit, habits }, setState] = useReducer(reducer, {
+    habit: habitDetails,
+    habits: initialHabitsArray
+  });
 
-  const handleHabitData = value => setHabit({ ...habit, ...value });
+  const handleHabitData = value => setState({ habit: value });
+
+  const replaceHabits = value => setState({ habits: value });
+
+  const addToHabits = value => {
+    const updatedHabits = [value].concat(habits);
+    setState({ habits: updatedHabits });
+  };
+
+  const addMilestoneToHabit = ({ habitId, data }) => {
+    const newHabits = habits.map(item => {
+      if (habitId === item.habitId) {
+        item.milestones = item.milestones.concat([data]);
+      }
+      return item;
+    });
+    const copiedHabit = { ...habit };
+    copiedHabit.milestones.push(data);
+    setState({ habits: newHabits, habit: copiedHabit });
+  };
 
   return (
-    <HabitProvider value={{ habit, handleHabitData }}>{children}</HabitProvider>
+    <HabitProvider
+      value={{
+        habit,
+        handleHabitData,
+        replaceHabits,
+        habits,
+        addToHabits,
+        addMilestoneToHabit
+      }}
+    >
+      {children}
+    </HabitProvider>
   );
 };
 

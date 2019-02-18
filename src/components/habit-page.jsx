@@ -23,6 +23,7 @@ const HabitPage = props => {
     });
     const resultData = result.data;
     handleHabitData(resultData);
+    handleFormVisibility();
   };
 
   useEffect(() => {
@@ -52,7 +53,7 @@ const HabitPage = props => {
             <div className="card-header mb-2 text-monospace text-center d-flex justify-content-between">
               <h1 className="ml-auto mr-auto">Milestones</h1>
               <FontAwesomeIcon
-                icon={formIsVisible ? "minus-circle" : "plus-circle"}
+                icon={formIsVisible ? 'minus-circle' : 'plus-circle'}
                 className="fa-2x"
                 data-toggle="tooltip"
                 title="Click to add new milestone"
@@ -61,13 +62,7 @@ const HabitPage = props => {
               />
             </div>
             <div className="mb-3">
-              {formIsVisible && (
-                <MilestonesForm
-                  {...props}
-                  habit={habit}
-                  handleFormVisibility={handleFormVisibility}
-                />
-              )}
+              {formIsVisible && <MilestonesForm {...props} habit={habit} />}
             </div>
             {habit.milestones.map(item => (
               <Milestone

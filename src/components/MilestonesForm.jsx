@@ -83,7 +83,6 @@ const MilestonesForm = props => {
               { setSubmitting, resetForm },
               addMilestoneToHabit
             );
-            props.handleFormVisibility();
           }}
         >
           {({ isSubmitting }) => (

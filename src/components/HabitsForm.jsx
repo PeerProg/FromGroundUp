@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Formik, Field } from 'formik';
 import swal from 'sweetalert2';
 import { CustomInput } from '.';
@@ -10,10 +10,6 @@ import moment from 'moment';
 import { habitContext } from '../contexts';
 
 const initialValues = { name: '', days: '' };
-
-const reducer = (previousState, newState) => {
-  return { ...previousState, ...newState };
-};
 
 // Placed this outside the component to make it a composed component on its own
 // Might consider abstracting the submit functions out of respective components.
@@ -64,26 +60,23 @@ const submitHabitForm = async (
 };
 
 const HabitsForm = props => {
+  const [habitFormVisible, setHabitFormIsVisible] = useState(false);
   const { addToHabits } = useContext(habitContext);
-  const [{ habitFormVisible }, setState] = useReducer(reducer, {
-    habitFormVisible: false
-  });
 
-  const handleFormVisibility = () =>
-    setState({ habitFormVisible: !habitFormVisible });
+  const handleFormVisibility = () => setHabitFormIsVisible(!habitFormVisible);
 
   return (
     <div className="mt-3">
       {props.location.pathname !== '/habits' && <div className="card mb-3">
         <h1 className="text-center text-monospace">Add New Habit</h1>
       </div>}
-      <div className="d-flex p-1" style={{ backgroundColor: '#A8A8A8' }}>
-        <span className="d-flex align-items-center text-monospace font-italic font-weight-bold">
+      <div className="card-header d-flex flex-row justify-content-between align-middle">
+        <h6 className="d-flex align-items-center text-monospace font-weight-bold mb-0">
           Click "+" to add a new Habit
-        </span>
+        </h6>
         <FontAwesomeIcon
-          icon="plus-circle"
-          className="fa-2x ml-auto"
+          icon={habitFormVisible ? "minus-circle" : "plus-circle"}
+          className="fa-2x"
           onClick={handleFormVisibility}
         />
       </div>

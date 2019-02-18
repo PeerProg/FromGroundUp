@@ -45,7 +45,7 @@ const HabitCard = ({
         </span>
       </div>
       <div className="card-body d-flex justify-content-between">
-        <h5 className="card-title mb-0 text-monospace font-weight-bold">
+        <h5 className="card-title d-flex align-items-center mb-0 text-monospace font-weight-bold">
           {name}
         </h5>
         <ActivateHabitButton habitActive={habitActive} />

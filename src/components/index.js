@@ -17,4 +17,5 @@ export { default as HabitsPage } from './HabitsPage';
 export { default as HabitButtons } from './HabitButtons';
 export { default as MilestonesForm } from './MilestonesForm';
 export { default as AddHabitButton } from './add-habit-button';
+export { default as HabitCreationPage } from './habit-creation-page';
 

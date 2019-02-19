@@ -6,7 +6,8 @@ import {
   HabitsForm,
   MilestonesForm,
   HabitsList,
-  HabitPage
+  HabitPage,
+  HabitCreationPage
 } from '../components';
 
 export default [
@@ -33,5 +34,6 @@ export const protectedRoutes = [
   { path: '/add-new-habit', component: HabitsForm },
   { path: '/add-milestones', component: MilestonesForm },
   { path: '/habits', component: HabitsList, exact: true },
-  { path: '/habits/:habitId', component: HabitPage, exact: true }
+  { path: '/habits/:habitId', component: HabitPage, exact: true },
+  { path: '/create-habit', component: HabitCreationPage, exact: true }
 ];

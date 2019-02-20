@@ -8,7 +8,7 @@ import { habitContext } from '../contexts';
 import swal from 'sweetalert2';
 import { createNewMilestone } from '../services';
 
-const submitHabitForm = async (
+const submitMilestoneForm = async (
   { habitId, milestone },
   { setSubmitting, resetForm },
   cb
@@ -78,7 +78,7 @@ const MilestonesForm = props => {
               : milestoneValidator(values);
           }}
           onSubmit={async ({ milestone }, { setSubmitting, resetForm }) => {
-            submitHabitForm(
+            submitMilestoneForm(
               { habitId: habitId || props.match.params.habitId, milestone },
               { setSubmitting, resetForm },
               addMilestoneToHabit
@@ -113,7 +113,7 @@ const MilestonesForm = props => {
                     !isHabitPage ? { minWidth: '300px', marginLeft: '15px' }
                     : { minWidth: '35rem' }
                   }
-                  placeholder={isHabitPage ? 'Type a milestone title here' : 'milestone item'}
+                  placeholder={isHabitPage ? 'Add a new milestone' : 'milestone item'}
                   component={CustomInput}
                 />
                 <button

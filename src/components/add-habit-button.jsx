@@ -2,18 +2,22 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const AddHabitButton = ({ className }) => {
+const AddHabitButton = () => {
   return (
     <Link to="/create-habit">
-      <div className={className}>
-        <FontAwesomeIcon
-          icon="plus-circle"
-          className="fa-2x mr-5 mb-5 float-right"
-          style={{ height: '5rem', width: '5rem' }}
-          data-toggle="tooltip"
-          title="CREATE HABIT"
-        />
-      </div>
+      <FontAwesomeIcon
+        icon="plus-circle"
+        className="fa-2x"
+        style={{
+          position: 'absolute',
+          height: '5rem',
+          width: '5rem',
+          right: '4rem',
+          bottom: '4rem'
+        }}
+        data-toggle="tooltip"
+        title="CREATE HABIT"
+      />
     </Link>
   );
 };

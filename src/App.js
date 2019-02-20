@@ -32,7 +32,7 @@ const App = () => {
                 <Redirect to="/" />
               </Switch>
             </div>
-            <AddHabitButton className="fixed-bottom" />
+            <AddHabitButton />
           </React.Fragment>
         </BrowserRouter>
       </HabitProviderComponent>

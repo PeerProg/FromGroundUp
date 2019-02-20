@@ -91,3 +91,16 @@ export const milestoneTitleOnlyValidator = inputObject => {
   }
   return errors;
 };
+
+export const habitCreationPageValidator = inputObject => {
+  let errors = {};
+  Object.entries(inputObject).forEach(item => {
+    if(!(item[1].toString()).trim()) {
+      errors[item[0]] = 'Required';
+    }
+  });
+  if(inputObject.habitName.trim().length < 3) {
+    errors.habitName = 'Must be 3 characters or more';
+  }
+  return errors;
+};

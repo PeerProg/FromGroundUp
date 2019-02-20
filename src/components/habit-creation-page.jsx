@@ -1,12 +1,16 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext } from 'react';
 import { Form, Formik, Field } from 'formik';
-// import swal from 'sweetalert2';
+import swal from 'sweetalert2';
 import { CustomInput } from '.';
-// import { createNewHabit } from '../services';
 import MilestoneAddRow from './milestone-add-row';
 import MilestoneDisplayRow from './milestone-display-row';
-// import moment from 'moment';
-// import { habitContext } from '../contexts';
+import {
+  habitCreationPageValidator,
+  createHabit,
+  createMilestone
+} from '../helpers';
+import { habitContext } from '../contexts';
+
 const reducer = (previousState, newState) => ({
   ...previousState,
   ...newState
@@ -14,14 +18,31 @@ const reducer = (previousState, newState) => ({
 
 const INITIAL_VALUES = {
   habitName: '',
-  milestoneTitle: ''
+  days: ''
 };
 
-const HabitCreationPage = () => {
-  const [{ milestones, milestoneValue }, setState] = useReducer(reducer, {
-    milestones: [],
-    milestoneValue: ''
-  })
+const swalMessage = (type, message) => {
+  return swal({
+    type,
+    position: 'top-end',
+    title: message,
+    toast: true,
+    showConfirmButton: false,
+    timer: 3000
+  });
+};
+
+const HabitCreationPage = props => {
+  const [{ milestones, milestoneValue, initialValues }, setState] = useReducer(
+    reducer,
+    {
+      milestones: [],
+      milestoneValue: '',
+      initialValues: INITIAL_VALUES
+    }
+  );
+
+  const { addToHabits, addMilestoneToHabit } = useContext(habitContext);
 
   const changeMilestoneValue = e => {
     e.preventDefault();
@@ -29,17 +50,21 @@ const HabitCreationPage = () => {
   };
 
   const addMilestone = () => {
+    const trimmedMilestoneValue = milestoneValue.trim();
+    if (!trimmedMilestoneValue) {
+      swalMessage('error', 'Milestone title cannot be empty');
+    } else if (trimmedMilestoneValue < 3) {
+      swalMessage('error', 'Milestone title must be 3 characters or more');
+    }
     milestones.push(milestoneValue);
-    setState({ milestones, milestoneValue: '' });
+    setState({ milestones, milestoneValue: '', errors: {} });
   };
-
-
 
   return (
     <div className="row d-flex flex-column align-items-center text-monospace">
       <div className="card text-center col-sm-8 mt-5 pl-0 pr-0">
         <div className="card-header">
-          <h5>Create New Habit</h5>
+          <h5 className="font-weight-bold">Create New Habit</h5>
         </div>
       </div>
 
@@ -48,21 +73,59 @@ const HabitCreationPage = () => {
         style={{ minHeight: '15rem' }}
       >
         <Formik
-          initialValues={INITIAL_VALUES}
-          onSubmit={() => {
-            console.log('Anything goes odebi');
+          initialValues={initialValues}
+          validate={values => habitCreationPageValidator(values)}
+          onSubmit={async (
+            { habitName, days },
+            { setSubmitting, resetForm }
+          ) => {
+            const newHabitId = await createHabit(
+              { name: habitName, days },
+              { setSubmitting },
+              addToHabits
+            );
+            const promises = milestones.map(milestone => {
+              return createMilestone(
+                { habitId: newHabitId, milestone },
+                { setSubmitting },
+                addMilestoneToHabit
+              );
+            });
+            Promise.all(promises).then(() => {
+              swalMessage('success', 'Habit created successfully');
+              resetForm();
+              props.history.push('/habits');
+            });
           }}
         >
           {({ isSubmitting }) => (
             <Form className="col-sm-8 d-flex flex-column justify-content-center">
-              <Field
-                type="text"
-                style={{ height: '3.5rem' }}
-                name="habitName"
-                addedClass="mt-4 mb-2"
-                component={CustomInput}
-                placeholder="Habit Name"
-              />
+              <div className="d-flex flex-row justify-content-between mb-2">
+                <Field
+                  type="text"
+                  style={{
+                    height: '3.5rem',
+                    width: '24rem',
+                    marginTop: '1rem',
+                    marginBottom: '0.3rem'
+                  }}
+                  name="habitName"
+                  component={CustomInput}
+                  placeholder="Habit Name"
+                />
+                <Field
+                  type="number"
+                  style={{
+                    height: '3.5rem',
+                    width: '14rem',
+                    marginTop: '1rem',
+                    marginBottom: '0.3rem'
+                  }}
+                  name="days"
+                  placeholder="No of Days"
+                  component={CustomInput}
+                />
+              </div>
               {!!milestones.length && (
                 <MilestoneDisplayRow milestones={milestones} />
               )}

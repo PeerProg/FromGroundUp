@@ -1,6 +1,7 @@
 export { default as Header } from './Header';
 export { default as ProtectedRoute } from './ProtectedRoute';
 export { default as CustomInput } from './CustomInput';
+export { default as ControlledInput } from './controlled-input';
 export { default as LandingPage } from './LandingPage';
 export { default as LoginPage } from './LoginPage';
 export { default as RegisterPage } from './RegisterPage';

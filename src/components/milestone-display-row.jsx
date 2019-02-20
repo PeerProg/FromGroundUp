@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field } from 'formik';
-import CustomInput from './CustomInput';
+import ControlledInput from './controlled-input';
 
 const MilestoneDisplayRow = ({ milestones }) => {
   const rendered = milestones.map((milestone, index) => (
@@ -10,8 +10,8 @@ const MilestoneDisplayRow = ({ milestones }) => {
       value={milestone}
       readOnly
       style={{ height: '3.5rem' }}
-      name="milestoneTitle"
-      component={CustomInput}
+      name={`milestoneTitle-${index}`}
+      component={ControlledInput}
       placeholder="Milestone Title"
     />
   ));

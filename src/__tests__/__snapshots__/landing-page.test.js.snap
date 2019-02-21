@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render <LandingPage /> correctly 1`] = `
+<div>
+  <div
+    class="card mt-5 mr-auto ml-auto mb-auto text-center"
+    style="max-height: 500px;"
+  >
+    <h1
+      class="text-monospace mt-5 mb-8 font-weight-bold"
+    >
+      Welcome to the habit tracker
+    </h1>
+    <br />
+    <br />
+    <div
+      class="row pl-5 pr-5 mb-5"
+    >
+      <div
+        class="col card mr-5"
+        style="background-color: rgb(241, 241, 241); height: 150px;"
+      >
+        <span
+          class="text-monospace mt-auto mb-auto"
+        >
+          Create Habits
+        </span>
+      </div>
+      <div
+        class="col card mr-5"
+        style="background-color: rgb(241, 241, 241); height: 150px;"
+      >
+        <span
+          class="text-monospace mt-auto mb-auto"
+        >
+          Add milestones
+        </span>
+      </div>
+      <div
+        class="col card"
+        style="background-color: rgb(241, 241, 241); height: 150px;"
+      >
+        <span
+          class="text-monospace mt-auto mb-auto"
+        >
+          Track milestones completion
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

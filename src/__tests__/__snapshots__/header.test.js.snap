@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render <Header /> correctly 1`] = `
+<div>
+  <nav
+    class="navbar navbar-light"
+    style="background-color: rgb(32, 150, 243);"
+  >
+    <ul
+      class="nav justify-content-start"
+    >
+      <li
+        class="nav-item"
+      >
+        <a
+          class="nav-link"
+          href="/"
+        >
+          <button
+            class="btn btn-outline-primary customBtn"
+          >
+            HBT
+          </button>
+        </a>
+      </li>
+    </ul>
+    <ul
+      class="nav justify-content-end"
+    >
+      <li
+        class="nav-item"
+      >
+        <a
+          class="nav-link"
+          href="/login"
+        >
+          <button
+            class="btn btn-outline-primary customBtn"
+          >
+            LOGIN
+          </button>
+        </a>
+      </li>
+      <li
+        class="nav-item"
+      >
+        <a
+          class="nav-link"
+          href="/register"
+        >
+          <button
+            class="btn btn-outline-primary customBtn"
+          >
+            SIGNUP
+          </button>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+`;

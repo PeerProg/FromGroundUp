@@ -6,7 +6,7 @@ exports[`should render the add habit button correctly 1`] = `
     href="/create-habit"
   >
     <svg
-      aria-labelledby="svg-inline--fa-title-Ib9KPCxE3LUb"
+      aria-labelledby="svg-inline--fa-title-dlqfApEpcSOu"
       data-prefix="fas"
       data-icon="plus-circle"
       class="svg-inline--fa fa-plus-circle fa-w-16 fa-2x"
@@ -17,7 +17,7 @@ exports[`should render the add habit button correctly 1`] = `
       data-toggle="tooltip"
     >
       <title
-        id="svg-inline--fa-title-Ib9KPCxE3LUb"
+        id="svg-inline--fa-title-dlqfApEpcSOu"
       >
         CREATE HABIT
       </title>

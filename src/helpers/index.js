@@ -6,7 +6,8 @@ export {
   habitNameValidator,
   habitObjectValidator,
   milestoneValidator,
-  milestoneTitleOnlyValidator
+  milestoneTitleOnlyValidator,
+  habitCreationPageValidator
 } from './validators';
 export {
   invalidEmailObject,
@@ -15,3 +16,4 @@ export {
 } from './testData';
 export { default as getDurationToExpiration } from './getDurationToExpiration';
 export { default as standardizeDate } from './standardizeDate';
+export { createMilestone, createHabit } from './formSubmitHandlers';

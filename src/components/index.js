@@ -1,6 +1,7 @@
 export { default as Header } from './Header';
 export { default as ProtectedRoute } from './ProtectedRoute';
 export { default as CustomInput } from './CustomInput';
+export { default as ControlledInput } from './controlled-input';
 export { default as LandingPage } from './LandingPage';
 export { default as LoginPage } from './LoginPage';
 export { default as RegisterPage } from './RegisterPage';
@@ -16,4 +17,6 @@ export { default as HabitTableRow } from './HabitTableRow';
 export { default as HabitsPage } from './HabitsPage';
 export { default as HabitButtons } from './HabitButtons';
 export { default as MilestonesForm } from './MilestonesForm';
+export { default as AddHabitButton } from './add-habit-button';
+export { default as HabitCreationPage } from './habit-creation-page';
 

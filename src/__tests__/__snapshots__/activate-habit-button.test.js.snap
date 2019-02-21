@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render the activate habit button correctly 1`] = `
+<div>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    data-testid="activate-habit-button"
+  >
+    Start
+  </button>
+</div>
+`;

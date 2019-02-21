@@ -44,6 +44,7 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
     "husky": "^1.2.0",
+    "jest-localstorage-mock": "^2.4.0",
     "prop-types": "^15.6.2",
     "react-test-renderer": "^16.6.3",
     "react-testing-library": "^5.9.0"

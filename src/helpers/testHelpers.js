@@ -12,6 +12,7 @@ import {
   faTimesCircle,
   faMinusCircle
 } from '@fortawesome/free-solid-svg-icons';
+import { UserProviderComponent, HabitProviderComponent } from '../contexts';
 
 library.add(
   fab,
@@ -24,8 +25,26 @@ library.add(
   faMinusCircle
 );
 
+export function renderwithFaLibrary(ui) {
+  return {
+    ...render({ ui })
+  };
+}
+
 export function renderWithRouter(ui) {
   return {
     ...render(<Router>{ui}</Router>)
+  };
+}
+
+export function renderWithRouterAndContext(ui) {
+  return {
+    ...render(
+      <Router>
+        <UserProviderComponent>
+          <HabitProviderComponent>{ui}</HabitProviderComponent>
+        </UserProviderComponent>
+      </Router>
+    )
   };
 }

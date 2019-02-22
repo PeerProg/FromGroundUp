@@ -1,22 +1,20 @@
 import React from 'react';
-import { useState, useContext } from 'react';
-import swal from 'sweetalert2';
 import { Formik, Form, Field } from 'formik';
-import { updateUserInfo } from '../services';
-import { CustomInput } from '.';
-import { submitButtonStyle, loginFormContainerStyle } from '../styles';
-import { userContext } from '../contexts';
-import { profilePageValidator } from '../helpers';
-import { saveToLocalStorage } from '../utils';
-import imageUrl from '../images/imageURL.jpg';
-import noImageUrl from '../images/noImageUrl.png';
+import PropTypes from 'prop-types';
+import CustomInput from '../CustomInput';
+import { submitButtonStyle, loginFormContainerStyle } from '../../styles';
+import imageUrl from '../../images/imageURL.jpg';
+import noImageUrl from '../../images/noImageUrl.png';
 
-const ProfilePage = props => {
-  const [isEditing, setisEditing] = useState(false);
-  const { user, handleUserData } = useContext(userContext);
-
-  const toggleEditStatus = () => setisEditing(!isEditing);
-
+const Profile = props => {
+  const {
+    initialValues,
+    isEditing,
+    user,
+    toggleEditStatus,
+    onSubmit,
+    validate
+  } = props;
   return (
     <React.Fragment>
       <div className="card profileCard">
@@ -72,49 +70,9 @@ const ProfilePage = props => {
 
         {isEditing && (
           <Formik
-            initialValues={{
-              username: user.username,
-              email: user.email,
-              imageURL: user.imageURL || ''
-            }}
-            validate={values => profilePageValidator(values)}
-            onSubmit={async (
-              { username, email, imageURL },
-              { setSubmitting }
-            ) => {
-              imageURL = imageURL || null;
-              updateUserInfo({
-                username,
-                email,
-                imageURL,
-                id: props.match.params.userId
-              })
-                .then(res => {
-                  handleUserData(res.data);
-                  saveToLocalStorage('userDetails', { ...user, ...res.data });
-
-                  swal({
-                    type: 'success',
-                    position: 'top-end',
-                    title: 'Update Successful',
-                    toast: true,
-                    showConfirmButton: false,
-                    timer: 3000
-                  });
-                  toggleEditStatus();
-                })
-                .catch(err => {
-                  swal({
-                    type: 'error',
-                    position: 'top-end',
-                    title: err.message,
-                    toast: true,
-                    showConfirmButton: false,
-                    timer: 3000
-                  });
-                });
-              setSubmitting(false);
-            }}
+            initialValues={initialValues}
+            validate={validate}
+            onSubmit={onSubmit}
           >
             {({ isSubmitting }) => (
               <Form>
@@ -161,4 +119,13 @@ const ProfilePage = props => {
   );
 };
 
-export default ProfilePage;
+Profile.propTypes = {
+  initialValues: PropTypes.object.isRequired,
+  isEditing: PropTypes.bool,
+  user: PropTypes.object.isRequired,
+  toggleEditStatus: PropTypes.func,
+  onSubmit: PropTypes.func.isRequired,
+  validate: PropTypes.func.isRequired
+};
+
+export default Profile;

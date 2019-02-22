@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render <Milestone /> correctly 1`] = `
+<div>
+  <div
+    class="card mb-1"
+  >
+    <div
+      class="card-body text-monospace d-flex justify-content-between"
+    >
+      <h5
+        class="card-title font-weight-bold"
+      >
+        New Milestone
+      </h5>
+      <p
+        class="card-text"
+      >
+        Created on 
+        January 12th 2019, 12:00:59 pm
+      </p>
+    </div>
+  </div>
+</div>
+`;

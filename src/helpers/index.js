@@ -17,3 +17,4 @@ export {
 export { default as getDurationToExpiration } from './getDurationToExpiration';
 export { default as standardizeDate } from './standardizeDate';
 export { createMilestone, createHabit } from './formSubmitHandlers';
+export { renderWithRouter, renderwithFaLibrary, renderWithRouterAndContext } from './testHelpers';

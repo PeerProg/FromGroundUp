@@ -11,26 +11,8 @@ const ControlledInput = ({
   addedClass,
   value,
   onChange,
-  form: { touched, errors },
   ...props
 }) => {
-  let inputClassName;
-  if (!addedClass || !addedClass.trim().length) {
-    inputClassName =
-      touched[field.name] && errors[field.name]
-        ? 'form-control is-invalid'
-        : touched[field.name] && !errors[field.name]
-        ? 'form-control is-valid'
-        : 'form-control';
-  }
-  if (addedClass && addedClass.trim().length) {
-    inputClassName =
-      touched[field.name] && errors[field.name]
-        ? `${addedClass.trim()} form-control is-invalid`
-        : touched[field.name] && !errors[field.name]
-        ? `${addedClass.trim()} form-control is-valid`
-        : `${addedClass.trim()} form-control`;
-  }
   return (
     <div className={inputClass}>
       <input
@@ -40,11 +22,8 @@ const ControlledInput = ({
         value={value}
         onChange={onChange}
         style={style || authFieldStyle}
-        className={inputClassName}
+        className="form-control"
       />
-      {touched[field.name] && errors[field.name] && (
-        <div className="invalid-feedback">{errors[field.name]}</div>
-      )}
     </div>
   );
 };

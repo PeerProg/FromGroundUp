@@ -6,7 +6,6 @@ import ActivateHabitButton from './activate-habit-button';
 const HabitCard = ({
   name,
   durationTillExpiration,
-  dateCreated,
   handleHabitDelete,
   habitId,
   habitActive

@@ -1,22 +1,20 @@
 import React from 'react';
-import { useState, useContext } from 'react';
-import swal from 'sweetalert2';
 import { Formik, Form, Field } from 'formik';
-import { updateUserInfo } from '../services';
-import { CustomInput } from '.';
-import { submitButtonStyle, loginFormContainerStyle } from '../styles';
-import { userContext } from '../contexts';
-import { profilePageValidator } from '../helpers';
-import { saveToLocalStorage } from '../utils';
-import imageUrl from '../images/imageURL.jpg';
-import noImageUrl from '../images/noImageUrl.png';
+import PropTypes from 'prop-types';
+import CustomInput from '../CustomInput';
+import { submitButtonStyle, loginFormContainerStyle } from '../../styles';
+import imageUrl from '../../images/imageURL.jpg';
+import noImageUrl from '../../images/noImageUrl.png';
 
-const ProfilePage = props => {
-  const [isEditing, setisEditing] = useState(false);
-  const { user, handleUserData } = useContext(userContext);
-
-  const toggleEditStatus = () => setisEditing(!isEditing);
-
+const Profile = props => {
+  const {
+    initialValues,
+    isEditing,
+    user,
+    toggleEditStatus,
+    handleSubmit,
+    validate
+  } = props;
   return (
     <React.Fragment>
       <div className="card profileCard">
@@ -26,6 +24,7 @@ const ProfilePage = props => {
               type="button"
               onClick={toggleEditStatus}
               className="btn btn-primary"
+              data-testid="edit-profile-button"
             >
               {isEditing ? 'Cancel' : 'Edit Profile'}
             </button>
@@ -41,8 +40,14 @@ const ProfilePage = props => {
 
         {!isEditing && (
           <div>
-            <ul className="list-group profileDetails ">
-              <li className="list-group-item d-flex justify-content-between align-items-center">
+            <ul
+              className="list-group profileDetails"
+              data-testid="profile-details-section"
+            >
+              <li
+                className="list-group-item d-flex justify-content-between align-items-center"
+                data-testid="username-list-item"
+              >
                 Username
                 <span className="badge badge-primary badge-pill">
                   {user.username}
@@ -60,7 +65,10 @@ const ProfilePage = props => {
                   {user.isAdmin.toString().toUpperCase()}
                 </span>
               </li>
-              <li className="list-group-item d-flex justify-content-between align-items-center">
+              <li
+                className="list-group-item d-flex justify-content-between align-items-center"
+                data-testid="superadmin-list-item"
+              >
                 SuperAdmin
                 <span className="badge badge-primary badge-pill">
                   {user.isSuperAdmin.toString().toUpperCase()}
@@ -72,58 +80,23 @@ const ProfilePage = props => {
 
         {isEditing && (
           <Formik
-            initialValues={{
-              username: user.username,
-              email: user.email,
-              imageURL: user.imageURL || ''
-            }}
-            validate={values => profilePageValidator(values)}
-            onSubmit={async (
-              { username, email, imageURL },
-              { setSubmitting }
-            ) => {
-              imageURL = imageURL || null;
-              updateUserInfo({
-                username,
-                email,
-                imageURL,
-                id: props.match.params.userId
-              })
-                .then(res => {
-                  handleUserData(res.data);
-                  saveToLocalStorage('userDetails', { ...user, ...res.data });
-
-                  swal({
-                    type: 'success',
-                    position: 'top-end',
-                    title: 'Update Successful',
-                    toast: true,
-                    showConfirmButton: false,
-                    timer: 3000
-                  });
-                  toggleEditStatus();
-                })
-                .catch(err => {
-                  swal({
-                    type: 'error',
-                    position: 'top-end',
-                    title: err.message,
-                    toast: true,
-                    showConfirmButton: false,
-                    timer: 3000
-                  });
-                });
-              setSubmitting(false);
-            }}
+            initialValues={initialValues}
+            validate={validate}
+            onSubmit={handleSubmit}
           >
             {({ isSubmitting }) => (
               <Form>
-                <div className="formStyle" style={loginFormContainerStyle}>
+                <div
+                  className="formStyle"
+                  style={loginFormContainerStyle}
+                  data-testid="profile-form"
+                >
                   <Field
                     type="text"
                     name="username"
                     placeholder="Username"
                     component={CustomInput}
+                    data-testid="username-profile-input"
                   />
                   <br />
                   <br />
@@ -132,6 +105,7 @@ const ProfilePage = props => {
                     name="email"
                     placeholder="Email"
                     component={CustomInput}
+                    data-testid="email-profile-input"
                   />
                   <br />
                   <br />
@@ -140,6 +114,7 @@ const ProfilePage = props => {
                     name="imageURL"
                     placeholder="imageURL"
                     component={CustomInput}
+                    data-testid="image-profile-input"
                   />
                   <br />
                   <br />
@@ -148,6 +123,7 @@ const ProfilePage = props => {
                     type="submit"
                     disabled={isSubmitting}
                     style={submitButtonStyle}
+                    data-testid="profile-submit-button"
                   >
                     Submit
                   </button>
@@ -161,4 +137,13 @@ const ProfilePage = props => {
   );
 };
 
-export default ProfilePage;
+Profile.propTypes = {
+  initialValues: PropTypes.object.isRequired,
+  isEditing: PropTypes.bool,
+  user: PropTypes.object.isRequired,
+  toggleEditStatus: PropTypes.func,
+  handleSubmit: PropTypes.func.isRequired,
+  validate: PropTypes.func.isRequired
+};
+
+export default Profile;

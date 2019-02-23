@@ -12,13 +12,14 @@ const jwtToken = Boolean(getFromLocalStorage('jwtToken'));
 
 const UserProviderComponent = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(jwtToken);
-  const [user, setUser] = useReducer(reducer, userDetails);
+  const [{ user }, setUser] = useReducer(reducer, { user: userDetails });
 
   const handleAuthStatus = value => setIsAuthenticated(value);
 
   const handleUserData = value => {
-    setUser({ ...user, ...value });
-    saveToLocalStorage('userDetails', user);
+    const mergedUser = { ...user, ...value };
+    setUser({ user: mergedUser });
+    saveToLocalStorage('userDetails', mergedUser);
     saveToLocalStorage('jwtToken', user.token);
   }
 

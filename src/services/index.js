@@ -11,3 +11,4 @@ export {
   fetchHabit
 } from './habitServices';
 export { createNewMilestone, fetchMilestones } from './milestoneServices';
+export { default as MockDataService } from './mockDataService';

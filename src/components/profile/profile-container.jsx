@@ -5,7 +5,7 @@ import { updateUserInfo } from '../../services';
 import { userContext } from '../../contexts';
 import { profilePageValidator } from '../../helpers';
 
-const renderAlert = (type, title) => {
+export const renderAlert = (type, title) => {
   return swal({
     type,
     position: 'top-end',
@@ -28,20 +28,15 @@ const ProfileContainer = props => {
 
   const toggleEditStatus = () => setisEditing(!isEditing);
 
-  const handleProfileUpdate = async (
-    { username, email, imageURL },
-    { setSubmitting },
-    cb
-  ) => {
+  const handleSubmit = async ({ username, email }, { setSubmitting }) => {
     try {
       const result = await updateUserInfo({
         username,
         email,
-        imageURL,
+        imageURL: null,
         id: props.match.params.userId
       });
-      console.log('======================================', result.data);
-      cb(result.data);
+      handleUserData(result.data);
       renderAlert('success', 'Update Successful');
       toggleEditStatus();
     } catch (err) {
@@ -57,13 +52,7 @@ const ProfileContainer = props => {
       isEditing={isEditing}
       user={user}
       toggleEditStatus={toggleEditStatus}
-      onSubmit={async ({ username, email }, { setSubmitting }) => {
-        handleProfileUpdate(
-          { username, email, imageURL: null },
-          { setSubmitting },
-          handleUserData
-        );
-      }}
+      handleSubmit={handleSubmit}
     />
   );
 };

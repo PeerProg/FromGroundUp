@@ -12,7 +12,7 @@ const Profile = props => {
     isEditing,
     user,
     toggleEditStatus,
-    onSubmit,
+    handleSubmit,
     validate
   } = props;
   return (
@@ -24,6 +24,7 @@ const Profile = props => {
               type="button"
               onClick={toggleEditStatus}
               className="btn btn-primary"
+              data-testid="edit-profile-button"
             >
               {isEditing ? 'Cancel' : 'Edit Profile'}
             </button>
@@ -39,8 +40,14 @@ const Profile = props => {
 
         {!isEditing && (
           <div>
-            <ul className="list-group profileDetails ">
-              <li className="list-group-item d-flex justify-content-between align-items-center">
+            <ul
+              className="list-group profileDetails"
+              data-testid="profile-details-section"
+            >
+              <li
+                className="list-group-item d-flex justify-content-between align-items-center"
+                data-testid="username-list-item"
+              >
                 Username
                 <span className="badge badge-primary badge-pill">
                   {user.username}
@@ -58,7 +65,10 @@ const Profile = props => {
                   {user.isAdmin.toString().toUpperCase()}
                 </span>
               </li>
-              <li className="list-group-item d-flex justify-content-between align-items-center">
+              <li
+                className="list-group-item d-flex justify-content-between align-items-center"
+                data-testid="superadmin-list-item"
+              >
                 SuperAdmin
                 <span className="badge badge-primary badge-pill">
                   {user.isSuperAdmin.toString().toUpperCase()}
@@ -72,16 +82,21 @@ const Profile = props => {
           <Formik
             initialValues={initialValues}
             validate={validate}
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit}
           >
             {({ isSubmitting }) => (
               <Form>
-                <div className="formStyle" style={loginFormContainerStyle}>
+                <div
+                  className="formStyle"
+                  style={loginFormContainerStyle}
+                  data-testid="profile-form"
+                >
                   <Field
                     type="text"
                     name="username"
                     placeholder="Username"
                     component={CustomInput}
+                    data-testid="username-profile-input"
                   />
                   <br />
                   <br />
@@ -90,6 +105,7 @@ const Profile = props => {
                     name="email"
                     placeholder="Email"
                     component={CustomInput}
+                    data-testid="email-profile-input"
                   />
                   <br />
                   <br />
@@ -98,6 +114,7 @@ const Profile = props => {
                     name="imageURL"
                     placeholder="imageURL"
                     component={CustomInput}
+                    data-testid="image-profile-input"
                   />
                   <br />
                   <br />
@@ -106,6 +123,7 @@ const Profile = props => {
                     type="submit"
                     disabled={isSubmitting}
                     style={submitButtonStyle}
+                    data-testid="profile-submit-button"
                   >
                     Submit
                   </button>
@@ -124,7 +142,7 @@ Profile.propTypes = {
   isEditing: PropTypes.bool,
   user: PropTypes.object.isRequired,
   toggleEditStatus: PropTypes.func,
-  onSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   validate: PropTypes.func.isRequired
 };
 
